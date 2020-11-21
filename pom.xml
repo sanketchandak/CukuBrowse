@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ui.automation</groupId>
+    <artifactId>cukubrowse</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <!-- maven dependency version -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <logback.version>1.2.3</logback.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
+        <webdriver.manager.version>4.2.0</webdriver.manager.version>
+        <cucumber.java.version>6.8.0</cucumber.java.version>
+        <cucumber.junit.version>6.8.0</cucumber.junit.version>
+        <selenium.java.version>3.141.59</selenium.java.version>
+        <junit.version.version>4.13.1</junit.version.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
+        <cucumber.jvm.parallel.plugin.version>5.0.0</cucumber.jvm.parallel.plugin.version>
+        <zip4j.version>2.6.4</zip4j.version>
+        <extentreports.cucumber6.adapter.version>2.5.0</extentreports.cucumber6.adapter.version>
+        <maven.cucumber.reporting.version>5.3.0</maven.cucumber.reporting.version>
+        <exec.maven.plugin.version>3.0.0</exec.maven.plugin.version>
+        <maven.antrun.plugin.version>3.0.0</maven.antrun.plugin.version>
+
+        <!-- new parameter -->
+        <timestamp>${maven.build.timestamp} UTC</timestamp>
+        <maven.build.timestamp.format>dd_MMM_yyyy HH_mm_ss</maven.build.timestamp.format>
+
+        <!--<execution.report.path>build/reports</execution.report.path>
+        <parallel.execution.count>6</parallel.execution.count>
+        <cleanup.report.directory.flag>true</cleanup.report.directory.flag>
+        <send.report.email.flag>true</send.report.email.flag>
+        <email.report.to>sanketrchandak@gmail.com</email.report.to>
+        <email.report.cc>sanketrc14@gmail.com</email.report.cc>
+        <email.reply.to>sanketrchandak@gmail.com</email.reply.to>-->
+    </properties>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.java.version}</version>
+
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.junit.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.java.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdriver.manager.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j -->
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+            <version>${zip4j.version}</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>tech.grasshopper</groupId>-->
+<!--            <artifactId>extentreports-cucumber6-adapter</artifactId>-->
+<!--            <version>${extentreports.cucumber6.adapter.version}</version>-->
+<!--        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- This plugin is required to read and store property file in memory -->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/properties-maven-plugin -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>load-properites</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>configs/Configuration.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- The plugin required to generate runtime cucumber runner classes from a template -->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/com.github.temyers/cucumber-jvm-parallel-plugin -->
+                <groupId>com.github.temyers</groupId>
+                <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+                <version>${cucumber.jvm.parallel.plugin.version}</version>
+
+                <!-- To generate runner class at scenario level for parallel execution -->
+                <executions>
+                    <execution>
+                        <id>generateParallelScenariosRunners</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <glue>
+                                <package>stepDefinition</package>
+                                <package>utils/service</package>
+                            </glue>
+                            <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
+                            <featuresDirectory>src/test/resources/features/parallelScenario</featuresDirectory>
+                            <!-- Where to output the generated tests -->
+                            <outputDirectory>target/generated-test-sources/cucumber_parallel_scenarios</outputDirectory>
+                            <!-- Directory where the cucumber report files shall be written  -->
+                            <cucumberOutputDir>target/cucureport/cucumber_parallel_scenarios/parallelScenarios
+                            </cucumberOutputDir>
+                            <!-- The naming scheme to use for the generated test classes.  One of ['simple', 'feature-title', 'pattern'] -->
+                            <namingScheme>pattern</namingScheme>
+                            <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
+                            <namingPattern>ParallelScenario{c}</namingPattern>
+                            <plugins>
+                                <plugin>
+                                    <name>json</name>
+                                </plugin>
+                                <plugin>
+                                    <name>html</name>
+                                </plugin>
+                            </plugins>
+                            <!-- The tags to run, maps to CucumberOptions.tags property. Default is no tags. -->
+                            <tags>
+                                <tag>~@donotrun</tag>
+                                <tag>~@ignore</tag>
+                            </tags>
+                            <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
+                            <parallelScheme>SCENARIO</parallelScheme>
+                            <!-- Specify a custom template for the generated sources (this is a path relative to the project base directory) -->
+                            <customVmTemplate>src/main/resources/runner/templates/cucumber-junit-runner-template.vm
+                            </customVmTemplate>
+                        </configuration>
+                    </execution>
+
+                    <!-- To generate runner class at feature level for parallel execution -->
+                    <execution>
+                        <id>generateParallelFeaturesRunners</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <glue>
+                                <package>stepDefinition</package>
+                                <package>utils/service</package>
+                            </glue>
+                            <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
+                            <featuresDirectory>src/test/resources/features/parallelFeatures</featuresDirectory>
+                            <!-- Where to output the generated tests -->
+                            <outputDirectory>target/generated-test-sources/cucumber_parallel_features</outputDirectory>
+                            <!-- Directory where the cucumber report files shall be written  -->
+                            <cucumberOutputDir>target/cucureport/cucumber_parallel_features/parallelFeatures
+                            </cucumberOutputDir>
+                            <!-- The naming scheme to use for the generated test classes.  One of ['simple', 'feature-title', 'pattern'] -->
+                            <namingScheme>pattern</namingScheme>
+                            <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
+                            <namingPattern>ParallelFeature{c}</namingPattern>
+                            <plugins>
+                                <plugin>
+                                    <name>json</name>
+                                </plugin>
+                                <plugin>
+                                    <name>html</name>
+                                </plugin>
+                            </plugins>
+                            <!-- The tags to run, maps to CucumberOptions.tags property. Default is no tags. -->
+                            <tags>
+                                <tag>~@donotrun</tag>
+                                <tag>~@ignore</tag>
+                            </tags>
+                            <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
+                            <parallelScheme>FEATURE</parallelScheme>
+                            <!-- Specify a custom template for the generated sources (this is a path relative to the project base directory) -->
+                            <customVmTemplate>src/main/resources/runner/templates/cucumber-junit-runner-template.vm
+                            </customVmTemplate>
+                        </configuration>
+                    </execution>
+
+                    <!-- To generate runner class at feature level for sequential execution -->
+                    <execution>
+                        <id>generateSequentialFeaturesRunners</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generateRunners</goal>
+                        </goals>
+                        <configuration>
+                            <glue>
+                                <package>stepDefinition</package>
+                                <package>utils/service</package>
+                            </glue>
+                            <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
+                            <featuresDirectory>src/test/resources/features/sequential</featuresDirectory>
+                            <!-- Where to output the generated tests -->
+                            <outputDirectory>target/generated-test-sources/cucumber_sequential</outputDirectory>
+                            <!-- Directory where the cucumber report files shall be written  -->
+                            <cucumberOutputDir>target/cucureport/cucumber_sequential/sequentialFeatures
+                            </cucumberOutputDir>
+                            <!-- The naming scheme to use for the generated test classes.  One of ['simple', 'feature-title', 'pattern'] -->
+                            <namingScheme>pattern</namingScheme>
+                            <!-- The class naming pattern to use.  Only required/used if naming scheme is 'pattern'.-->
+                            <namingPattern>SequentialFeature{c}</namingPattern>
+                            <plugins>
+                                <plugin>
+                                    <name>json</name>
+                                </plugin>
+                                <plugin>
+                                    <name>html</name>
+                                </plugin>
+                            </plugins>
+                            <!-- The tags to run, maps to CucumberOptions.tags property. Default is no tags. -->
+                            <tags>
+                                <tag>~@donotrun</tag>
+                                <tag>~@ignore</tag>
+                            </tags>
+                            <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
+                            <parallelScheme>FEATURE</parallelScheme>
+                            <!-- Specify a custom template for the generated sources (this is a path relative to the project base directory) -->
+                            <customVmTemplate>src/main/resources/runner/templates/cucumber-junit-runner-template.vm
+                            </customVmTemplate>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- The plugin required to provide the name of runner class & run them-->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+                <!-- This execution required to provide the name of runner class to be execute -->
+                <executions>
+                    <execution>
+                        <id>acceptance-test-parallel</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+<!--                            <parallel>all</parallel>-->
+<!--                            <threadCount>${parallel.execution.count}</threadCount>-->
+<!--                            <useUnlimitedThreads>true</useUnlimitedThreads>-->
+<!--                            <perCoreThreadCount>false</perCoreThreadCount>-->
+                            <forkCount>${parallel.execution.count}</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <includes>
+                                <include>**/ParallelScenario*.class</include>
+                                <include>**/ParallelFeature*.class</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>acceptance-test-sequential</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <forkCount>1</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <includes>
+                                <include>**/SequentialFeature*.class</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- The plugin required to generate maven cucumber reports -->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/net.masterthought/maven-cucumber-reporting -->
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>${maven.cucumber.reporting.version}</version>
+                <executions>
+                    <execution>
+                        <id>cucumberReportGeneration</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>SELENIUM CUCUMBER REPORT | ENVIRONMENT - ${execution.environment}</projectName>
+                            <!-- output directory for the generated report -->
+                            <outputDirectory>${execution.report.path}/${timestamp}</outputDirectory>
+                            <inputDirectory>target/cucureport/</inputDirectory>
+                            <jsonFiles>
+                                <!-- supports wildcard or name pattern -->
+                                <param>**/*.json</param>
+                            </jsonFiles>
+                            <checkBuildResult>false</checkBuildResult>
+                            <!-- optional, set true to group features by its Ids -->
+                            <mergeFeaturesById>true</mergeFeaturesById>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>tech.grasshopper</groupId>
+                <artifactId>extentreports-cucumberjson-plugin</artifactId>
+                <version>2.5.0</version>
+                <executions>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>extentreport</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <cucumberJsonReportDirectory>target/cucureport</cucumberJsonReportDirectory>
+                    <extentPropertiesDirectory>target/classes/extentreport</extentPropertiesDirectory>
+                    <displayAllHooks>true</displayAllHooks>
+                    <strictCucumber6Behavior>true</strictCucumber6Behavior>
+                </configuration>
+            </plugin>
+
+            <!-- The plugin required to run/execute job -->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec.maven.plugin.version}</version>
+                <executions>
+                    <!-- The execution required to run java class to clean temp dir in windows in Maven Compile step-->
+                    <execution>
+                        <id>cleaningTempDirBeforeExecution</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>core.report.cleanup.CleanupTempDirectory</mainClass>
+                        </configuration>
+                    </execution>
+
+                    <!-- The execution required to run java class to clean temp dir in windows -->
+                    <execution>
+                        <id>cleaningReportDir</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>core.report.cleanup.CleanupReportDirectory</mainClass>
+                            <arguments>
+                                <!-- 1st argument is flag to deicde whether to clean report dir or not. Set it to TRUE or FALSE. -->
+                                <argument>${cleanup.report.directory.flag}</argument>
+                                <!-- 2nd argument is path to report dir for cleanup. -->
+                                <argument>${execution.report.path}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <!-- The execution required to run java class to create zip of report -->
+                    <execution>
+                        <id>zipMavenCucumberReport</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>core.report.zip.ZipExecutionReportDirectory</mainClass>
+                            <arguments>
+                                <!-- 1st is path of report dir to zip -->
+                                <argument>${execution.report.path}/${timestamp}</argument>
+                                <!-- 2nd is path to store zip file with name. -->
+                                <argument>${execution.report.path}/${timestamp}.zip</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <!-- The execution required to run java class to send email with Cucumber report -->
+                    <execution>
+                        <id>sendCucumberReportInEmail</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>utils.email.EmailExecutionReport</mainClass>
+                            <arguments>
+                                <!-- 1st argument is flag to deicde whether to send email or not. Set it to TRUE or FALSE. -->
+                                <argument>${send.report.email.flag}</argument>
+                                <!-- 2nd argument is email to. -->
+                                <argument>${email.report.to}</argument>
+                                <!-- 3rd argument is email cc. -->
+                                <argument>${email.report.cc}</argument>
+                                <!-- 4th argument is reply to. -->
+                                <argument>${email.reply.to}</argument>
+                                <!-- 5th argument is email attachment. -->
+                                <argument>${execution.report.path}/${timestamp}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <!-- The execution required to run java class to clean temp dir in windows in Maven Vrify stage-->
+                    <execution>
+                        <id>cleaningTempDirPostExecution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>core.report.cleanup.CleanupTempDirectory</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- The plugin required to create runtime folder for final report-->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-antrun-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>createScenarioDir</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="src/test/resources/features/parallelScenario"/>
+                                <mkdir dir="src/test/resources/features/parallelFeatures"/>
+                                <mkdir dir="src/test/resources/features/sequential"/>
+                                <mkdir dir="src/test/java/stepDefinition"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>createDir</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${execution.report.path}/${timestamp}"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
