@@ -54,11 +54,11 @@ public class Click {
                 break;
             }
             case ActionDoubleClick: {
-                new Actions(driver).doubleClick().perform();
+                new Actions(driver).doubleClick(element).perform();
                 break;
             }
             case ActionRightClick: {
-                new Actions(driver).contextClick().perform();
+                new Actions(driver).contextClick(element).perform();
                 break;
             }
             case DEFAULT: {

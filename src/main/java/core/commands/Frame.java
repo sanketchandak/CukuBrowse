@@ -2,6 +2,7 @@ package core.commands;
 
 import core.browser.runner.WebDriverRunner;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class Frame {
     private WebDriver driver;
@@ -28,6 +29,12 @@ public class Frame {
         setDriverSession();
         driver.switchTo().defaultContent();
         driver.switchTo().frame(frameNameOrId);
+    }
+
+    public void switchToFrameByFrameElement(WebElement frameElement) {
+        setDriverSession();
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(frameElement);
     }
 
     public void switchToMainFrame() {

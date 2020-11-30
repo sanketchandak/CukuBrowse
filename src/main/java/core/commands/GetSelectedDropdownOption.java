@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import static core.commands.Find.Find;
+import static core.commands.FindAll.FindAll;
 
 public class GetSelectedDropdownOption {
     public static GetSelectedDropdownOption GetSelectedDropdownOption =
@@ -16,17 +17,21 @@ public class GetSelectedDropdownOption {
         }
     }
 
-    public WebElement getSelectedDropdownOption(By dropdownBy, By... dropdownChildOptionBy) {
+    public WebElement getSelectedDropdownOption(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
         return getSelectedDropdownOption(Find.find(dropdownBy), dropdownChildOptionBy);
     }
 
-    public WebElement getSelectedDropdownOption(WebElement dropdownElement, By... dropdownChildOptionBy) {
+    public WebElement getSelectedDropdownOption(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
         assert dropdownChildOptionBy != null;
-        dropdownElement.click();
-        return "select".equalsIgnoreCase(dropdownElement.getTagName()) ?
-                new Select(dropdownElement).getFirstSelectedOption() :
-                dropdownChildOptionBy.length == 0 ?
-                        dropdownElement :
-                        Find.find(dropdownElement, dropdownChildOptionBy[0]);
+        if("select".equalsIgnoreCase(dropdownElement.getTagName())){
+            return new Select(dropdownElement).getFirstSelectedOption();
+        } else {
+            dropdownElement.click();
+            if(dropdownChildOptionBy.length == 0){
+                throw new Exception("Element is not having 'Select' tag. 'dropdownChildOptionBy' argument value is required.");
+            } else {
+                return Find.find(dropdownElement, dropdownChildOptionBy[0]);
+            }
+        }
     }
 }

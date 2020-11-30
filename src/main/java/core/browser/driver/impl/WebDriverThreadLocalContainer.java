@@ -36,7 +36,7 @@ public class WebDriverThreadLocalContainer implements WebDriverContainer {
     public WebDriver getWebDriver() {
         long threadId = currentThread().getId();
         if (!threadWebDriver.containsKey(threadId)) {
-            throw new IllegalStateException("No webdriver is bound to current thread: " + threadId + ". You need to call open(url) first.");
+            throw new IllegalStateException("No WebDriver is bound to current thread: " + threadId + ". You need to call open(url) first.");
         }
         return threadWebDriver.get(threadId);
     }
@@ -80,7 +80,7 @@ public class WebDriverThreadLocalContainer implements WebDriverContainer {
 
     @Override
     public void setWindowSize(int width, int height) {
-        getWebDriver().manage().window().setSize(new Dimension(800, 480));
+        getWebDriver().manage().window().setSize(new Dimension(width, height));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class WebDriverThreadLocalContainer implements WebDriverContainer {
         }
         EventFiringWebDriver wrapper = new EventFiringWebDriver(webDriver);
         for (WebDriverEventListener listener : listeners) {
-            log.info("Add listner to webdriver: " + listener);
+            log.info("Add listener to WebDriver: " + listener);
             wrapper.register(listener);
         }
         return wrapper;

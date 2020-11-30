@@ -2,9 +2,9 @@ package core.commands;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import static core.commands.Find.Find;
+import static core.commands.GetSelectedDropdownOption.GetSelectedDropdownOption;
 
 public class GetSelectedDropdownOptionText {
     public static GetSelectedDropdownOptionText GetSelectedDropdownOptionText =
@@ -16,17 +16,11 @@ public class GetSelectedDropdownOptionText {
         }
     }
 
-    public String getSelectedDropdownOptionText(By dropdownBy, By... dropdownChildOptionBy) {
+    public String getSelectedDropdownOptionText(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
         return getSelectedDropdownOptionText(Find.find(dropdownBy), dropdownChildOptionBy);
     }
 
-    public String getSelectedDropdownOptionText(WebElement dropdownElement, By... dropdownChildOptionBy) {
-        assert dropdownChildOptionBy != null;
-        dropdownElement.click();
-        return "select".equalsIgnoreCase(dropdownElement.getTagName()) ?
-                new Select(dropdownElement).getFirstSelectedOption().getText() :
-                dropdownChildOptionBy.length == 0 ?
-                        dropdownElement.getText() :
-                        Find.find(dropdownElement, dropdownChildOptionBy[0]).getText();
+    public String getSelectedDropdownOptionText(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
+        return GetSelectedDropdownOption.getSelectedDropdownOption(dropdownElement, dropdownChildOptionBy).getText();
     }
 }

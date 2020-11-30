@@ -7,15 +7,13 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
-import java.io.IOException;
-
 public class WebDriverRunner {
     private volatile static WebDriverRunner webDriverRunner;
-    private WebDriverContainer webdriverContainer = new WebDriverThreadLocalContainer();
+    private final WebDriverContainer webdriverContainer = new WebDriverThreadLocalContainer();
 
 
     private WebDriverRunner() {
-        if(webDriverRunner != null){
+        if (webDriverRunner != null) {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
     }
@@ -32,9 +30,9 @@ public class WebDriverRunner {
     }
 
     /**
-     * Use this method BEFORE opening a browser to add custom event listeners to webdriver.
+     * Use this method BEFORE opening a browser to add custom event listeners to WebDriver.
      *
-     * @param listener your listener of webdriver events
+     * @param listener your listener of WebDriver events
      */
     public void addListener(WebDriverEventListener listener) {
         webdriverContainer.addListener(listener);

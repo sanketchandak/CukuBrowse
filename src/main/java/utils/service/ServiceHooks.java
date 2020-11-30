@@ -2,7 +2,6 @@ package utils.service;
 
 import core.browser.runner.BrowserType;
 import core.browser.runner.WebDriverRunner;
-//import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -76,8 +75,7 @@ public class ServiceHooks {
     public void tearDownBrowser() {
         if (scenario.isFailed()) {
             if (driver != null) {
-                //scenario.embed(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES), "image/png");
-                scenario.attach(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES), "image/png",this.scenario.getName());
+                scenario.attach(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES), "image/png", this.scenario.getName());
             }
         }
         webDriverRunner.closeWebDriver();
@@ -103,8 +101,10 @@ public class ServiceHooks {
         }
         assert prop != null;
         String eventHandlerNameWithDir = prop.getProperty("event.handler.classes");
-        for (String eventHandler : Arrays.stream(eventHandlerNameWithDir.split(",")).collect(Collectors.toSet())) {
-            webDriverRunner.addListener((WebDriverEventListener) Class.forName(eventHandler.trim()).getDeclaredConstructor().newInstance());
+        if (!eventHandlerNameWithDir.equals("")) {
+            for (String eventHandler : Arrays.stream(eventHandlerNameWithDir.split(",")).collect(Collectors.toSet())) {
+                webDriverRunner.addListener((WebDriverEventListener) Class.forName(eventHandler.trim()).getDeclaredConstructor().newInstance());
+            }
         }
     }
 }

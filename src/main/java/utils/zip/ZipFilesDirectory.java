@@ -44,7 +44,7 @@ public class ZipFilesDirectory {
 
     private enum FileDirType {
         FILE("FILE"), DIRECTORY("DIRECTORY");
-        private String type;
+        private final String type;
 
         public String getType() {
             return this.type;
@@ -260,10 +260,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Add Folders to Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Add Folders to Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Add Folders to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Folders to Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Folders to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -307,10 +307,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Add Files with Password Protection to Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Add Files with Password Protection to Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Add Files with Password Protection to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files with Password Protection to Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -434,7 +434,7 @@ public class ZipFilesDirectory {
         return addFilesToZip(Collections.singletonList(folderToZip));
     }
 
-    public boolean addFilesToZip(List<File> filessToZip) {
+    public boolean addFilesToZip(List<File> filesToZip) {
         if (zipFile == null) {
             logger.warn("Add Files to Zip: Updating zip file failed as zip file path is not assigned.");
             return false;
@@ -443,7 +443,7 @@ public class ZipFilesDirectory {
         try {
             ZipFile zip4JFile = new ZipFile(zipFile);
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
-            for (File fileToZip : filessToZip) {
+            for (File fileToZip : filesToZip) {
                 zip4JFile.addFolder(fileToZip);
             }
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -452,10 +452,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Add Files to Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Add Files to Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Add Files to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files to Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -499,10 +499,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Add Files with Password Protection to Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Add Files with Password Protection to Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Add Files with Password Protection to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files with Password Protection to Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -527,10 +527,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Remove Files & Folders in Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Remove Files & Folders in Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Remove Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Remove Files & Folders in Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Remove Files & Folders in Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -555,10 +555,10 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.ERROR)) {
                 logger.error("Rename Files & Folders in Zip: Error occurred while updating zip file at: " + zipFile.getPath());
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
-                logger.error("Rename Files & Folders in Zip: Zip updation cancelled at: " + zipFile.getPath());
+                logger.error("Rename Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Rename Files & Folders in Zip: Zip updation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Rename Files & Folders in Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }

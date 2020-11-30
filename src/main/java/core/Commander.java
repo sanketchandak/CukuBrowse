@@ -108,6 +108,10 @@ public class Commander {
         Frame.switchToFrameByNameOrId(frameNameOrId);
     }
 
+    public static void switchToFrameByFrameElement(CommanderElement frameElement){
+        Frame.switchToFrameByFrameElement(frameElement.getElement());
+    }
+
     /**
      * Switch to Main frame
      */
@@ -192,7 +196,7 @@ public class Commander {
      * Take the screenshot of current page and save to file fileName parameter
      *
      * @param fileName         Name of file (with extension) to save HTML and PNG to
-     * @param commanderElement to take sceenshot of specific element
+     * @param commanderElement to take screenshot of specific element
      * @return The name of resulting file
      */
     public static File screenshotElement(String fileName, CommanderElement commanderElement) {
@@ -232,7 +236,16 @@ public class Commander {
      * @return null if nothing selected
      */
     public static CommanderElement getSelectedRadio(By radioField) {
-        return new CommanderElement(RadioOrCheckbox.getSelectedRadio(radioField));
+        return new CommanderElement(RadioOrCheckbox.getSelectedRadioOrCheckbox(radioField));
+    }
+
+    /**
+     * Returns selected element in checkbox group
+     *
+     * @return null if nothing selected
+     */
+    public static CommanderElement getSelectedCheckbox(By radioField) {
+        return new CommanderElement(RadioOrCheckbox.getSelectedRadioOrCheckbox(radioField));
     }
 
     /**
@@ -241,7 +254,16 @@ public class Commander {
      * @return CommanderElements for all matching condition
      */
     public CommanderElements getSelectedRadios(By radioField) {
-        return new CommanderElements(RadioOrCheckbox.getSelectedRadios(radioField));
+        return new CommanderElements(RadioOrCheckbox.getSelectedRadiosOrCheckboxes(radioField));
+    }
+
+    /**
+     * Returns all selected element in Checkbox group
+     *
+     * @return CommanderElements for all matching condition
+     */
+    public CommanderElements getSelectedCheckboxes(By radioField) {
+        return new CommanderElements(RadioOrCheckbox.getSelectedRadiosOrCheckboxes(radioField));
     }
 
     /**
@@ -249,6 +271,13 @@ public class Commander {
      */
     public void selectRadioOrCheckbox(By elementBy, String... radioOrCheckboxText) {
         RadioOrCheckbox.selectRadioOrCheckbox(elementBy, radioOrCheckboxText);
+    }
+
+    /**
+     * Deselect checkbox optionally radio or checkbox Text
+     */
+    public void deselectCheckbox(By elementBy, String... checkboxText) {
+        RadioOrCheckbox.deselectCheckbox(elementBy, checkboxText);
     }
 
     /**

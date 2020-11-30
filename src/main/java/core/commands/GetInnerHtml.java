@@ -3,7 +3,7 @@ package core.commands;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static core.commands.Find.Find;
+import static core.commands.GetAttribute.GetAttribute;
 
 public class GetInnerHtml {
     public static GetInnerHtml GetInnerHtml =
@@ -16,10 +16,10 @@ public class GetInnerHtml {
     }
 
     public String getInnerHtml(By elementBy) {
-        return getInnerHtml(Find.find(elementBy));
+        return GetAttribute.getAttribute(elementBy,"innerHTML");
     }
 
     public String getInnerHtml(WebElement element) {
-        return element.getAttribute("innerHTML");
+        return GetAttribute.getAttribute(element, "innerHTML");
     }
 }

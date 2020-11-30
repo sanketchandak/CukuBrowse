@@ -52,9 +52,6 @@ public class Hover {
                 new Actions(driver).moveToElement(hoverElement).perform();
                 break;
             }
-            default: {
-                throw new IllegalArgumentException("Unknown Hover option: " + hoverType);
-            }
         }
     }
 

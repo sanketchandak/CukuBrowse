@@ -16,10 +16,10 @@ public class EdgeDriverManager implements DriverManager {
         try {
             WebDriverManager.edgedriver().setup();
             DesiredCapabilities capabilities = DesiredCapabilities.edge();
-            logger.info("Create Web Driver: Edge Driver created successfully.");
+            logger.info("Create WebDriver: Edge Driver created successfully.");
             new EdgeDriver(new EdgeOptions().merge(capabilities));
         } catch (Exception e) {
-            logger.error("Create Web Driver: Web Driver creation failed due to " + e.toString(), e);
+            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
             e.printStackTrace();
         }
         return null;

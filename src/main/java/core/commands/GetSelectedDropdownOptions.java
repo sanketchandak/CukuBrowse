@@ -20,17 +20,21 @@ public class GetSelectedDropdownOptions {
         }
     }
 
-    public List<WebElement> getSelectedDropdownOptions(By dropdownBy, By... dropdownChildOptionBy) {
+    public List<WebElement> getSelectedDropdownOptions(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
         return getSelectedDropdownOptions(Find.find(dropdownBy), dropdownChildOptionBy);
     }
 
-    public List<WebElement> getSelectedDropdownOptions(WebElement dropdownElement, By... dropdownChildOptionBy) {
+    public List<WebElement> getSelectedDropdownOptions(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
         assert dropdownChildOptionBy != null;
-        dropdownElement.click();
-        return "select".equalsIgnoreCase(dropdownElement.getTagName()) ?
-                new Select(dropdownElement).getAllSelectedOptions() :
-                dropdownChildOptionBy.length == 0 ?
-                        Collections.singletonList(dropdownElement) :
-                        FindAll.findAll(dropdownElement, dropdownChildOptionBy[0]);
+        if("select".equalsIgnoreCase(dropdownElement.getTagName())){
+            return new Select(dropdownElement).getAllSelectedOptions();
+        } else {
+            dropdownElement.click();
+            if(dropdownChildOptionBy.length == 0){
+                throw new Exception("Element is not having 'Select' tag. 'dropdownChildOptionBy' argument value is required.");
+            } else {
+                return FindAll.findAll(dropdownElement, dropdownChildOptionBy[0]);
+            }
+        }
     }
 }

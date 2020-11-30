@@ -19,11 +19,11 @@ public class GetSelectedDropdownAttribute {
         }
     }
 
-    public List<String> getSelectedDropdownAttribute(By dropdownBy, String attribute, By... dropdownChildOptionBy) {
+    public List<String> getSelectedDropdownAttribute(By dropdownBy, String attribute, By... dropdownChildOptionBy) throws Exception {
         return getSelectedDropdownAttribute(Find.find(dropdownBy), attribute, dropdownChildOptionBy);
     }
 
-    public List<String> getSelectedDropdownAttribute(WebElement dropdownElement, String attribute, By... dropdownChildOptionBy) {
+    public List<String> getSelectedDropdownAttribute(WebElement dropdownElement, String attribute, By... dropdownChildOptionBy) throws Exception {
         assert dropdownChildOptionBy != null;
         List<WebElement> elements = GetSelectedDropdownOptions.getSelectedDropdownOptions(dropdownElement, dropdownChildOptionBy);
         return elements.stream().map(element -> element.getAttribute(attribute)).collect(Collectors.toList());

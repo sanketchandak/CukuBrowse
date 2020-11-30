@@ -42,10 +42,10 @@ public class FirefoxDriverManager implements DriverManager {
             capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
             /* merge options and capability */
             options.merge(capabilities);
-            logger.info("Create Web Driver: Firefox Driver created successfully.");
+            logger.info("Create WebDriver: Firefox Driver created successfully.");
             return new FirefoxDriver(options);
         } catch (Exception e) {
-            logger.error("Create Web Driver: Web Driver creation failed due to " + e.toString(), e);
+            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
             e.printStackTrace();
         }
         return null;

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static core.commands.Find.Find;
+import static core.commands.GetAttribute.GetAttribute;
 
 public class GetInnerText {
     private WebDriver driver;
@@ -31,8 +32,8 @@ public class GetInnerText {
     public String getInnerText(WebElement element) {
         setDriverSession();
         if (((RemoteWebDriver) driver).getCapabilities().getBrowserName().equalsIgnoreCase(BrowserType.IE)) {
-            return element.getAttribute("innerText");
+            return GetAttribute.getAttribute(element,"innerText");
         }
-        return element.getAttribute("textContent");
+        return GetAttribute.getAttribute(element,"textContent");
     }
 }

@@ -22,6 +22,7 @@ import static core.commands.GetInnerText.GetInnerText;
 import static core.commands.GetLastChild.GetLastChild;
 import static core.commands.GetParent.GetParent;
 import static core.commands.GetPreceding.GetPreceding;
+import static core.commands.GetFollowing.GetFollowing;
 import static core.commands.GetSibling.GetSibling;
 import static core.commands.GetText.GetText;
 import static core.commands.Hover.Hover;
@@ -83,6 +84,11 @@ public class CommanderElement {
 
     public CommanderElement getPreceding(int siblingIndex) {
         setElement(GetPreceding.getPreceding(element, siblingIndex));
+        return this;
+    }
+
+    public CommanderElement getFollowing(int followingIndex) {
+        setElement(GetFollowing.getFollowing(element, followingIndex));
         return this;
     }
 
@@ -199,24 +205,24 @@ public class CommanderElement {
         DeselectOptionByTextOrIndex.deselectOptionsByTexts(element, texts);
     }
 
-    public List<String> getSelectedDropdownAttribute(String attribute, By... dropdownChildOptionBy) {
+    public List<String> getSelectedDropdownAttribute(String attribute, By... dropdownChildOptionBy) throws Exception {
         return GetSelectedDropdownAttribute.getSelectedDropdownAttribute(element, attribute, dropdownChildOptionBy);
     }
 
-    public CommanderElement getSelectedDropdownOption(By... dropdownChildOptionBy) {
+    public CommanderElement getSelectedDropdownOption(By... dropdownChildOptionBy) throws Exception {
         setElement(GetSelectedDropdownOption.getSelectedDropdownOption(element, dropdownChildOptionBy));
         return this;
     }
 
-    public CommanderElements getSelectedDropdownOptions(By... dropdownChildOptionBy) {
+    public CommanderElements getSelectedDropdownOptions(By... dropdownChildOptionBy) throws Exception {
         return new CommanderElements(GetSelectedDropdownOptions.getSelectedDropdownOptions(element, dropdownChildOptionBy));
     }
 
-    public List<String> getSelectedDropdownOptionsText(By... dropdownChildOptionBy) {
+    public List<String> getSelectedDropdownOptionsText(By... dropdownChildOptionBy) throws Exception {
         return GetSelectedDropdownOptionsText.getSelectedDropdownOptionsText(element, dropdownChildOptionBy);
     }
 
-    public String getSelectedDropdownOptionText(By... dropdownChildOptionBy) {
+    public String getSelectedDropdownOptionText(By... dropdownChildOptionBy) throws Exception {
         return GetSelectedDropdownOptionText.getSelectedDropdownOptionText(element, dropdownChildOptionBy);
     }
 

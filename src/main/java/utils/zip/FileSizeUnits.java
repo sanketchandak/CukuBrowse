@@ -6,7 +6,7 @@ public enum FileSizeUnits {
     MB(1048576),
     GB(1073741824);
 
-    private long unitSize;
+    private final long unitSize;
 
     FileSizeUnits(long unitSize) {
         this.unitSize = unitSize;

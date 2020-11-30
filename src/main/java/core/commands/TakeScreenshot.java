@@ -28,7 +28,7 @@ public class TakeScreenshot {
     public File takeScreenshotAsFile(String fileNameWithPath, WebElement... element) {
         try {
             File file = new File(fileNameWithPath);
-            FileUtils.copyFile(file, takeScreenshotAsFile(element));
+            FileUtils.copyFile(takeScreenshotAsFile(element), file);
             return file;
         } catch (IOException e) {
             e.printStackTrace();

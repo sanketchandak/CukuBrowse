@@ -36,16 +36,16 @@ public class CleanupDirectory {
                             return FileVisitResult.CONTINUE;
                         }
                     });
-                    logger.warn("Cleanup Report Directory: " + directoryPath + " cleaned up.");
+                    logger.warn("Clean up Report Directory: " + directoryPath + " cleaned up.");
                 } else {
-                    logger.warn("Cleanup Report Directory: " + directoryPath + " directory doesn't exist for clean up.");
+                    logger.warn("Clean up Report Directory: " + directoryPath + " directory doesn't exist for clean up.");
                     flag = Boolean.TRUE;
                 }
             } else if (cleanReportDirFlag.toUpperCase().trim().equals("FALSE")) {
                 logger.warn("Clean up Report Directory: Report clean up flag is set to FALSE.");
                 flag = Boolean.TRUE;
             } else {
-                logger.error("Cleanup Report Directory: 1st parameters is Expected to be Boolean (TRUE?FALSE) value. It is used to decide whether to clean report dir." +
+                logger.error("Clean up Report Directory: 1st parameters is Expected to be Boolean (TRUE?FALSE) value. It is used to decide whether to clean report dir." +
                         " Actual value is:" + cleanReportDirFlag);
                 flag = Boolean.FALSE;
             }

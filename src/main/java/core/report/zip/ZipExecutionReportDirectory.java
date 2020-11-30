@@ -21,7 +21,6 @@ public class ZipExecutionReportDirectory {
                 if (flag && zipFilesDirectory.getZipFile().length() / FileSizeUnits.MB.getUnitSize() > 10) {
                     zipFilesDirectory.deleteZipFile();
                     flag = zipFilesDirectory.createSplitZipOfFolder(args[0], 10, FileSizeUnits.MB);
-
                 }
                 if (flag) {
                     logger.info("Zip Report Directory: Zip created successfully of: " + args[0] + " at: " + args[1]);
