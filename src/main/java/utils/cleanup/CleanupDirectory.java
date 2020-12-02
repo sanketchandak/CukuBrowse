@@ -9,21 +9,21 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class CleanupDirectory {
     private static final Logger logger = LoggerFactory.getLogger(CleanupDirectory.class);
-    private final String cleanReportDirFlag;
-    private final String directoryPath;
+    private final String cleanReportDirOrFileFlag;
+    private final String directoryOrFilePath;
 
-    public CleanupDirectory(String cleanReportDirFlag, String directoryPath) {
-        this.cleanReportDirFlag = cleanReportDirFlag;
-        this.directoryPath = directoryPath;
+    public CleanupDirectory(String cleanReportDirOrFileFlag, String directoryOrFilePath) {
+        this.cleanReportDirOrFileFlag = cleanReportDirOrFileFlag;
+        this.directoryOrFilePath = directoryOrFilePath;
     }
 
-    public boolean cleanupDir() {
+    public boolean cleanupDirOrFile() {
         Boolean flag = Boolean.FALSE;
         try {
-            if (cleanReportDirFlag.toUpperCase().trim().equals("TRUE")) {
-                Path directory = Paths.get(directoryPath);
-                if (Files.isDirectory(directory)) {
-                    Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+            if (cleanReportDirOrFileFlag.toUpperCase().trim().equals("TRUE")) {
+                Path directoryOrFile = Paths.get(directoryOrFilePath);
+                if (Files.isDirectory(directoryOrFile)) {
+                    Files.walkFileTree(directoryOrFile, new SimpleFileVisitor<Path>() {
                         @Override
                         public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
                             Files.delete(file);
@@ -36,21 +36,60 @@ public class CleanupDirectory {
                             return FileVisitResult.CONTINUE;
                         }
                     });
-                    logger.warn("Clean up Report Directory: " + directoryPath + " cleaned up.");
+                    logger.warn("Clean up Directory: " + directoryOrFilePath + " cleaned up.");
                 } else {
-                    logger.warn("Clean up Report Directory: " + directoryPath + " directory doesn't exist for clean up.");
+                    Files.delete(directoryOrFile);
+                    logger.warn("Clean up File: " + directoryOrFilePath + " File deleted.");
                     flag = Boolean.TRUE;
                 }
-            } else if (cleanReportDirFlag.toUpperCase().trim().equals("FALSE")) {
-                logger.warn("Clean up Report Directory: Report clean up flag is set to FALSE.");
+            } else if (cleanReportDirOrFileFlag.toUpperCase().trim().equals("FALSE")) {
+                logger.warn("Clean up Directory: Directory or File clean up flag is set to FALSE.");
                 flag = Boolean.TRUE;
             } else {
-                logger.error("Clean up Report Directory: 1st parameters is Expected to be Boolean (TRUE?FALSE) value. It is used to decide whether to clean report dir." +
-                        " Actual value is:" + cleanReportDirFlag);
+                logger.error("Clean up Directory or File: 1st parameters is Expected to be Boolean (TRUE?FALSE) value. It is used to decide whether to clean dir or file." +
+                        " Actual value is:" + cleanReportDirOrFileFlag);
                 flag = Boolean.FALSE;
             }
         } catch (IOException e) {
-            logger.error("Clean up Report Directory: Cleaned up Failed - Exception: " + e.toString(), e);
+            logger.error("Clean up Directory Or File: Cleaned up Failed - Exception: " + e.toString(), e);
+        }
+        return flag;
+    }
+
+    public boolean cleanupFiles(int purgeDaysBack) {
+        Boolean flag = Boolean.FALSE;
+        try {
+            if (cleanReportDirOrFileFlag.toUpperCase().trim().equals("TRUE")) {
+                Path directoryOrFile = Paths.get(directoryOrFilePath);
+                long purgeTime = System.currentTimeMillis() - (purgeDaysBack * 24 * 60 * 60 * 1000);
+                if (Files.isDirectory(directoryOrFile)) {
+                    Files.walkFileTree(directoryOrFile, new SimpleFileVisitor<Path>() {
+                        @Override
+                        public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                            if(file.toFile().lastModified() < purgeTime) {
+                                Files.delete(file);
+                            }
+                            return FileVisitResult.CONTINUE;
+                        }
+                    });
+                    logger.warn("Clean up Directory: " + directoryOrFilePath + " cleaned up.");
+                } else {
+                    if(directoryOrFile.toFile().lastModified() < purgeTime) {
+                        Files.delete(directoryOrFile);
+                        logger.warn("Clean up File: " + directoryOrFilePath + " File deleted.");
+                        flag = Boolean.TRUE;
+                    }
+                }
+            } else if (cleanReportDirOrFileFlag.toUpperCase().trim().equals("FALSE")) {
+                logger.warn("Clean up Files: File clean up flag is set to FALSE.");
+                flag = Boolean.TRUE;
+            } else {
+                logger.error("Clean up Files: 1st parameters is Expected to be Boolean (TRUE?FALSE) value. It is used to decide whether to clean files." +
+                        " Actual value is:" + cleanReportDirOrFileFlag);
+                flag = Boolean.FALSE;
+            }
+        } catch (IOException e) {
+            logger.error("Clean up Files: Cleaned up Failed - Exception: " + e.toString(), e);
         }
         return flag;
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_FILE_INFO_PATH" value="build/logs/info"/>
-    <property name="LOG_FILE_ERROR_PATH" value="build/logs/error"/>
+    <property name="LOG_FILE_INFO_PATH" value="${log.file.info.path}"/>
+    <property name="LOG_FILE_ERROR_PATH" value="${log.file.error.path}"/>
 
     <logger name="org.apache" level="ERROR" />
     <logger name="httpclient" level="ERROR" />
@@ -21,11 +21,11 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_FILE_ERROR_PATH}/archived/app_error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
             <!-- each archived file, size max 30MB -->
-            <maxFileSize>30MB</maxFileSize>
+            <maxFileSize>${log.file.max.size}</maxFileSize>
             <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>600MB</totalSizeCap>
+            <totalSizeCap>${log.archive.files.size}</totalSizeCap>
             <!-- 60 days to keep -->
-            <maxHistory>60</maxHistory>
+            <maxHistory>${log.max.history.days}</maxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
@@ -41,11 +41,11 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_FILE_INFO_PATH}/archived/app_info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
             <!-- each archived file, size max 30MB -->
-            <maxFileSize>30MB</maxFileSize>
+            <maxFileSize>${log.file.max.size}</maxFileSize>
             <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
-            <totalSizeCap>600MB</totalSizeCap>
+            <totalSizeCap>${log.archive.files.size}</totalSizeCap>
             <!-- 60 days to keep -->
-            <maxHistory>60</maxHistory>
+            <maxHistory>${log.max.history.days}</maxHistory>
         </rollingPolicy>
 
         <encoder>
