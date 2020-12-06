@@ -93,7 +93,7 @@ public class ServiceHooks {
 
     private void setListeners() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Properties prop = null;
-        try (FileInputStream fis = new FileInputStream("configs/Configuration.properties")) {
+        try (FileInputStream fis = new FileInputStream("configs/configuration.properties")) {
             prop = new Properties();
             prop.load(fis);
         } catch (IOException fnfe) {

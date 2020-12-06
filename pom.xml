@@ -132,7 +132,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>configs/Configuration.properties</file>
+                                <file>configs/configuration.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -397,6 +397,10 @@
                         </goals>
                         <configuration>
                             <mainClass>core.report.cleanup.CleanupTempDirectory</mainClass>
+                            <arguments>
+                                <!-- BAT file for cleaning temp dir -->
+                                <argument>${cleanup.temp.directory.batfile.path}</argument>
+                            </arguments>
                         </configuration>
                     </execution>
 
@@ -469,6 +473,10 @@
                         </goals>
                         <configuration>
                             <mainClass>core.report.cleanup.CleanupTempDirectory</mainClass>
+                            <arguments>
+                                <!-- BAT file for cleaning temp dir -->
+                                <argument>${cleanup.temp.directory.batfile.path}</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
