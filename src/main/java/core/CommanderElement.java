@@ -22,7 +22,7 @@ import static core.commands.GetInnerText.GetInnerText;
 import static core.commands.GetLastChild.GetLastChild;
 import static core.commands.GetParent.GetParent;
 import static core.commands.GetPreceding.GetPreceding;
-import static core.commands.GetFollowing.GetFollowing;
+import static core.commands.GetAncestor.GetAncestor;
 import static core.commands.GetSibling.GetSibling;
 import static core.commands.GetText.GetText;
 import static core.commands.Hover.Hover;
@@ -87,8 +87,8 @@ public class CommanderElement {
         return this;
     }
 
-    public CommanderElement getFollowing(int followingIndex) {
-        setElement(GetFollowing.getFollowing(element, followingIndex));
+    public CommanderElement getAncestor(String ancestorPath) {
+        setElement(GetAncestor.getAncestor(element, ancestorPath));
         return this;
     }
 
@@ -157,7 +157,7 @@ public class CommanderElement {
         UploadFile.uploadFile(element, fileToUpload);
     }
 
-    public void dragAndDropTo(CommanderElement destinationCommanderElement) {
+    public void dragAndDropTo(@org.jetbrains.annotations.NotNull CommanderElement destinationCommanderElement) {
         DragAndDrop.dragAndDropTo(element, destinationCommanderElement.getElement());
     }
 
