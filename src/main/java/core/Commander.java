@@ -108,7 +108,7 @@ public class Commander {
         Frame.switchToFrameByNameOrId(frameNameOrId);
     }
 
-    public static void switchToFrameByFrameElement(CommanderElement frameElement){
+    public static void switchToFrameByFrameElement(CommanderElement frameElement) {
         Frame.switchToFrameByFrameElement(frameElement.getElement());
     }
 
@@ -408,5 +408,50 @@ public class Commander {
      */
     public static CommanderElements findAll(By parentBy, By targetElementBy) {
         return new CommanderElements(FindAll.findAll(parentBy, targetElementBy));
+    }
+
+    /**
+     * Wait on page.
+     *
+     * @param condition    is condition used to wait for specific element or page condition.
+     * @param safeWaitFlag is used to specify True or False value which is used to decide if exception should be thrown or not.
+     */
+    public static void waitUntil(Condition condition, boolean safeWaitFlag) throws Exception {
+        condition.verifyCondition(safeWaitFlag);
+    }
+
+    /**
+     * Wait on page.
+     *
+     * @param condition        is condition used to wait for specific element or page condition.
+     * @param timeOutInSeconds is used to specify max time out in seconds.
+     * @param safeWaitFlag     is used to specify True or False value which is used to decide if exception should be thrown or not.
+     * @param exceptionTypes   is used to specify '.class' exceptions class names to ignore it.
+     */
+    @SafeVarargs
+    public static void waitUntil(Condition condition, long timeOutInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) throws Exception {
+        if (exceptionTypes != null) {
+            condition.verifyCondition(timeOutInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
+        } else {
+            condition.verifyCondition(timeOutInSeconds, safeWaitFlag, null);
+        }
+    }
+
+    /**
+     * Wait on page.
+     *
+     * @param condition                is condition used to wait for specific element or page condition.
+     * @param timeOutInSeconds         is used to specify max time out in seconds.
+     * @param pollingIntervalInSeconds is used to specify polling interval in which condition should be check.
+     * @param safeWaitFlag             is used to specify True or False value which is used to decide if exception should be thrown or not.
+     * @param exceptionTypes           is used to specify '.class' exceptions class names to ignore it.
+     */
+    @SafeVarargs
+    public static void waitUntil(Condition condition, long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) throws Exception {
+        if (exceptionTypes != null) {
+            condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
+        } else {
+            condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, null);
+        }
     }
 }
