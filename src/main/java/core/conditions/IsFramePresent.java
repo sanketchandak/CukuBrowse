@@ -7,28 +7,31 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class ContainsCaseInsensitiveAttribute extends Condition {
+public class IsFramePresent extends Condition {
     WebDriver driver;
     private WebDriverWait wait;
-    private By elementBy = null;
-    private WebElement element = null;
-    private final String attributeName;
-    private final String attributeValue;
+    private String frameLocator = null;
+    private By locator = null;
+    private int framePosition = -1;
+    private WebElement frameElement = null;
 
-    public ContainsCaseInsensitiveAttribute(By elementBy, String attributeName, String attributeValue) {
-        this.elementBy = elementBy;
-        this.attributeName = attributeName;
-        this.attributeValue = attributeValue;
+    public IsFramePresent(String frameLocator) {
+        this.frameLocator = frameLocator;
     }
 
-    public ContainsCaseInsensitiveAttribute(WebElement element, String attributeName, String attributeValue) {
-        this.element = element;
-        this.attributeName = attributeName;
-        this.attributeValue = attributeValue;
+    public IsFramePresent(By locator) {
+        this.locator = locator;
+    }
+
+    public IsFramePresent(int frameLocator) {
+        this.framePosition = frameLocator;
+    }
+
+    public IsFramePresent(WebElement frameLocator) {
+        this.frameElement = frameLocator;
     }
 
     public boolean verifyCondition(boolean safeWaitFlag) {
@@ -59,29 +62,34 @@ public class ContainsCaseInsensitiveAttribute extends Condition {
     }
 
     private boolean checkCondition() {
-        AtomicReference<String> uiAttributeValue = new AtomicReference<>();
         try {
-            return wait.until(d -> {
+            WebDriver tempDriver = wait.until(d -> {
                         try {
-                            WebElement element;
-                            if (elementBy != null) {
-                                element = d.findElement(elementBy);
+                            if (frameLocator != null) {
+                                return d.switchTo().frame(frameLocator);
+                            } else if (framePosition != -1) {
+                                return d.switchTo().frame(framePosition);
+                            } else if (locator != null) {
+                                return d.switchTo().frame(d.findElement(locator));
                             } else {
-                                element = this.element;
+                                return d.switchTo().frame(frameElement);
                             }
-                            uiAttributeValue.set(element.getAttribute(attributeName));
-                            if (uiAttributeValue.get() == null || uiAttributeValue.get().isEmpty()) {
-                                uiAttributeValue.set(element.getCssValue(attributeName));
-                            }
-                            return uiAttributeValue.get().toLowerCase().contains(attributeValue.toLowerCase());
-                        } catch (StaleElementReferenceException e) {
+                        } catch (NoSuchFrameException e) {
                             return null;
                         }
                     }
             );
+            return tempDriver != null ? Boolean.TRUE : Boolean.FALSE;
         } catch (TimeoutException timeoutException) {
-            throw new TimeoutException(String.format(attributeName + " to be \"%s\". Current " + attributeName + ": \"%s\"", attributeValue, uiAttributeValue.get()),
-                    timeoutException);
+            if (frameLocator != null) {
+                throw new TimeoutException("frame to be available: " + frameLocator, timeoutException);
+            } else if (framePosition != -1) {
+                throw new TimeoutException("frame to be available: " + framePosition, timeoutException);
+            } else if (locator != null) {
+                throw new TimeoutException("frame to be available: " + locator, timeoutException);
+            } else {
+                throw new TimeoutException("frame to be available: " + frameElement, timeoutException);
+            }
         }
     }
 }

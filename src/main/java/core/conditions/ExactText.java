@@ -2,14 +2,12 @@ package core.conditions;
 
 import core.Condition;
 import core.browser.runner.WebDriverRunner;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -58,20 +56,26 @@ public class ExactText extends Condition {
     }
 
     private boolean checkCondition(){
-        return wait.until(d -> {
-                    try {
-                        WebElement element;
-                        if (elementBy != null) {
-                            element = d.findElement(elementBy);
-                        } else {
-                            element = this.element;
+        AtomicReference<String> uiElementText = new AtomicReference<>();
+        try {
+            return wait.until(d -> {
+                        try {
+                            WebElement element;
+                            if (elementBy != null) {
+                                element = d.findElement(elementBy);
+                            } else {
+                                element = this.element;
+                            }
+                            uiElementText.set(element.getText());
+                            return uiElementText.get().equals(elementText);
+                        } catch (StaleElementReferenceException e) {
+                            return null;
                         }
-                        String uiElementText = element.getText();
-                        return uiElementText.equals(elementText);
-                    } catch (StaleElementReferenceException e) {
-                        return null;
                     }
-                }
-        );
+            );
+        } catch (TimeoutException timeoutException) {
+            throw new TimeoutException(String.format("Exact text '%s' to be present in element '%s'. Actual text is '%s'.", elementText, elementBy != null ? elementBy : element.toString(), uiElementText.get()),
+                    timeoutException);
+        }
     }
 }

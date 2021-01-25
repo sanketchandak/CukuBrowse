@@ -415,9 +415,10 @@ public class Commander {
      *
      * @param condition    is condition used to wait for specific element or page condition.
      * @param safeWaitFlag is used to specify True or False value which is used to decide if exception should be thrown or not.
+     * @return boolean value as per condition
      */
-    public static void waitUntil(Condition condition, boolean safeWaitFlag) throws Exception {
-        condition.verifyCondition(safeWaitFlag);
+    public static boolean waitUntil(Condition condition, boolean safeWaitFlag) {
+        return condition.verifyCondition(safeWaitFlag);
     }
 
     /**
@@ -427,13 +428,14 @@ public class Commander {
      * @param timeOutInSeconds is used to specify max time out in seconds.
      * @param safeWaitFlag     is used to specify True or False value which is used to decide if exception should be thrown or not.
      * @param exceptionTypes   is used to specify '.class' exceptions class names to ignore it.
+     * @return boolean value as per condition
      */
     @SafeVarargs
-    public static void waitUntil(Condition condition, long timeOutInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) throws Exception {
+    public static boolean waitUntil(Condition condition, long timeOutInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) {
         if (exceptionTypes != null) {
-            condition.verifyCondition(timeOutInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
+            return condition.verifyCondition(timeOutInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
         } else {
-            condition.verifyCondition(timeOutInSeconds, safeWaitFlag, null);
+            return condition.verifyCondition(timeOutInSeconds, safeWaitFlag, null);
         }
     }
 
@@ -445,13 +447,14 @@ public class Commander {
      * @param pollingIntervalInSeconds is used to specify polling interval in which condition should be check.
      * @param safeWaitFlag             is used to specify True or False value which is used to decide if exception should be thrown or not.
      * @param exceptionTypes           is used to specify '.class' exceptions class names to ignore it.
+     * @return boolean value as per condition
      */
     @SafeVarargs
-    public static void waitUntil(Condition condition, long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) throws Exception {
+    public static boolean waitUntil(Condition condition, long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, Class<? extends Throwable>... exceptionTypes) {
         if (exceptionTypes != null) {
-            condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
+            return condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, Arrays.asList(exceptionTypes));
         } else {
-            condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, null);
+            return condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, null);
         }
     }
 }

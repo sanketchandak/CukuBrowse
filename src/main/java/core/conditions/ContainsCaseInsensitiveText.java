@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -27,16 +28,16 @@ public class ContainsCaseInsensitiveText extends Condition {
         this.elementText = elementText;
     }
 
-    public boolean verifyCondition(boolean safeWaitFlag) throws Exception {
+    public boolean verifyCondition(boolean safeWaitFlag) {
         return verifyCondition(60, safeWaitFlag, null);
     }
 
-    public boolean verifyCondition(long timeOutInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) throws Exception {
+    public boolean verifyCondition(long timeOutInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) {
         setDriverWaitSession(timeOutInSeconds, safeWaitFlag, exceptionTypes);
         return checkCondition();
     }
 
-    public boolean verifyCondition(long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) throws Exception {
+    public boolean verifyCondition(long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) {
         setDriverWaitSession(timeOutInSeconds, safeWaitFlag, exceptionTypes);
         wait.pollingEvery(Duration.ofMillis(SECONDS.toMillis(pollingIntervalInSeconds)));
         return checkCondition();
@@ -54,8 +55,8 @@ public class ContainsCaseInsensitiveText extends Condition {
         }
     }
 
-    private boolean checkCondition() throws Exception {
-        //return String.format("text ('%s') to be present in element %s", text, element);
+    private boolean checkCondition() {
+        AtomicReference<String> uiElementText = new AtomicReference<>();
         try {
             return wait.until(d -> {
                         try {
@@ -65,15 +66,15 @@ public class ContainsCaseInsensitiveText extends Condition {
                             } else {
                                 element = this.element;
                             }
-                            String uiElementText = element.getText();
-                            return uiElementText.toLowerCase().contains(elementText.toLowerCase());
+                            uiElementText.set(element.getText());
+                            return uiElementText.get().toLowerCase().contains(elementText.toLowerCase());
                         } catch (StaleElementReferenceException e) {
                             return null;
                         }
                     }
             );
         } catch (TimeoutException timeoutException) {
-            throw new Exception(String.format("text ('%s') to be present in element %s", elementText, elementBy != null ? elementBy : element.toString()),
+            throw new TimeoutException(String.format("Insensitive text '%s' to be present in element '%s'. Actual text is '%s'.", elementText, elementBy != null ? elementBy : element.toString(), uiElementText.get()),
                     timeoutException);
         }
     }

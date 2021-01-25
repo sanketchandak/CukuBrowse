@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class Condition {
 
-    public abstract boolean verifyCondition(boolean safeWaitFlag) throws Exception;
+    public abstract boolean verifyCondition(boolean safeWaitFlag);
 
-    public abstract boolean verifyCondition(long timeOutInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) throws Exception;
+    public abstract boolean verifyCondition(long timeOutInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes);
 
-    public abstract boolean verifyCondition(long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) throws Exception;
+    public abstract boolean verifyCondition(long timeOutInSeconds, long pollingIntervalInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes);
 
     public static Condition clickable(By elementBy) {
         return new Clickable(elementBy);
@@ -90,35 +90,67 @@ public abstract class Condition {
         return new ContainsCaseInsensitiveText(element, elementText);
     }
 
-    public static Condition containsCaseSensitiveText(By elementBy, String elementText)  {
+    public static Condition containsCaseSensitiveText(By elementBy, String elementText) {
         return new ContainsCaseSensitiveText(elementBy, elementText);
     }
 
-    public static Condition containsCaseSensitiveText(WebElement element, String elementText)  {
+    public static Condition containsCaseSensitiveText(WebElement element, String elementText) {
         return new ContainsCaseSensitiveText(element, elementText);
     }
 
-    public static Condition notContainsText(By elementBy, String elementText)  {
+    public static Condition notContainsText(By elementBy, String elementText) {
         return new NotContainsText(elementBy, elementText);
     }
 
-    public static Condition notContainsText(WebElement element, String elementText)  {
+    public static Condition notContainsText(WebElement element, String elementText) {
         return new NotContainsText(element, elementText);
     }
 
-    public static Condition titleContains(String title)  {
+    public static Condition titleContains(String title) {
         return new TitleContains(title);
     }
 
-    public static Condition titleIs(String title)  {
+    public static Condition titleIs(String title) {
         return new TitleIs(title);
     }
 
-    public static Condition urlContains(String url)  {
+    public static Condition urlContains(String url) {
         return new UrlContains(url);
     }
 
-    public static Condition urlIs(String url)  {
+    public static Condition urlIs(String url) {
         return new UrlIs(url);
+    }
+
+    public static Condition AlertPresence() {
+        return new AlertPresence();
+    }
+
+    public static Condition CountOfElementsLessThan(By elementBy, int elementCount) {
+        return new CountOfElementsLessThan(elementBy, elementCount);
+    }
+
+    public static Condition CountOfElementsMoreThan(By elementBy, int elementCount) {
+        return new CountOfElementsMoreThan(elementBy, elementCount);
+    }
+
+    public static Condition ExactCountOfElements(By elementBy, int elementCount) {
+        return new ExactCountOfElements(elementBy, elementCount);
+    }
+
+    public static Condition IsFramePresent(String frameLocator) {
+        return new IsFramePresent(frameLocator);
+    }
+
+    public static Condition IsFramePresent(By locator) {
+        return new IsFramePresent(locator);
+    }
+
+    public static Condition IsFramePresent(int frameLocator) {
+        return new IsFramePresent(frameLocator);
+    }
+
+    public static Condition IsFramePresent(WebElement frameLocator) {
+        return new IsFramePresent(frameLocator);
     }
 }
