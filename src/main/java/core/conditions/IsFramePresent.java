@@ -26,8 +26,8 @@ public class IsFramePresent extends Condition {
         this.locator = locator;
     }
 
-    public IsFramePresent(int frameLocator) {
-        this.framePosition = frameLocator;
+    public IsFramePresent(int frameNumber) {
+        this.framePosition = frameNumber;
     }
 
     public IsFramePresent(WebElement frameLocator) {
