@@ -12,7 +12,6 @@ import java.util.Map;
 import static core.commands.Clear.Clear;
 import static core.commands.Click.Click;
 import static core.commands.DragAndDrop.DragAndDrop;
-import static core.commands.Exists.Exists;
 import static core.commands.Find.Find;
 import static core.commands.FindAll.FindAll;
 import static core.commands.GetAttribute.GetAttribute;
@@ -92,8 +91,13 @@ public class CommanderElement {
         return this;
     }
 
-    public CommanderElement getSibling(int siblingIndex) {
-        setElement(GetSibling.getSibling(element, siblingIndex));
+    public CommanderElement getFollowingSibling(int siblingIndex) {
+        setElement(GetSibling.getFollowingSibling(element, siblingIndex));
+        return this;
+    }
+
+    public CommanderElement getPrecedingSibling(int siblingIndex) {
+        setElement(GetSibling.getPrecedingSibling(element, siblingIndex));
         return this;
     }
 
@@ -165,10 +169,6 @@ public class CommanderElement {
         DragAndDrop.dragAndDropTo(element, xOffset, yOffset);
     }
 
-    public boolean exists() {
-        return Exists.exists(element);
-    }
-
     public String getAttribute(String attribute) {
         return GetAttribute.getAttribute(element, attribute);
     }
@@ -234,8 +234,8 @@ public class CommanderElement {
         SelectOptionByTextOrIndex.selectOptionsByTexts(element, texts, elementDropdownOptionsBy);
     }
 
-    public void selectOptionsByTexts(String text, By... elementDropdownOptionsBy) throws Exception {
-        SelectOptionContainingText.selectOptionsByTexts(element, text, elementDropdownOptionsBy);
+    public void selectOptionsContainingTexts(String text, By... elementDropdownOptionsBy) throws Exception {
+        SelectOptionContainingText.selectOptionsContainingTexts(element, text, elementDropdownOptionsBy);
     }
 
 }

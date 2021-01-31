@@ -20,6 +20,7 @@ public class DragAndDrop {
     private DragAndDrop() {
         find = Find;
         if (DragAndDrop != null) {
+            logger.error("Use DragAndDrop variable to get the single instance of this class.");
             throw new RuntimeException("Use DragAndDrop variable to get the single instance of this class.");
         }
     }
@@ -30,6 +31,7 @@ public class DragAndDrop {
 
     public void dragAndDropTo(By sourceElementBy, By destinationElementBy) {
         dragAndDropTo(find.find(sourceElementBy), find.find(destinationElementBy));
+        logger.info("Drag And Drop: Drag And Drop From: " + sourceElementBy.toString() + " To: " + destinationElementBy.toString());
     }
 
     public void dragAndDropTo(WebElement sourceElement, WebElement destinationElement) {
@@ -40,6 +42,7 @@ public class DragAndDrop {
 
     public void dragAndDropTo(By sourceElementBy, int xOffset, int yOffset) {
         dragAndDropTo(find.find(sourceElementBy), xOffset, yOffset);
+        logger.info("Drag And Drop: Drag And Drop From: " + sourceElementBy.toString() + " To X-Offset: " + xOffset + " And Y-Offset: " + yOffset);
     }
 
     public void dragAndDropTo(WebElement sourceElement, int xOffset, int yOffset) {

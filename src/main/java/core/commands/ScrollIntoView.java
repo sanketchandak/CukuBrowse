@@ -2,26 +2,32 @@ package core.commands;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static core.commands.Find.Find;
 import static core.commands.ExecuteJavascript.ExecuteJavascript;
 
 public class ScrollIntoView {
+    private static final Logger logger = LoggerFactory.getLogger(ScrollIntoView.class);
     public static ScrollIntoView ScrollIntoView =
             ThreadLocal.withInitial(ScrollIntoView::new).get();
 
     private ScrollIntoView() {
         if (ScrollIntoView != null) {
+            logger.error("Use ScrollIntoView variable to get the single instance of this class.");
             throw new RuntimeException("Use ScrollIntoView variable to get the single instance of this class.");
         }
     }
 
     public void scrollIntoView(By elementBy) {
         scrollIntoView(Find.find(elementBy));
+        logger.info(String.format("Scroll Into View: scroll to '%s' element.", elementBy.toString()));
     }
 
     public void scrollIntoView(WebElement element) {
         //JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver();
         ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", element);
+        logger.info(String.format("Scroll Into View: scroll to '%s' element.", element.toString()));
     }
 }

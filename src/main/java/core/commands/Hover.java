@@ -5,17 +5,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static core.commands.Find.Find;
 import static core.commands.ExecuteJavascript.ExecuteJavascript;
 
 public class Hover {
+    private static final Logger logger = LoggerFactory.getLogger(Hover.class);
     private WebDriver driver;
     public static Hover Hover =
             ThreadLocal.withInitial(Hover::new).get();
 
     private Hover() {
         if (Hover != null) {
+            logger.error("Use Hover variable to get the single instance of this class.");
             throw new RuntimeException("Use Hover variable to get the single instance of this class.");
         }
     }
@@ -26,6 +30,7 @@ public class Hover {
 
     public void hover(By hoverElementBy, HoverType hoverType) {
         hover(Find.find(hoverElementBy), hoverType);
+        logger.info(String.format("Mouse Hover: mouse hover on '%s' element with '%s'", hoverElementBy.toString(), hoverType.toString()));
     }
 
     public void hover(WebElement hoverElement, HoverType hoverType) {
@@ -53,6 +58,7 @@ public class Hover {
                 break;
             }
         }
+        logger.info(String.format("Mouse Hover: mouse hover on '%s' element with '%s'", hoverElement.toString(), hoverType.toString()));
     }
 
 }

@@ -19,6 +19,7 @@ public class Click {
 
     private Click() {
         if (Click != null) {
+            logger.error("Use Click variable to get the single instance of this class.");
             throw new RuntimeException("Use Click variable to get the single instance of this class.");
         }
     }
@@ -29,6 +30,7 @@ public class Click {
 
     public void clickOn(By elementIdentifierBy, ClickType clickType) {
         clickOn(Find.find(elementIdentifierBy), clickType);
+        logger.info("Click On: " + clickType.name() + " on " + elementIdentifierBy.toString());
     }
 
     public void clickOn(WebElement element, ClickType clickType) {
