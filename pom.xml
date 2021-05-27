@@ -184,6 +184,7 @@
                             <glue>
                                 <package>stepDefinition</package>
                                 <package>utils/service</package>
+                                <package>glue</package>
                             </glue>
                             <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
                             <featuresDirectory>src/test/resources/features/parallelScenario</featuresDirectory>
@@ -228,6 +229,7 @@
                             <glue>
                                 <package>stepDefinition</package>
                                 <package>utils/service</package>
+                                <package>glue</package>
                             </glue>
                             <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
                             <featuresDirectory>src/test/resources/features/parallelFeatures</featuresDirectory>
@@ -272,6 +274,7 @@
                             <glue>
                                 <package>stepDefinition</package>
                                 <package>utils/service</package>
+                                <package>glue</package>
                             </glue>
                             <!-- The directory, which must be in the root of the runtime classpath, containing your feature files.  -->
                             <featuresDirectory>src/test/resources/features/sequential</featuresDirectory>
@@ -543,6 +546,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>12</source>
+                    <target>12</target>
+                </configuration>
             </plugin>
 
         </plugins>

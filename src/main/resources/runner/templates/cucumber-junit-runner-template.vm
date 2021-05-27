@@ -3,7 +3,7 @@
 package $packageName;
 
 #end
-import core.browser.runner.WebDriverRunner;
+import core.web.browser.runner.WebDriverRunner;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;

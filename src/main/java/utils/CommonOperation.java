@@ -1,10 +1,10 @@
 package utils;
 
-import core.CommanderElement;
+import core.web.CommanderElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import static core.Commander.*;
+import static core.web.Commander.*;
 
 public class CommonOperation {
 
