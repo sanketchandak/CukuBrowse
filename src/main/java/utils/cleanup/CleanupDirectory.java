@@ -51,7 +51,7 @@ public class CleanupDirectory {
                 flag = Boolean.FALSE;
             }
         } catch (IOException e) {
-            logger.error("Clean up Directory Or File: Cleaned up Failed - Exception: " + e.toString(), e);
+            logger.error("Clean up Directory Or File: Cleaned up Failed - Exception: " + e.getMessage(), e);
         }
         return flag;
     }
@@ -61,7 +61,7 @@ public class CleanupDirectory {
         try {
             if (cleanReportDirOrFileFlag.toUpperCase().trim().equals("TRUE")) {
                 Path directoryOrFile = Paths.get(directoryOrFilePath);
-                long purgeTime = System.currentTimeMillis() - (purgeDaysBack * 24 * 60 * 60 * 1000);
+                long purgeTime = System.currentTimeMillis() - ((long) purgeDaysBack * 24 * 60 * 60 * 1000);
                 if (Files.isDirectory(directoryOrFile)) {
                     Files.walkFileTree(directoryOrFile, new SimpleFileVisitor<Path>() {
                         @Override
@@ -89,7 +89,7 @@ public class CleanupDirectory {
                 flag = Boolean.FALSE;
             }
         } catch (IOException e) {
-            logger.error("Clean up Files: Cleaned up Failed - Exception: " + e.toString(), e);
+            logger.error("Clean up Files: Cleaned up Failed - Exception: " + e.getMessage(), e);
         }
         return flag;
     }

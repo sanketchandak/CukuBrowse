@@ -62,7 +62,7 @@ public class ZipFilesDirectory {
         try {
             return zipFile.isFile();
         } catch (SecurityException | NullPointerException e) {
-            logger.error("Is Zip File Exist: Check if zip file exist. " + e.toString(), e);
+            logger.error("Is Zip File Exist: Check if zip file exist. " + e.getMessage(), e);
         }
         return false;
     }
@@ -91,7 +91,7 @@ public class ZipFilesDirectory {
                 logger.warn("Delete Zip File: Zip File doesn't exist to delete. Provided path: " + zipFile.getPath());
             }
         } catch (SecurityException | NullPointerException | ZipException e) {
-            logger.error("Delete Zip File: Delete zip file at: " + zipFile.getPath() + ". " + e.toString(), e);
+            logger.error("Delete Zip File: Delete zip file at: " + zipFile.getPath() + ". " + e.getMessage(), e);
         }
         return flag;
     }
@@ -126,7 +126,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Zip of Folders: Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Zip of Folders: Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Zip of Folders: Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
             e.printStackTrace();
         }
         return flag;
@@ -156,7 +156,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Split Zip of Folder: Split Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Split Zip of Folder: Split Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Split Zip of Folder: Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -188,7 +188,7 @@ public class ZipFilesDirectory {
                 }
             }
         } catch (ZipException e) {
-            logger.error("Merge Split Zip: Split Zip merging failed due to: " + e.toString() + " at:" + outputZipFile.getPath() + ".", e);
+            logger.error("Merge Split Zip: Split Zip merging failed due to: " + e.getMessage() + " at:" + outputZipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -229,7 +229,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Split Zip of Folder with Password Protection: Password Protection Split Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Split Zip of Folder with Password Protection: Password Protection Split Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Split Zip of Folder with Password Protection: Password Protection Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -263,7 +263,7 @@ public class ZipFilesDirectory {
                 logger.error("Add Folders to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Folders to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Folders to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -310,7 +310,7 @@ public class ZipFilesDirectory {
                 logger.error("Add Files with Password Protection to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -343,7 +343,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Zip of Files: Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Zip of Files: Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Zip of Files: Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -376,7 +376,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Split Zip of Files: Split Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Split Zip of Files: Split Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Split Zip of Files: Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -421,7 +421,7 @@ public class ZipFilesDirectory {
                 logger.error("Create Split Zip of Files with Password Protection: Password Protection Split Zip creation cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Create Split Zip of Files with Password Protection: Password Protection Split Zip creation failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Create Split Zip of Files with Password Protection: Password Protection Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -455,7 +455,7 @@ public class ZipFilesDirectory {
                 logger.error("Add Files to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -502,7 +502,7 @@ public class ZipFilesDirectory {
                 logger.error("Add Files with Password Protection to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -530,7 +530,7 @@ public class ZipFilesDirectory {
                 logger.error("Remove Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Remove Files & Folders in Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Remove Files & Folders in Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -558,7 +558,7 @@ public class ZipFilesDirectory {
                 logger.error("Rename Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
         } catch (ZipException e) {
-            logger.error("Rename Files & Folders in Zip: Zip file updating process failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Rename Files & Folders in Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
     }
@@ -582,7 +582,7 @@ public class ZipFilesDirectory {
                 logger.error("Get Files & Folders names in Zip: Fetching zip file 'file & Folders' names process cancelled.");
             }
         } catch (ZipException e) {
-            logger.error("Get Files & Folders names in Zip: Fetching zip file 'file & Folders' names failed due to: " + e.toString() + " at:" + zipFile.getPath() + ".", e);
+            logger.error("Get Files & Folders names in Zip: Fetching zip file 'file & Folders' names failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return fileNames;
     }
@@ -606,7 +606,7 @@ public class ZipFilesDirectory {
                 logger.error("Extract Zip: Zip extraction cancelled at: " + extractDestinationPath);
             }
         } catch (ZipException e) {
-            logger.error("Extract Zip: Zip extraction failed due to: " + e.toString() + " at:" + extractDestinationPath + ".", e);
+            logger.error("Extract Zip: Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
     }
@@ -635,7 +635,7 @@ public class ZipFilesDirectory {
                 logger.error("Extract Password Protected Zip: Password Protected Zip extraction cancelled at: " + extractDestinationPath);
             }
         } catch (ZipException e) {
-            logger.error("Extract Password Protected Zip: Password Protected Zip extraction failed due to: " + e.toString() + " at:" + extractDestinationPath + ".", e);
+            logger.error("Extract Password Protected Zip: Password Protected Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
     }
@@ -667,7 +667,7 @@ public class ZipFilesDirectory {
                 logger.error("Extract File Or Folder in Zip: Zip extraction cancelled at: " + extractDestinationPath);
             }
         } catch (ZipException e) {
-            logger.error("Extract File Or Folder in Zip: Zip extraction failed due to: " + e.toString() + " at:" + extractDestinationPath + ".", e);
+            logger.error("Extract File Or Folder in Zip: Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
     }
@@ -696,7 +696,7 @@ public class ZipFilesDirectory {
                 logger.error("Extract Password Protected File Or Folder Zip: Password Protected Zip extraction cancelled at: " + extractDestinationPath);
             }
         } catch (ZipException e) {
-            logger.error("Extract Password Protected File Or Folder Zip: Password Protected Zip extraction failed due to: " + e.toString() + " at:" + extractDestinationPath + ".", e);
+            logger.error("Extract Password Protected File Or Folder Zip: Password Protected Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
     }
