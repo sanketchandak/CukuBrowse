@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -17,7 +18,7 @@ public class Exists {
         find = Find;
         if (Exists != null) {
             logger.error("Use Exists variable to get the single instance of this class.");
-            throw new RuntimeException("Use Exists variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use Exists variable to get the single instance of this class.");
         }
     }
 

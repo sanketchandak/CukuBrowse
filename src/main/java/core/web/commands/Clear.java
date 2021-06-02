@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -17,7 +18,7 @@ public class Clear {
         find = Find;
         if (Clear != null) {
             logger.error("Use Clear variable to get the single instance of this class.");
-            throw new RuntimeException("Use Clear variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use Clear variable to get the single instance of this class.");
         }
     }
 

@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -20,11 +21,11 @@ public class GetSelectedDropdownOptionText {
     private GetSelectedDropdownOptionText() {
         if (GetSelectedDropdownOptionText != null) {
             logger.error("Use GetSelectedDropdownOptionText variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetSelectedDropdownOptionText variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetSelectedDropdownOptionText variable to get the single instance of this class.");
         }
     }
 
-    public String getSelectedDropdownOptionText(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
+    public String getSelectedDropdownOptionText(By dropdownBy, By... dropdownChildOptionBy) {
         String selectedDropdownOptionText = getSelectedDropdownOptionText(Find.find(dropdownBy), dropdownChildOptionBy);
         logger.info(String.format("Get Selected Dropdown Option Text: '%s' dropdown having child options: '%s' having text as '%s'",
                 dropdownBy.toString(),
@@ -34,7 +35,7 @@ public class GetSelectedDropdownOptionText {
         return selectedDropdownOptionText;
     }
 
-    public String getSelectedDropdownOptionText(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
+    public String getSelectedDropdownOptionText(WebElement dropdownElement, By... dropdownChildOptionBy) {
         String selectedDropdownOptionText = GetSelectedDropdownOption.getSelectedDropdownOption(dropdownElement, dropdownChildOptionBy).getText();
         logger.info(String.format("Get Selected Dropdown Option Text: '%s' dropdown having child options: '%s' having text as '%s'",
                 GetInnerHtml.getInnerHtml(dropdownElement),

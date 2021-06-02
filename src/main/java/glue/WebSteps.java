@@ -78,6 +78,18 @@ public class WebSteps {
         getWeb().elements_should_contain_text(elementBy, expectedText, not == null);
     }
 
+    @When("^I press enter on element (.+)$")
+    public void when_I_press_enter_on_element(String elementName) {
+        By elementBy = getWeb().normalize_element(elementName);
+        getWeb().I_press_enter_on_element(elementBy);
+    }
+
+    @When("^I press tab on element (.+)$")
+    public void when_I_press_tab_on_element(String elementName) {
+        By elementBy = getWeb().normalize_element(elementName);
+        getWeb().I_press_tab_on_element(elementBy);
+    }
+
     @When("^I (click|JS click|JS double click|JS right click|right click|double click) on element (.+)$")
     public void when_I_click_on_element(String clickOption, String elementName) {
         By elementBy = getWeb().normalize_element(elementName);
@@ -243,8 +255,8 @@ public class WebSteps {
     }
 
     @And("^I close current browser windows$")
-    public void and_I_close_current_browser_windows() {
-        getWeb().I_close_current_browser_windows();
+    public void and_I_close_current_browser_window() {
+        getWeb().I_close_current_browser_window();
     }
 
     @Then("^I wait for (\\d+) (minutes|seconds|milliseconds)$")
@@ -273,6 +285,39 @@ public class WebSteps {
     public void then_element_should_be_displayed(String displayElementName, String not) {
         By displayElementBy = getWeb().normalize_element(displayElementName);
         getWeb().element_should_be_displayed(displayElementBy, not == null);
+    }
+
+    @Then("^I wait (\\d+) (minutes|seconds|milliseconds) with polling interval of (\\d+) (minutes|seconds|milliseconds) for element (.+) text( not)? to be (.+)$")
+    public void then_element_text_should_be_with_polling(long maxTimeInterval, String max_TimeUnit, long pollingTimeInterval, String polling_TimeUnit, String textElementName, String not, String expectedText) {
+        By textElementBy = getWeb().normalize_element(textElementName);
+        TimeUnit maxTimeUnit, pollingTimeUnit;
+        switch (max_TimeUnit.trim().toUpperCase()) {
+            case "SECONDS":
+                maxTimeUnit = TimeUnit.SECONDS;
+                break;
+            case "MILLISECONDS":
+                maxTimeUnit = TimeUnit.MILLISECONDS;
+                break;
+            case "MINUTES":
+                maxTimeUnit = TimeUnit.MINUTES;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + max_TimeUnit.trim().toUpperCase());
+        }
+        switch (polling_TimeUnit.trim().toUpperCase()) {
+            case "SECONDS":
+                pollingTimeUnit = TimeUnit.SECONDS;
+                break;
+            case "MILLISECONDS":
+                pollingTimeUnit = TimeUnit.MILLISECONDS;
+                break;
+            case "MINUTES":
+                pollingTimeUnit = TimeUnit.MINUTES;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + polling_TimeUnit.trim().toUpperCase());
+        }
+        getWeb().element_text_should_be_with_polling(textElementBy, expectedText, not == null, maxTimeInterval, maxTimeUnit, pollingTimeInterval, pollingTimeUnit);
     }
 
     @Then("^I wait (\\d+) (minutes|seconds|milliseconds) with polling interval of (\\d+) (minutes|seconds|milliseconds) for element (.+) to( not)? display$")
@@ -363,5 +408,17 @@ public class WebSteps {
     public void and_attribute_of_element_should_be(String attributeName, String selectorName, String not, String expectedAttributeValue) {
         By selectorElementBy = getWeb().normalize_element(selectorName);
         getWeb().attribute_of_element_should_be(selectorElementBy, attributeName, expectedAttributeValue, not == null);
+    }
+
+    @Then("^I select and upload (.+) file under element (.+)$")
+    public void and_I_select_and_upload_file_under_element(String targetFilePath, String uploadSelectorName) {
+        By uploadSelectorElementBy = getWeb().normalize_element(uploadSelectorName);
+        getWeb().I_select_and_upload_file_under_element(uploadSelectorElementBy, targetFilePath);
+    }
+
+    @Then("^I copy text (.+) in browser clipboard and paste it in element (.+)$")
+    public void and_I_copy_in_browser_clipboard_and_paste_it_in_element(String clipboardText, String sendTextElement) {
+        By sendTextElementBy = getWeb().normalize_element(sendTextElement);
+        getWeb().I_copy_in_browser_clipboard_and_paste_it_in_element(clipboardText, sendTextElementBy);
     }
 }

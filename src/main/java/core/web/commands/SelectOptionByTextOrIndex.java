@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public class SelectOptionByTextOrIndex {
     private SelectOptionByTextOrIndex() {
         if (SelectOptionByTextOrIndex != null) {
             logger.error("Use SelectOptionByTextOrIndex variable to get the single instance of this class.");
-            throw new RuntimeException("Use SelectOptionByTextOrIndex variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use SelectOptionByTextOrIndex variable to get the single instance of this class.");
         }
     }
 
@@ -59,7 +60,7 @@ public class SelectOptionByTextOrIndex {
             dropdownElement.click();
             if (elementDropdownOptionsBy.length == 0) {
                 logger.error("Select Options By Indexes: 1 Child element 'By' is required.");
-                throw new ArrayIndexOutOfBoundsException("1 Child element 'By' is required.");
+                throw new CukeBrowseException("1 Child element 'By' is required.");
             }
             List<WebElement> options = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
             for (int index : indexes) {
@@ -70,13 +71,13 @@ public class SelectOptionByTextOrIndex {
                     }
                 } catch (IndexOutOfBoundsException e) {
                     logger.error("Select Options By Indexes: Dropdown option with index:" + index + " is not present for: " + Arrays.toString(elementDropdownOptionsBy));
-                    throw new NoSuchElementException("Dropdown option with index:" + index + " is not present for: " + Arrays.toString(elementDropdownOptionsBy));
+                    throw new CukeBrowseException("Dropdown option with index:" + index + " is not present for: " + Arrays.toString(elementDropdownOptionsBy));
                 }
             }
         }
     }
 
-    public void selectOptionsByTexts(By dropdownBy, String[] texts, By... elementDropdownOptionsBy) throws Exception {
+    public void selectOptionsByTexts(By dropdownBy, String[] texts, By... elementDropdownOptionsBy) {
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown having text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
                 dropdownBy.toString(),
@@ -85,7 +86,7 @@ public class SelectOptionByTextOrIndex {
         selectOptionsByTexts(Find.find(dropdownBy), texts, elementDropdownOptionsBy);
     }
 
-    public void selectOptionsByTexts(WebElement dropdownElement, String[] texts, By... elementDropdownOptionsBy) throws Exception {
+    public void selectOptionsByTexts(WebElement dropdownElement, String[] texts, By... elementDropdownOptionsBy) {
         assert elementDropdownOptionsBy != null;
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown having text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
@@ -108,7 +109,7 @@ public class SelectOptionByTextOrIndex {
             }
             List<WebElement> allOptions = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
             if (allOptions.isEmpty()) {
-                throw new Exception("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
+                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
             }
             Map<String, WebElement> elements = allOptions.stream().collect(Collectors.toMap(WebElement::getText, element -> element));
             for (String text : texts) {

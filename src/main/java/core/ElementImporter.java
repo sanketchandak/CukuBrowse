@@ -5,9 +5,11 @@ import com.google.common.collect.TreeBasedTable;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 import utils.Helper;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ public class ElementImporter {
     private ElementImporter() {
         if (ElementImporter != null) {
             logger.error("Use ElementImporter variable to get the single instance of this class.");
-            throw new RuntimeException("Use ElementImporter variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use ElementImporter variable to get the single instance of this class.");
         }
     }
 
@@ -38,7 +40,9 @@ public class ElementImporter {
                         try {
                             importElementsFromDictionary(fileToImport);
                             importedFiles.put(fileToImport.toURI().toURL().toString(), true);
-                        } catch (Exception ignore) {
+                        } catch (IOException e) {
+                            logger.error("Convert URI to URL: URL is not absolute. ",e);
+                            throw new CukeBrowseException("Convert URI to URL: URL is not absolute. ",e);
                         }
                     }
                 }
@@ -74,19 +78,23 @@ public class ElementImporter {
         if (idsElementsData.containsKey("partialLinkText")) {
             return By.partialLinkText(idsElementsData.get("partialLinkText"));
         }
-        throw new IllegalArgumentException("Invalid identifier present for '"+elementName+"'. " +
+        logger.error("Invalid identifier present for '" + elementName + "'. " +
                 "Valid identifiers are id, css, cssSelector, xpath, className, tagName, name, linkText and partialLinkText. " +
-                "Actual identifiers is/are: "+elementsTable);
+                "Actual identifiers is/are: " + elementsTable);
+        throw new CukeBrowseException("Invalid identifier present for '" + elementName + "'. " +
+                "Valid identifiers are id, css, cssSelector, xpath, className, tagName, name, linkText and partialLinkText. " +
+                "Actual identifiers is/are: " + elementsTable);
     }
 
     boolean hasBeenImported(File fileToImport) {
-        boolean isFileAlreadyImported = false;
+        boolean isFileAlreadyImported;
         try {
             isFileAlreadyImported = importedFiles.containsKey(fileToImport.toURI().toURL().toString());
             return isFileAlreadyImported;
-        } catch (Exception ignore) {
+        } catch (IOException e) {
+            logger.error("Convert URI to URL: URL is not absolute. ",e);
+            throw new CukeBrowseException("Convert URI to URL: URL is not absolute. ",e);
         }
-        return isFileAlreadyImported;
     }
 
     void importElementsFromDictionary(File fileToImport) {
@@ -96,8 +104,13 @@ public class ElementImporter {
                     map(String::trim).
                     filter(line -> !(line.startsWith("#") || line.equals(""))).
                     map(line -> line.split("\\|")).
-                    forEach(line -> elementsTable.put(line[1].trim(), line[2].replaceAll("[\\s\\n\\r]*","").trim(), line[3].trim()));
-        } catch (Exception ignore) {
+                    forEach(line -> elementsTable.put(line[1].trim(), line[2].replaceAll("[\\s\\n\\r]*", "").trim(), line[3].trim()));
+        } catch (IOException e) {
+            /*Scenario scenario = ServiceHooks.getCurrentScenario();
+            scenario.log(e +Arrays.toString(e.getStackTrace()));
+            scenario.attach(Arrays.toString(e.getStackTrace()), "txt", "Exception Details");*/
+            logger.error("Import Elements From Dictionary: Import Elements From Dictionary failed", e);
+            throw new CukeBrowseException("Import Elements From Dictionary: Import Elements From Dictionary failed", e);
         }
     }
 }

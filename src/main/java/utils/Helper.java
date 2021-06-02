@@ -1,5 +1,7 @@
 package utils;
 
+import org.openqa.selenium.InvalidArgumentException;
+
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
@@ -7,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Helper {
 
@@ -57,5 +60,26 @@ public class Helper {
 
     public static String getTimestamp(){
         return Thread.currentThread().getId()+new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss").format(new Date());
+    }
+
+    public static long convertTimeInSeconds(long duration, TimeUnit currentTimeUnit){
+        switch (currentTimeUnit) {
+            case DAYS:
+                return TimeUnit.DAYS.toSeconds(duration);
+            case HOURS:
+                return TimeUnit.HOURS.toSeconds(duration);
+            case MINUTES:
+                return TimeUnit.MINUTES.toSeconds(duration);
+            case SECONDS:
+                return duration;
+            case MILLISECONDS:
+                return TimeUnit.MILLISECONDS.toSeconds(duration);
+            case MICROSECONDS:
+                return TimeUnit.MICROSECONDS.toSeconds(duration);
+            case NANOSECONDS:
+                return TimeUnit.NANOSECONDS.toSeconds(duration);
+            default:
+                throw new InvalidArgumentException("Invalid time unit parameter used as:"+currentTimeUnit);
+        }
     }
 }

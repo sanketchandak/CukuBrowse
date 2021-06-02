@@ -2,6 +2,7 @@ package core.report.zip;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 import utils.zip.FileSizeUnits;
 import utils.zip.ZipFilesDirectory;
 
@@ -32,8 +33,8 @@ public class ZipExecutionReportDirectory {
                         "1st is path of report dir to zip & 2nd is path to store zip file with name.");
             }
         } catch (Exception e) {
-            logger.error("Zip Report Directory: Zipping Failed - Exception: " + e.toString());
-            e.printStackTrace();
+            logger.error("Zip Report Directory: Zipping Failed - Exception Details: " + e);
+            throw new CukeBrowseException("Zip Report Directory: Zipping Failed - Exception Details:", e);
         }
     }
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 
@@ -22,7 +23,7 @@ public class DeselectOptionByTextOrIndex {
         find = Find;
         if (DeselectOptionByTextOrIndex != null) {
             logger.error("Use DeselectOptionByTextOrIndex variable to get the single instance of this class.");
-            throw new RuntimeException("Use DeselectOptionByTextOrIndex variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use DeselectOptionByTextOrIndex variable to get the single instance of this class.");
         }
     }
 
@@ -38,8 +39,8 @@ public class DeselectOptionByTextOrIndex {
                 try {
                     select.deselectByIndex(index);
                 } catch (NoSuchElementException e) {
-                    logger.error(String.format("Deselect Options By Indexes: /option[index:%s] is not present", index));
-                    throw new NoSuchElementException("Deselect Options By Indexes: /option[index:" + index + "] is not present");
+                    logger.error(String.format("Deselect Options By Indexes: /option[index:%s] is not present. ", index), e);
+                    throw new CukeBrowseException("Deselect Options By Indexes: /option[index:" + index + "] is not present. ", e);
                 }
             }
             if (!Thread.currentThread().getStackTrace()[2].getMethodName().equalsIgnoreCase("deselectOptionsByIndexes")) {
@@ -47,7 +48,7 @@ public class DeselectOptionByTextOrIndex {
             }
         } else {
             logger.error(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new NoSuchElementException(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
         }
     }
 
@@ -63,14 +64,14 @@ public class DeselectOptionByTextOrIndex {
                 try {
                     select.deselectByVisibleText(text);
                 } catch (NoSuchElementException e) {
-                    logger.error(String.format("Deselect Options By Texts: /option[index:%s] is not present", text));
-                    throw new NoSuchElementException("Deselect Options By Texts: /option[text:" + text + "] is not present");
+                    logger.error(String.format("Deselect Options By Texts: /option[index:%s] is not present. ", text), e);
+                    throw new CukeBrowseException("Deselect Options By Texts: /option[text:" + text + "] is not present. ", e);
                 }
             }
             logger.info(String.format("Deselect Options By Texts: Deselect Options in dropdown '%s' by indexes: '%s' ", GetInnerHtml.getInnerHtml(selectDropdownElement), Arrays.toString(texts)));
         } else {
             logger.error(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new NoSuchElementException(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
         }
     }
 }

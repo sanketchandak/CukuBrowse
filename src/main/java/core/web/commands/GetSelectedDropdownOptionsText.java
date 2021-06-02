@@ -30,7 +30,7 @@ public class GetSelectedDropdownOptionsText {
         return getSelectedDropdownOptionsText(Find.find(dropdownBy), dropdownChildOptionBy);
     }
 
-    public List<String> getSelectedDropdownOptionsText(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
+    public List<String> getSelectedDropdownOptionsText(WebElement dropdownElement, By... dropdownChildOptionBy) {
         logger.info(String.format("Get Selected Dropdown Options Text: Get selected options text of '%s' dropdown having option: '%s'", GetInnerHtml.getInnerHtml(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
         List<WebElement> selectedOptions = GetSelectedDropdownOptions.getSelectedDropdownOptions(dropdownElement, dropdownChildOptionBy);
         return selectedOptions.stream().map(WebElement::getText).collect(Collectors.toList());

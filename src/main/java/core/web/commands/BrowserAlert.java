@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class BrowserAlert {
     private static final Logger logger = LoggerFactory.getLogger(BrowserAlert.class);
@@ -16,7 +17,7 @@ public class BrowserAlert {
     private BrowserAlert() {
         if (BrowserAlert != null) {
             logger.error("Use BrowserAlert variable to get the single instance of this class.");
-            throw new RuntimeException("Use BrowserAlert variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use BrowserAlert variable to get the single instance of this class.");
         }
     }
 
@@ -32,12 +33,12 @@ public class BrowserAlert {
         return alertMsg;
     }
 
-    public String acceptAlert(String expectedDialogText) throws Exception {
+    public String acceptAlert(String expectedDialogText) {
         if (getAlertMessage().equalsIgnoreCase(expectedDialogText.trim())) {
             return acceptAlert();
         } else {
             logger.error(String.format("Accept Alert: Alert with text '%s' is not present to accept.", expectedDialogText));
-            throw new Exception(String.format("Accept Alert: Alert with text '%s' is not present to accept.", expectedDialogText));
+            throw new CukeBrowseException(String.format("Accept Alert: Alert with text '%s' is not present to accept.", expectedDialogText));
         }
     }
 
@@ -49,12 +50,12 @@ public class BrowserAlert {
         return alertMsg;
     }
 
-    public String dismissAlert(String expectedDialogText) throws Exception {
+    public String dismissAlert(String expectedDialogText) {
         if (getAlertMessage().equalsIgnoreCase(expectedDialogText.trim())) {
             return dismissAlert();
         } else {
             logger.error(String.format("Dismiss Alert: Alert with text '%s' is not present to dismiss.", expectedDialogText));
-            throw new Exception(String.format("Dismiss Alert: Alert with text '%s' is not present to dismiss.", expectedDialogText));
+            throw new CukeBrowseException(String.format("Dismiss Alert: Alert with text '%s' is not present to dismiss.", expectedDialogText));
         }
     }
 
