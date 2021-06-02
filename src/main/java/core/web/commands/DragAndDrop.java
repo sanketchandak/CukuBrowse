@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -21,7 +22,7 @@ public class DragAndDrop {
         find = Find;
         if (DragAndDrop != null) {
             logger.error("Use DragAndDrop variable to get the single instance of this class.");
-            throw new RuntimeException("Use DragAndDrop variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use DragAndDrop variable to get the single instance of this class.");
         }
     }
 

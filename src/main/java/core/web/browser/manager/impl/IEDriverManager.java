@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class IEDriverManager implements DriverManager {
     private static final Logger logger = LoggerFactory.getLogger(IEDriverManager.class);
@@ -37,8 +38,8 @@ public class IEDriverManager implements DriverManager {
             logger.info("Create WebDriver: Internet Explorer Driver created successfully.");
             new InternetExplorerDriver(options);
         } catch (Exception e) {
-            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
-            e.printStackTrace();
+            logger.error("Create WebDriver: Internet Explorer Driver creation failed due to Exception: " + e);
+            throw new CukeBrowseException("Create WebDriver: Internet Explorer Driver creation failed due to Exception:", e);
         }
         return null;
     }

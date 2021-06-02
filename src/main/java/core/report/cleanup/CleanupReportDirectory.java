@@ -21,7 +21,7 @@ public class CleanupReportDirectory {
                         "1st is path to report dir for zip.");
             }
         } catch (Exception e) {
-            logger.error("Clean up Report Directory: Cleaned up Failed - Exception: " + e.toString());
+            logger.error("Clean up Report Directory: Cleaned up Failed - Exception: " + e);
             e.printStackTrace();
         }
     }

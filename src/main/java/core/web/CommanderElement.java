@@ -206,24 +206,24 @@ public class CommanderElement {
         DeselectOptionByTextOrIndex.deselectOptionsByTexts(element, texts);
     }
 
-    public List<String> getSelectedDropdownAttribute(String attribute, By... dropdownChildOptionBy) throws Exception {
+    public List<String> getSelectedDropdownAttribute(String attribute, By... dropdownChildOptionBy) {
         return GetSelectedDropdownAttribute.getSelectedDropdownAttribute(element, attribute, dropdownChildOptionBy);
     }
 
-    public CommanderElement getSelectedDropdownOption(By... dropdownChildOptionBy) throws Exception {
+    public CommanderElement getSelectedDropdownOption(By... dropdownChildOptionBy) {
         setElement(GetSelectedDropdownOption.getSelectedDropdownOption(element, dropdownChildOptionBy));
         return this;
     }
 
-    public CommanderElements getSelectedDropdownOptions(By... dropdownChildOptionBy) throws Exception {
+    public CommanderElements getSelectedDropdownOptions(By... dropdownChildOptionBy) {
         return new CommanderElements(GetSelectedDropdownOptions.getSelectedDropdownOptions(element, dropdownChildOptionBy));
     }
 
-    public List<String> getSelectedDropdownOptionsText(By... dropdownChildOptionBy) throws Exception {
+    public List<String> getSelectedDropdownOptionsText(By... dropdownChildOptionBy) {
         return GetSelectedDropdownOptionsText.getSelectedDropdownOptionsText(element, dropdownChildOptionBy);
     }
 
-    public String getSelectedDropdownOptionText(By... dropdownChildOptionBy) throws Exception {
+    public String getSelectedDropdownOptionText(By... dropdownChildOptionBy) {
         return GetSelectedDropdownOptionText.getSelectedDropdownOptionText(element, dropdownChildOptionBy);
     }
 
@@ -231,11 +231,11 @@ public class CommanderElement {
         SelectOptionByTextOrIndex.selectOptionsByIndexes(element, indexes, elementDropdownOptionsBy);
     }
 
-    public void selectDropdownOptionsByTexts(String[] texts, By... elementDropdownOptionsBy) throws Exception {
+    public void selectDropdownOptionsByTexts(String[] texts, By... elementDropdownOptionsBy) {
         SelectOptionByTextOrIndex.selectOptionsByTexts(element, texts, elementDropdownOptionsBy);
     }
 
-    public void selectOptionsContainingTexts(String text, By... elementDropdownOptionsBy) throws Exception {
+    public void selectOptionsContainingTexts(String text, By... elementDropdownOptionsBy) {
         SelectOptionContainingText.selectOptionsContainingTexts(element, text, elementDropdownOptionsBy);
     }
 }

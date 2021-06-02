@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 import static core.web.commands.ExecuteJavascript.ExecuteJavascript;
@@ -16,7 +17,7 @@ public class IsImage {
     private IsImage() {
         if (IsImage != null) {
             logger.error("Use IsImage variable to get the single instance of this class.");
-            throw new RuntimeException("Use IsImage variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use IsImage variable to get the single instance of this class.");
         }
     }
 
@@ -29,7 +30,7 @@ public class IsImage {
     public boolean isImage(WebElement element) {
         if (!"img".equalsIgnoreCase(element.getTagName())) {
             logger.error("Is Image: Method isImage() is only applicable for img elements");
-            throw new IllegalArgumentException("Method isImage() is only applicable for img elements");
+            throw new CukeBrowseException("Method isImage() is only applicable for img elements");
         }
         /*JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver();*/
         ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", element);

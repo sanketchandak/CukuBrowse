@@ -30,7 +30,7 @@ public class CleanupTempDirectory {
                         "1st is path to BAT file which will cleanup temp dir.");
             }
         } catch (Exception e) {
-            logger.error("Clean up 'Temp' Directory: Cleaned up Failed - Exception: " + e.toString());
+            logger.error("Clean up 'Temp' Directory: Cleaned up Failed - Exception: " + e);
             e.printStackTrace();
         }
     }

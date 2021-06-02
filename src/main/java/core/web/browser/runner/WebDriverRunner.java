@@ -6,6 +6,7 @@ import core.web.browser.manager.impl.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import utils.CukeBrowseException;
 
 public class WebDriverRunner {
     private volatile static WebDriverRunner webDriverRunner;
@@ -14,7 +15,7 @@ public class WebDriverRunner {
 
     private WebDriverRunner() {
         if (webDriverRunner != null) {
-            throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
+            throw new CukeBrowseException("Use getInstance() method to get the single instance of this class.");
         }
     }
 
@@ -69,7 +70,7 @@ public class WebDriverRunner {
                 break;
             }
             default: {
-                throw new IllegalArgumentException("Unknown Browser Type: " + browserType);
+                throw new CukeBrowseException("Unknown Browser Type: " + browserType);
             }
         }
         return webdriverContainer.setWebDriver(driverManager.createDriver());

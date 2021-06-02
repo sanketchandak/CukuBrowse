@@ -1,11 +1,11 @@
 package core.web.commands;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 import static core.web.commands.GetInnerHtml.GetInnerHtml;
@@ -20,7 +20,7 @@ public class DeselectAllOptions {
         find = Find;
         if (DeselectAllOptions != null) {
             logger.error("Use DeselectAllOptions variable to get the single instance of this class.");
-            throw new RuntimeException("Use DeselectAllOptions variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use DeselectAllOptions variable to get the single instance of this class.");
         }
     }
 
@@ -36,7 +36,7 @@ public class DeselectAllOptions {
             logger.info(String.format("Deselect All Options: Deselect All Options in dropdown: '%s' ", GetInnerHtml.getInnerHtml(selectDropdownElement)));
         } else {
             logger.error(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new NoSuchElementException(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
         }
     }
 

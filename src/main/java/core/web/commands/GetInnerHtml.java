@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.GetAttribute.GetAttribute;
 
@@ -15,7 +16,7 @@ public class GetInnerHtml {
     private GetInnerHtml() {
         if (GetInnerHtml != null) {
             logger.error("Use GetInnerHtml variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetInnerHtml variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetInnerHtml variable to get the single instance of this class.");
         }
     }
 

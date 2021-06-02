@@ -25,7 +25,7 @@ public class GetSelectedDropdownAttribute {
         }
     }
 
-    public List<String> getSelectedDropdownAttribute(By dropdownBy, String attribute, By... dropdownChildOptionBy) throws Exception {
+    public List<String> getSelectedDropdownAttribute(By dropdownBy, String attribute, By... dropdownChildOptionBy) {
         List<String> selectedDropdownAttribute = getSelectedDropdownAttribute(Find.find(dropdownBy), attribute, dropdownChildOptionBy);
         logger.info(String.format("Get Selected Dropdown Attribute: '%s' attribute of '%s' dropdown having child options: '%s' having attributes as '%s'",
                 attribute,
@@ -36,7 +36,7 @@ public class GetSelectedDropdownAttribute {
         return selectedDropdownAttribute;
     }
 
-    public List<String> getSelectedDropdownAttribute(WebElement dropdownElement, String attribute, By... dropdownChildOptionBy) throws Exception {
+    public List<String> getSelectedDropdownAttribute(WebElement dropdownElement, String attribute, By... dropdownChildOptionBy) {
         assert dropdownChildOptionBy != null;
         List<WebElement> elements = GetSelectedDropdownOptions.getSelectedDropdownOptions(dropdownElement, dropdownChildOptionBy);
         List<String> selectedDropdownAttribute = elements.stream().map(element -> element.getAttribute(attribute)).collect(Collectors.toList());

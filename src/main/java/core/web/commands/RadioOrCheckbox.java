@@ -3,6 +3,7 @@ package core.web.commands;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class RadioOrCheckbox {
     private RadioOrCheckbox() {
         if (RadioOrCheckbox != null) {
             logger.error("Use RadioOrCheckbox variable to get the single instance of this class.");
-            throw new RuntimeException("Use RadioOrCheckbox variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use RadioOrCheckbox variable to get the single instance of this class.");
         }
     }
 
@@ -50,7 +51,7 @@ public class RadioOrCheckbox {
         List<WebElement> radioOrCheckboxElements = FindAll.findAll(elementBy);
         if (radioOrCheckboxElements.isEmpty()) {
             logger.error("Cannot locate radio button or checkbox containing text: " + Arrays.toString(radioOrCheckboxText) + " for:" + elementBy.toString());
-            throw new NoSuchElementException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(radioOrCheckboxText) + " for:" + elementBy.toString());
+            throw new CukeBrowseException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(radioOrCheckboxText) + " for:" + elementBy.toString());
         }
         if (radioOrCheckboxText.length == 0) {
             logger.info("Select Radio Or Checkbox: select all enabled radio or checkbox");
@@ -61,7 +62,7 @@ public class RadioOrCheckbox {
         for (WebElement filteredRadioOrCheckboxElement : filteredRadioOrCheckboxElements) {
             if (!filteredRadioOrCheckboxElement.isEnabled()) {
                 logger.error("Cannot select readonly radio button or checkbox");
-                throw new InvalidElementStateException("Cannot select readonly radio button or checkbox");
+                throw new CukeBrowseException("Cannot select readonly radio button or checkbox");
             }
             if (!filteredRadioOrCheckboxElement.isSelected()) {
                 Click.clickOn(filteredRadioOrCheckboxElement, ClickType.JSClick);
@@ -76,7 +77,7 @@ public class RadioOrCheckbox {
         List<WebElement> checkboxElements = FindAll.findAll(elementBy);
         if (checkboxElements.isEmpty()) {
             logger.error("Deselect Checkbox: Cannot locate radio button or checkbox containing text: " + Arrays.toString(checkboxText) + " for:" + elementBy);
-            throw new NoSuchElementException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(checkboxText) + " for:" + elementBy);
+            throw new CukeBrowseException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(checkboxText) + " for:" + elementBy);
         }
         if (checkboxText.length == 0) {
             logger.info("Deselect Checkbox: deselect all enabled and selected checkbox");
@@ -87,7 +88,7 @@ public class RadioOrCheckbox {
         for (WebElement filteredCheckboxElement : filteredCheckboxElements) {
             if (!filteredCheckboxElement.isEnabled()) {
                 logger.error("Deselect Checkbox: Cannot deselect readonly checkbox button");
-                throw new InvalidElementStateException("Cannot deselect readonly checkbox button");
+                throw new CukeBrowseException("Cannot deselect readonly checkbox button");
             }
             if (!filteredCheckboxElement.isSelected()) {
                 Click.clickOn(filteredCheckboxElement, ClickType.JSClick);

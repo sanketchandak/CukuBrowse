@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class FindAll {
     private FindAll() {
         if (FindAll != null) {
             logger.error("Use FindAll variable to get the single instance of this class.");
-            throw new RuntimeException("Use FindAll variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use FindAll variable to get the single instance of this class.");
         }
     }
 

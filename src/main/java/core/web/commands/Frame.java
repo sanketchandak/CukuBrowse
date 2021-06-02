@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class Frame {
     private static final Logger logger = LoggerFactory.getLogger(Frame.class);
@@ -15,7 +16,7 @@ public class Frame {
     private Frame() {
         if (Frame != null) {
             logger.error("Use Frame variable to get the single instance of this class.");
-            throw new RuntimeException("Use Frame variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use Frame variable to get the single instance of this class.");
         }
     }
 

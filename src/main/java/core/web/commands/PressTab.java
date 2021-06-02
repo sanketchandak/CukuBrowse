@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -16,7 +17,7 @@ public class PressTab {
     private PressTab() {
         if (PressTab != null) {
             logger.error("Use PressTap variable to get the single instance of this class.");
-            throw new RuntimeException("Use PressTap variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use PressTap variable to get the single instance of this class.");
         }
     }
 

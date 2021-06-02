@@ -1,12 +1,12 @@
 package core.web.commands;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Quotes;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +25,11 @@ public class SelectOptionContainingText {
     private SelectOptionContainingText() {
         if (SelectOptionContainingText != null) {
             logger.error("Use SelectOptionContainingText variable to get the single instance of this class.");
-            throw new RuntimeException("Use SelectOptionContainingText variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use SelectOptionContainingText variable to get the single instance of this class.");
         }
     }
 
-    public void selectOptionsContainingTexts(By dropdownBy, String text, By... elementDropdownOptionsBy) throws Exception {
+    public void selectOptionsContainingTexts(By dropdownBy, String text, By... elementDropdownOptionsBy) {
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown containing text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
                 dropdownBy.toString(),
@@ -38,7 +38,7 @@ public class SelectOptionContainingText {
         selectOptionsContainingTexts(Find.find(dropdownBy), text, elementDropdownOptionsBy);
     }
 
-    public void selectOptionsContainingTexts(WebElement dropdownElement, String text, By... elementDropdownOptionsBy) throws Exception {
+    public void selectOptionsContainingTexts(WebElement dropdownElement, String text, By... elementDropdownOptionsBy) {
         assert elementDropdownOptionsBy != null;
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown containing text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
@@ -50,7 +50,7 @@ public class SelectOptionContainingText {
             List<WebElement> options = dropdownElement.findElements(By.xpath(".//option[contains(normalize-space(.), " + Quotes.escape(text) + ")]"));
             if (options.isEmpty()) {
                 logger.error("Select Options By Texts: Cannot locate option containing text: " + text);
-                throw new NoSuchElementException("Cannot locate option containing text: " + text);
+                throw new CukeBrowseException("Cannot locate option containing text: " + text);
             }
             for (WebElement option : options) {
                 if (!option.isSelected()) {
@@ -64,12 +64,12 @@ public class SelectOptionContainingText {
             dropdownElement.click();
             if (elementDropdownOptionsBy.length == 0) {
                 logger.error("Select Options By Texts: 1 Child element 'By' is required.");
-                throw new ArrayIndexOutOfBoundsException("1 Child element 'By' is required.");
+                throw new CukeBrowseException("1 Child element 'By' is required.");
             }
             List<WebElement> allOptions = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
             if (allOptions.isEmpty()) {
                 logger.error("Select Options By Texts: Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
-                throw new Exception("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
+                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
             }
             List<WebElement> elements = allOptions.stream()
                     .filter(element -> element.getText().contains(text.trim()))
@@ -77,7 +77,7 @@ public class SelectOptionContainingText {
 
             if (elements.isEmpty()) {
                 logger.error("Select Options By Texts: Cannot locate option containing text: " + text);
-                throw new NoSuchElementException("Cannot locate option containing text: " + text);
+                throw new CukeBrowseException("Cannot locate option containing text: " + text);
             }
 
             for (WebElement element : elements) {

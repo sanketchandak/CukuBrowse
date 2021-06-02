@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -16,7 +17,7 @@ public class PressEscape {
     private PressEscape() {
         if (PressEscape != null) {
             logger.error("Use PressEscape variable to get the single instance of this class.");
-            throw new RuntimeException("Use PressEscape variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use PressEscape variable to get the single instance of this class.");
         }
     }
 

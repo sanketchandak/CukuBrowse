@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class GetAttribute {
     private GetAttribute() {
         if (GetAttribute != null) {
             logger.error("Use GetAttribute variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetAttribute variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetAttribute variable to get the single instance of this class.");
         }
     }
 

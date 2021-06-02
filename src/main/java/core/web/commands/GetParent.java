@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -15,7 +16,7 @@ public class GetParent {
     private GetParent() {
         if (GetParent != null) {
             logger.error("Use GetParent variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetParent variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetParent variable to get the single instance of this class.");
         }
     }
 

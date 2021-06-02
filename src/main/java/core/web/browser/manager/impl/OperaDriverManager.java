@@ -7,6 +7,7 @@ import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class OperaDriverManager implements DriverManager {
     private static final Logger logger = LoggerFactory.getLogger(OperaDriverManager.class);
@@ -25,9 +26,8 @@ public class OperaDriverManager implements DriverManager {
             logger.info("Create WebDriver: Opera Driver created successfully.");
             return new OperaDriver(options);
         } catch (Exception e) {
-            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
-            e.printStackTrace();
+            logger.error("Create WebDriver: Opera Driver creation failed due to Exception: " + e);
+            throw new CukeBrowseException("Create WebDriver: Opera Driver creation failed due to Exception:", e);
         }
-        return null;
     }
 }

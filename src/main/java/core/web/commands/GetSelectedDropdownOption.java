@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -20,24 +21,24 @@ public class GetSelectedDropdownOption {
     private GetSelectedDropdownOption() {
         if (GetSelectedDropdownOption != null) {
             logger.error("Use GetSelectedDropdownOption variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetSelectedDropdownOption variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetSelectedDropdownOption variable to get the single instance of this class.");
         }
     }
 
-    public WebElement getSelectedDropdownOption(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
+    public WebElement getSelectedDropdownOption(By dropdownBy, By... dropdownChildOptionBy) {
         logger.info(String.format("Get Selected Dropdown Option: Get selected option of '%s' dropdown having option: '%s'", dropdownBy.toString(), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
         return getSelectedDropdownOption(Find.find(dropdownBy), dropdownChildOptionBy);
     }
 
-    public WebElement getSelectedDropdownOption(WebElement dropdownElement, By... dropdownChildOptionBy) throws Exception {
+    public WebElement getSelectedDropdownOption(WebElement dropdownElement, By... dropdownChildOptionBy) {
         assert dropdownChildOptionBy != null;
         logger.info(String.format("Get Selected Dropdown Option: Get selected option of '%s' dropdown having option: '%s'", GetInnerHtml.getInnerHtml(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
-        if("select".equalsIgnoreCase(dropdownElement.getTagName())){
+        if ("select".equalsIgnoreCase(dropdownElement.getTagName())) {
             return new Select(dropdownElement).getFirstSelectedOption();
         } else {
             dropdownElement.click();
-            if(dropdownChildOptionBy.length == 0){
-                throw new Exception("Get Selected Dropdown Option: Element is not having 'Select' tag. 'dropdownChildOptionBy' argument value is required.");
+            if (dropdownChildOptionBy.length == 0) {
+                throw new CukeBrowseException("Get Selected Dropdown Option: Element is not having 'Select' tag. 'dropdownChildOptionBy' argument value is required.");
             } else {
                 return Find.find(dropdownElement, dropdownChildOptionBy[0]);
             }

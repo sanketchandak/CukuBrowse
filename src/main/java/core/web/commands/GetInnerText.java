@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 import static core.web.commands.GetAttribute.GetAttribute;
@@ -21,7 +22,7 @@ public class GetInnerText {
     private GetInnerText() {
         if (GetInnerText != null) {
             logger.error("Use GetInnerText variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetInnerText variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetInnerText variable to get the single instance of this class.");
         }
     }
 

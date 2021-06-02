@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class FirefoxDriverManager implements DriverManager {
     private static final Logger logger = LoggerFactory.getLogger(FirefoxDriverManager.class);
@@ -45,9 +46,8 @@ public class FirefoxDriverManager implements DriverManager {
             logger.info("Create WebDriver: Firefox Driver created successfully.");
             return new FirefoxDriver(options);
         } catch (Exception e) {
-            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
-            e.printStackTrace();
+            logger.error("Create WebDriver: Firefox Driver creation failed due to Exception: " + e);
+            throw new CukeBrowseException("Create WebDriver: Firefox Driver creation failed due to Exception:", e);
         }
-        return null;
     }
 }

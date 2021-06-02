@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Submit {
     private Submit() {
         if (Submit != null) {
             logger.error("Use Submit variable to get the single instance of this class.");
-            throw new RuntimeException("Use Submit variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use Submit variable to get the single instance of this class.");
         }
     }
 
@@ -28,7 +29,7 @@ public class Submit {
             logger.info("Submit: submit form");
         } else {
             logger.error("Submit: Element " + elementIdentifierBy + " not present on UI");
-            throw new RuntimeException("Element " + elementIdentifierBy + " not present on UI");
+            throw new CukeBrowseException("Element " + elementIdentifierBy + " not present on UI");
         }
     }
 
@@ -39,7 +40,7 @@ public class Submit {
             logger.info("Submit: submit form");
         } else {
             logger.error("Submit: Submit action can only perform on 'form' element");
-            throw new RuntimeException("Submit action can only perform on 'form' element");
+            throw new CukeBrowseException("Submit action can only perform on 'form' element");
         }
     }
 }

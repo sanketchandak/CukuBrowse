@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 import static core.web.commands.ExecuteJavascript.ExecuteJavascript;
@@ -20,7 +21,7 @@ public class Click {
     private Click() {
         if (Click != null) {
             logger.error("Use Click variable to get the single instance of this class.");
-            throw new RuntimeException("Use Click variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use Click variable to get the single instance of this class.");
         }
     }
 
@@ -68,7 +69,7 @@ public class Click {
                 break;
             }
             default: {
-                throw new IllegalArgumentException("Unknown click option: " + clickType);
+                throw new CukeBrowseException("Unknown click option: " + clickType);
             }
         }
         logger.info("Click On: " + clickType.name() + " on " + element.toString());

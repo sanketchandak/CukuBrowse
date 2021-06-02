@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import static core.web.commands.Find.Find;
 
@@ -15,7 +16,7 @@ public class GetLastChild {
     private GetLastChild() {
         if (GetLastChild != null) {
             logger.error("Use GetLastChild variable to get the single instance of this class.");
-            throw new RuntimeException("Use GetLastChild variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use GetLastChild variable to get the single instance of this class.");
         }
     }
 

@@ -3,6 +3,7 @@ package core.web;
 import core.web.browser.runner.WebDriverRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import utils.CukeBrowseException;
 
 import java.io.File;
 import java.util.Arrays;
@@ -205,7 +206,7 @@ public class Commander {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
+            throw new CukeBrowseException("Sleep for "+milliseconds, e);
         }
     }
 
@@ -348,7 +349,7 @@ public class Commander {
      * @param expectedDialogText if not null, check that confirmation dialog displays this message (case-sensitive)
      * @return actual dialog text
      */
-    public static String confirmAlertWithMessage(String expectedDialogText) throws Exception {
+    public static String confirmAlertWithMessage(String expectedDialogText) {
         return BrowserAlert.acceptAlert(expectedDialogText);
     }
 
@@ -367,7 +368,7 @@ public class Commander {
      * @param expectedDialogText if not null, check that confirmation dialog displays this message (case-sensitive)
      * @return actual dialog text
      */
-    public static String dismissAlertWithMessage(String expectedDialogText) throws Exception {
+    public static String dismissAlertWithMessage(String expectedDialogText) {
         return BrowserAlert.dismissAlert(expectedDialogText);
     }
 

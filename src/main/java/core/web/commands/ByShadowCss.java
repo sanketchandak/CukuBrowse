@@ -3,6 +3,7 @@ package core.web.commands;
 import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ByShadowCss {
     private ByShadowCss() {
         if (ByShadowCss != null) {
             logger.error("Use ByShadowCss variable to get the single instance of this class.");
-            throw new RuntimeException("Use ByShadowCss variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use ByShadowCss variable to get the single instance of this class.");
         }
     }
 
@@ -47,12 +48,12 @@ public class ByShadowCss {
                     .executeScript("return arguments[0].shadowRoot.querySelector(arguments[1])", host, target);*/
             if (targetWebElement == null) {
                 logger.error(String.format("Get Element Inside Shadow Tree: The element was not found: '%s'", target));
-                throw new NoSuchElementException("Get Element Inside Shadow Tree: The element was not found: " + target);
+                throw new CukeBrowseException("Get Element Inside Shadow Tree: The element was not found: " + target);
             }
             return targetWebElement;
         } else {
             logger.error(String.format("Get Element Inside Shadow Tree: The element is not a shadow host or has 'closed' shadow-dom mode: '%s'", host.toString()));
-            throw new NoSuchElementException("Get Element Inside Shadow Tree: The element is not a shadow host or has 'closed' shadow-dom mode: " + host);
+            throw new CukeBrowseException("Get Element Inside Shadow Tree: The element is not a shadow host or has 'closed' shadow-dom mode: " + host);
         }
     }
 

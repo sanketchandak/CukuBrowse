@@ -7,6 +7,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 public class EdgeDriverManager implements DriverManager {
     private static final Logger logger = LoggerFactory.getLogger(EdgeDriverManager.class);
@@ -19,8 +20,8 @@ public class EdgeDriverManager implements DriverManager {
             logger.info("Create WebDriver: Edge Driver created successfully.");
             new EdgeDriver(new EdgeOptions().merge(capabilities));
         } catch (Exception e) {
-            logger.error("Create WebDriver: WebDriver creation failed due to " + e.toString(), e);
-            e.printStackTrace();
+            logger.error("Create WebDriver: Edge Driver creation failed due to Exception: " + e);
+            throw new CukeBrowseException("Create WebDriver: Edge Driver creation failed due to Exception:", e);
         }
         return null;
     }

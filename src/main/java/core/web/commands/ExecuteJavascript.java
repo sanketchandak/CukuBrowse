@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.CukeBrowseException;
 
 import java.util.Arrays;
 
@@ -18,7 +19,7 @@ public class ExecuteJavascript {
     private ExecuteJavascript() {
         if (ExecuteJavascript != null) {
             logger.error("Use ExecuteJavascript variable to get the single instance of this class.");
-            throw new RuntimeException("Use ExecuteJavascript variable to get the single instance of this class.");
+            throw new CukeBrowseException("Use ExecuteJavascript variable to get the single instance of this class.");
         }
     }
 
