@@ -10,6 +10,7 @@ import utils.CukeBrowseException;
 
 import java.util.Arrays;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.*;
 public class Find {
     private static final Logger logger = LoggerFactory.getLogger(Find.class);
     private WebDriver driver;

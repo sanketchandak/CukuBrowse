@@ -8,7 +8,7 @@ import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import core.report.cleanup.CleanupTempDirectory;
@@ -57,12 +57,12 @@ public class ServiceHooks {
         log.info("Config IE Browser: IE Browser setup is successful");
     }
 
-    @Before("@operaBrowser or @OperaBrowser or @operabrowser or @OPERABROWSER")
+    /*@Before("@operaBrowser or @OperaBrowser or @operabrowser or @OPERABROWSER")
     public void configOperaBrowser(Scenario scenario) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         ServiceHooks.scenario.set(scenario);
         driverSetup(BrowserType.OPERA);
         log.info("Config Opera Browser: Opera Browser setup is successful");
-    }
+    }*/
 
     @Before("@safariBrowser or @SafariBrowser or @safaribrowser or @SAFARIBROWSER")
     public void configSafariBrowser(Scenario scenario) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -104,7 +104,7 @@ public class ServiceHooks {
         String eventHandlerNameWithDir = prop.getProperty("event.handler.classes");
         if (!eventHandlerNameWithDir.equals("")) {
             for (String eventHandler : Arrays.stream(eventHandlerNameWithDir.split(",")).collect(Collectors.toSet())) {
-                webDriverRunner.addListener((WebDriverEventListener) Class.forName(eventHandler.trim()).getDeclaredConstructor().newInstance());
+                webDriverRunner.addListener((WebDriverListener) Class.forName(eventHandler.trim()).getDeclaredConstructor().newInstance());
             }
         }
     }

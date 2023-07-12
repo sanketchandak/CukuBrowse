@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
+
 public class WaitForDocumentToReady {
     private static final Logger logger = LoggerFactory.getLogger(WaitForDocumentToReady.class);
     private WebDriver driver;
@@ -28,7 +30,7 @@ public class WaitForDocumentToReady {
     public boolean waitForPageToReady() {
         try {
             setDriverSession();
-            return new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd ->
+            return new WebDriverWait(driver, Duration.ofSeconds(30)).until((ExpectedCondition<Boolean>) wd ->
             {
                 assert wd != null;
                 return ((JavascriptExecutor) wd).executeScript("return (document.readyState == 'complete' && jQuery.active == 0)").equals(true);

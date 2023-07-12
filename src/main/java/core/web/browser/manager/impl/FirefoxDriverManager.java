@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,7 @@ public class FirefoxDriverManager implements DriverManager {
             /* Start Chrome maximized */
             options.addArguments("start-maximized");
             /* Enable below to Opens Chrome in headless mode */
-            //options.addArguments("--headless");
+            //options.addArguments("-headless");
             /* Enable below to Opens Chrome in incognito/private mode */
             //options.addArguments("--private");
             FirefoxProfile profile = new FirefoxProfile();
@@ -35,14 +34,12 @@ public class FirefoxDriverManager implements DriverManager {
             profile.setPreference("browser.cache.memory.enable", false);
             /* Enable or Disable disk cache */
             profile.setPreference("browser.cache.disk.enable", false);
-            /* Set the pre defined capability – ENSURING_CLEAN_SESSION value to true */
-            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-            capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-            capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
-            /* Set the pre defined capability – ACCEPT_SSL_CERTS value to true */
-            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+            options.setProfile(profile);
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            /* Set the pre-defined capability – ACCEPT_SSL_CERTS value to true */
+            capabilities.setCapability("acceptSslCerts", true);
             /* merge options and capability */
-            options.merge(capabilities);
+            options = options.merge(capabilities);
             logger.info("Create WebDriver: Firefox Driver created successfully.");
             return new FirefoxDriver(options);
         } catch (Exception e) {

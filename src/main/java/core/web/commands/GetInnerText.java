@@ -1,7 +1,7 @@
 package core.web.commands;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.Browser;
 import core.web.browser.runner.WebDriverRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -39,7 +39,7 @@ public class GetInnerText {
     public String getInnerText(WebElement element) {
         setDriverSession();
         logger.info(String.format("Get Inner Text: get inner text of element: '%s'", element.toString()));
-        if (((RemoteWebDriver) driver).getCapabilities().getBrowserName().equalsIgnoreCase(BrowserType.IE)) {
+        if (((RemoteWebDriver) driver).getCapabilities().getBrowserName().equalsIgnoreCase(Browser.IE.browserName())) {
             String retrievedInnerText = GetAttribute.getAttribute(element,"innerText");
             logger.info(String.format("Get Inner Text: inner text of element: '%s' having value as '%s'", element, retrievedInnerText));
             return retrievedInnerText;

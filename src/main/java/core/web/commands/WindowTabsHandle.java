@@ -2,6 +2,7 @@ package core.web.commands;
 
 import core.web.browser.runner.WebDriverRunner;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,5 +78,17 @@ public class WindowTabsHandle {
             throw new RuntimeException("Switch To Window By Title: No window with title "+windowTitle+" is present. Stack trace: "+ Arrays.toString(Thread.currentThread().getStackTrace()));
         }
         logger.info(String.format("Switch To Window By Title: switched to window with title '%s' successfully.", windowTitle));
+    }
+
+    public void openAndSwitchOnNewTab() {
+        setDriverSession();
+        driver.switchTo().newWindow(WindowType.TAB);
+        logger.info("Open and switch to new tab");
+    }
+
+    public void openAndSwitchOnNewWindow() {
+        setDriverSession();
+        driver.switchTo().newWindow(WindowType.WINDOW);
+        logger.info("Open and switch to new tab");
     }
 }

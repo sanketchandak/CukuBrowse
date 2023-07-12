@@ -1,11 +1,13 @@
 package core.web;
 
 import core.web.browser.runner.WebDriverRunner;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import utils.CukeBrowseException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -21,6 +23,7 @@ import static core.web.commands.ScrollIntoView.ScrollIntoView;
 import static core.web.commands.SetBrowserZoomPercentage.SetBrowserZoomPercentage;
 import static core.web.commands.WaitForDocumentToReady.WaitForDocumentToReady;
 import static core.web.commands.WindowTabsHandle.WindowTabsHandle;
+import static core.web.commands.DownloadFile.DownloadFile;
 
 public class Commander {
 
@@ -197,6 +200,20 @@ public class Commander {
     }
 
     /**
+     * To open new tab and switch on it
+     */
+    public static void openAndSwitchOnNewTab() {
+        WindowTabsHandle.openAndSwitchOnNewTab();
+    }
+
+    /**
+     * To open new window and switch on it
+     */
+    public static void openAndSwitchOnNewWindow() {
+        WindowTabsHandle.openAndSwitchOnNewWindow();
+    }
+
+    /**
      * Not recommended. Test should not sleep, but should wait for some condition instead.
      *
      * @param milliseconds Time to sleep in milliseconds
@@ -211,7 +228,7 @@ public class Commander {
     }
 
     /**
-     * Test should should wait for page to get ready & jQuery get finish.
+     * Test should wait for page to get ready & jQuery get finish.
      */
     public static boolean waitForPageToReady() {
         return WaitForDocumentToReady.waitForPageToReady();
@@ -510,5 +527,28 @@ public class Commander {
         } else {
             return condition.verifyCondition(timeOutInSeconds, pollingIntervalInSeconds, safeWaitFlag, null);
         }
+    }
+
+    /**
+     * Retrieves the downloaded file path based on the given file pattern and file extension.
+     *
+     * @param filePattern The file pattern used to match the downloaded file.
+     * @param fileExt The file extension of the downloaded file.
+     * @return The file path of the downloaded file.
+     */
+    public static String getDownloadedFilePath(String filePattern, @NotNull String fileExt) {
+        return DownloadFile.getDownloadedFilePath(filePattern, fileExt);
+    }
+
+    /**
+     * Retrieves the downloaded file based on the given file pattern and file extension and store at targetFilePath.
+     *
+     * @param filePattern The file pattern used to match the downloaded file.
+     * @param fileExt The file extension of the downloaded file.
+     * @param targetFilePath The file path where clone of downloaded file should be created.
+     * @return The file path of the downloaded file.
+     */
+    public static File getDownloadedFileFrom(String filePattern, @NotNull String fileExt, @NotNull String targetFilePath) throws IOException {
+        return DownloadFile.getDownloadedFileFrom(filePattern, fileExt, targetFilePath);
     }
 }

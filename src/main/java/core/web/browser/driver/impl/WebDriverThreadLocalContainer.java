@@ -3,8 +3,8 @@ package core.web.browser.driver.impl;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +14,12 @@ import java.util.List;
 public class WebDriverThreadLocalContainer implements WebDriverContainer {
     private static final Logger log = LoggerFactory.getLogger(WebDriverThreadLocalContainer.class);
 
-    public List<WebDriverEventListener> listeners = new ArrayList<>();
+    public List<WebDriverListener> listeners = new ArrayList<>();
     //private final Map<Long, WebDriver> threadWebDriver = new ConcurrentHashMap<>(4);
     private final ThreadLocal<WebDriver> threadWebDriver = new ThreadLocal<>();
 
     @Override
-    public void addListener(WebDriverEventListener listener) {
+    public void addListener(WebDriverListener listener) {
         listeners.add(listener);
     }
 
@@ -103,11 +103,6 @@ public class WebDriverThreadLocalContainer implements WebDriverContainer {
         if (listeners.isEmpty()) {
             return webDriver;
         }
-        EventFiringWebDriver wrapper = new EventFiringWebDriver(webDriver);
-        for (WebDriverEventListener listener : listeners) {
-            log.info("Add listener to WebDriver: " + listener);
-            wrapper.register(listener);
-        }
-        return wrapper;
+        return new EventFiringDecorator(listeners.toArray(new WebDriverListener[0])).decorate(webDriver);
     }
 }

@@ -4,8 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.CukeBrowseException;
@@ -26,20 +24,18 @@ public class ChromeDriverManager implements DriverManager {
             /* Start Chrome maximized */
             options.addArguments("start-maximized");
             /* Enable below to Opens Chrome in headless mode */
-            //options.addArguments("headless");
+            //options.addArguments("-headless");
             /* Enable below to Opens Chrome in incognito mode */
             //options.addArguments("incognito");
             /* Disables existing extensions on Chrome browser */
             options.addArguments("disable-extensions");
             /* Disables pop-ups displayed on Chrome browser */
             options.addArguments("disable-popup-blocking");
-            /* Set the pre defined capability – ENSURING_CLEAN_SESSION value to true */
-            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-            capabilities.setCapability(CapabilityType.ForSeleniumServer.ENSURING_CLEAN_SESSION, true);
-            /* Set the pre defined capability – ACCEPT_SSL_CERTS value to true */
-            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            /* merge options and capability */
-            options.merge(capabilities);
+            /*DesiredCapabilities capabilities = new DesiredCapabilities();
+            *//* Set the pre-defined capability – ACCEPT_SSL_CERTS value to true *//*
+            capabilities.setCapability("acceptSslCerts", true);
+            *//* merge options and capability *//*
+            options = options.merge(capabilities);*/
             logger.info("Create WebDriver: Chrome Driver created successfully.");
             return new ChromeDriver(options);
         } catch (Exception e) {

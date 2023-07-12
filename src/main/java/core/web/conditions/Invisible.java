@@ -44,7 +44,7 @@ public class Invisible extends Condition {
 
     private void setDriverWaitSession(long timeOutInSeconds, boolean safeWaitFlag, List<Class<? extends Throwable>> exceptionTypes) {
         driver = WebDriverRunner.getInstance().getWebDriver();
-        wait = new WebDriverWait(driver, timeOutInSeconds);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
         if (safeWaitFlag) {
             if (exceptionTypes == null || exceptionTypes.size() == 0) {
                 wait.ignoring(Exception.class);
