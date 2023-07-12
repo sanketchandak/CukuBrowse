@@ -15,19 +15,19 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <logback.version>1.2.3</logback.version>
         <javax.mail.version>1.4.7</javax.mail.version>
-        <webdriver.manager.version>4.2.0</webdriver.manager.version>
-        <cucumber.java.version>6.8.0</cucumber.java.version>
-        <cucumber.junit.version>6.8.0</cucumber.junit.version>
-        <selenium.java.version>3.141.59</selenium.java.version>
-        <junit.version.version>4.13.1</junit.version.version>
-        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
+        <webdriver.manager.version>5.3.3</webdriver.manager.version>
+        <cucumber.java.version>7.12.1</cucumber.java.version>
+        <cucumber.junit.version>7.12.1</cucumber.junit.version>
+        <selenium.java.version>4.10.0</selenium.java.version>
+        <junit.version.version>4.13.2</junit.version.version>
+        <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <cucumber.jvm.parallel.plugin.version>5.0.0</cucumber.jvm.parallel.plugin.version>
-        <zip4j.version>2.6.4</zip4j.version>
-        <maven.cucumber.reporting.version>5.3.0</maven.cucumber.reporting.version>
-        <exec.maven.plugin.version>3.0.0</exec.maven.plugin.version>
-        <maven.antrun.plugin.version>3.0.0</maven.antrun.plugin.version>
-        <extentreports.cucumberjson.plugin.version>2.6.0</extentreports.cucumberjson.plugin.version>
-        <properties.maven.plugin.version>1.0.0</properties.maven.plugin.version>
+        <zip4j.version>2.11.5</zip4j.version>
+        <maven.cucumber.reporting.version>5.7.5</maven.cucumber.reporting.version>
+        <exec.maven.plugin.version>3.1.0</exec.maven.plugin.version>
+        <maven.antrun.plugin.version>3.1.0</maven.antrun.plugin.version>
+        <extentreports.cucumberjson.plugin.version>2.16.0</extentreports.cucumberjson.plugin.version>
+        <properties.maven.plugin.version>1.1.0</properties.maven.plugin.version>
 
         <!-- new parameter -->
         <timestamp>${maven.build.timestamp} UTC</timestamp>
@@ -129,7 +129,28 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.0.0</version>
+            <version>5.2.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.github.mrspock182/crypto4j -->
+        <dependency>
+            <groupId>io.github.mrspock182</groupId>
+            <artifactId>crypto4j</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.sikulix/sikulixapi -->
+        <dependency>
+            <groupId>com.sikulix</groupId>
+            <artifactId>sikulixapi</artifactId>
+            <version>2.0.5</version>
         </dependency>
 
     </dependencies>
@@ -151,7 +172,7 @@
                 <version>${properties.maven.plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>load-properites</id>
+                        <id>load-properties</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>read-project-properties</goal>
@@ -209,6 +230,7 @@
                             <tags>
                                 <tag>~@donotrun</tag>
                                 <tag>~@ignore</tag>
+                                <tag>${customized.tags}</tag>
                             </tags>
                             <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
                             <parallelScheme>SCENARIO</parallelScheme>
@@ -254,6 +276,7 @@
                             <tags>
                                 <tag>~@donotrun</tag>
                                 <tag>~@ignore</tag>
+                                <tag>${customized.tags}</tag>
                             </tags>
                             <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
                             <parallelScheme>FEATURE</parallelScheme>
@@ -299,6 +322,7 @@
                             <tags>
                                 <tag>~@donotrun</tag>
                                 <tag>~@ignore</tag>
+                                <tag>${customized.tags}</tag>
                             </tags>
                             <!-- One of [SCENARIO, FEATURE]. SCENARIO generates one runner per scenario.  FEATURE generates a runner per feature. -->
                             <parallelScheme>FEATURE</parallelScheme>

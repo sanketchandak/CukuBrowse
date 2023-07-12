@@ -1,7 +1,6 @@
 package core.web.browser.manager.impl;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
@@ -17,11 +16,11 @@ public class SafariDriverManager implements DriverManager {
         try {
             SafariOptions options = new SafariOptions();
             options.setCapability("safari.cleanSession", true);
-            DesiredCapabilities capabilities = DesiredCapabilities.safari();
-            capabilities.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
-            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability("javascriptEnabled", true);
+            capabilities.setCapability("acceptSslCerts", true);
             /* merge options and capability */
-            options.merge(capabilities);
+            options = options.merge(capabilities);
             logger.info("Create WebDriver: Safari Driver created successfully.");
             return new SafariDriver(options);
         } catch (Exception e) {

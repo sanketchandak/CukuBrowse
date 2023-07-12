@@ -3,11 +3,11 @@ package core.web.browser.driver.impl;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.events.WebDriverListener;
 
 public interface WebDriverContainer {
 
-    void addListener(WebDriverEventListener listener);
+    void addListener(WebDriverListener listener);
 
     WebDriver setWebDriver(WebDriver driver);
 

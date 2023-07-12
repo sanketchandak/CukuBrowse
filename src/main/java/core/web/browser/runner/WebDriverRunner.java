@@ -5,7 +5,7 @@ import core.web.browser.driver.impl.WebDriverThreadLocalContainer;
 import core.web.browser.manager.impl.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.openqa.selenium.support.events.WebDriverListener;
 import utils.CukeBrowseException;
 
 public class WebDriverRunner {
@@ -35,7 +35,7 @@ public class WebDriverRunner {
      *
      * @param listener your listener of WebDriver events
      */
-    public void addListener(WebDriverEventListener listener) {
+    public void addListener(WebDriverListener listener) {
         webdriverContainer.addListener(listener);
     }
 
@@ -61,10 +61,10 @@ public class WebDriverRunner {
                 driverManager = new SafariDriverManager();
                 break;
             }
-            case OPERA: {
+            /*case OPERA: {
                 driverManager = new OperaDriverManager();
                 break;
-            }
+            }*/
             case EDGE: {
                 driverManager = new EdgeDriverManager();
                 break;

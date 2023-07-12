@@ -5,8 +5,10 @@ import core.web.commands.HoverType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -249,6 +251,16 @@ public class WebSteps {
         getWeb().I_switch_to_window_by_title(windowTitle);
     }
 
+    @And("^I open new tab and switch on it$")
+    public void and_I_open_new_tab_and_switch_on_it() {
+        getWeb().I_open_new_tab_and_switch_on_it();
+    }
+
+    @And("^I open browser new window and switch on it$")
+    public void I_open_browser_new_window_and_switch_on_it() {
+        getWeb().I_open_browser_new_window_and_switch_on_it();
+    }
+
     @And("^I close all child browser windows$")
     public void and_I_close_all_child_browser_windows() {
         getWeb().I_close_all_child_browser_windows();
@@ -420,5 +432,15 @@ public class WebSteps {
     public void and_I_copy_in_browser_clipboard_and_paste_it_in_element(String clipboardText, String sendTextElement) {
         By sendTextElementBy = getWeb().normalize_element(sendTextElement);
         getWeb().I_copy_in_browser_clipboard_and_paste_it_in_element(clipboardText, sendTextElementBy);
+    }
+
+    @Then("^Get downloaded file path having file name (.+) with extension (.+)$")
+    public void and_get_downloaded_file_path(String filePattern, @NotNull String fileExt) {
+        getWeb().get_downloaded_file_path(filePattern, fileExt);
+    }
+
+    @Then("^Get downloaded file having file name (.+) with extension (.+) and saves it to the (.+) file path$")
+    public void and_get_downloaded_file_path(String filePattern, @NotNull String fileExt, @NotNull String targetFilePath) throws IOException {
+        getWeb().get_downloaded_file_from_to_target_path(filePattern, fileExt, targetFilePath);
     }
 }

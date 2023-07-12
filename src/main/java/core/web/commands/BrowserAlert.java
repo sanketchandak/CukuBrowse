@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.CukeBrowseException;
 
+import java.time.Duration;
+
 public class BrowserAlert {
     private static final Logger logger = LoggerFactory.getLogger(BrowserAlert.class);
     public static BrowserAlert BrowserAlert =
@@ -61,7 +63,7 @@ public class BrowserAlert {
 
     public String getAlertMessage() {
         setDriverSession();
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         //Wait for the alert to be displayed
         String alertMessage = wait.until(ExpectedConditions.alertIsPresent()).getText();
         logger.info(String.format("Get Alert Message: Alert present with message '%s'.", alertMessage));

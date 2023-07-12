@@ -6,6 +6,7 @@ import core.web.browser.runner.WebDriverRunner;
 import core.web.commands.ClickType;
 import core.web.commands.HoverType;
 import io.cucumber.java.Scenario;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,8 @@ import utils.CukeBrowseException;
 import utils.Helper;
 import utils.service.ServiceHooks;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -348,6 +351,16 @@ public class WebFunctions {
         switchToWindowByTitle(windowTitle);
     }
 
+    public void I_open_new_tab_and_switch_on_it() {
+        logger.info("Open new tab and switch on it");
+        openAndSwitchOnNewTab();
+    }
+
+    public void I_open_browser_new_window_and_switch_on_it() {
+        logger.info("Open browser new window and switch on it");
+        openAndSwitchOnNewWindow();
+    }
+
     public void I_close_all_child_browser_windows() {
         logger.info("Close all child browser windows.");
         closeAllChildBrowserWindows();
@@ -467,5 +480,15 @@ public class WebFunctions {
         sendTextElement.sendKeys(Keys.CONTROL, "a");
         sendTextElement.sendKeys(Keys.CONTROL, "v");
         executeJavaScript("navigator.clipboard.writeText(" + "" + ");");
+    }
+
+    public String get_downloaded_file_path(String filePattern, @NotNull String fileExt){
+        logger.info("Get downloaded file path having file pattern as: " + filePattern + " with extension '" + fileExt + "'.");
+        return getDownloadedFilePath(filePattern, fileExt);
+    }
+
+    public File get_downloaded_file_from_to_target_path(String filePattern, @NotNull String fileExt, @NotNull String targetFilePath) throws IOException {
+        logger.info("Get downloaded file at targeted path: "+ targetFilePath +" having file pattern as: " + filePattern + " with extension '" + fileExt + "'.");
+        return getDownloadedFileFrom(filePattern, fileExt, targetFilePath);
     }
 }

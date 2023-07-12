@@ -1,3 +1,4 @@
+/*
 package core.web.browser.manager.impl;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -21,7 +22,9 @@ public class OperaDriverManager implements DriverManager {
             DesiredCapabilities capabilities = DesiredCapabilities.operaBlink();
             capabilities.setAcceptInsecureCerts(true);
             capabilities.setJavascriptEnabled(true);
-            /* merge options and capability */
+
+/* merge options and capability *//*
+
             options.merge(capabilities);
             logger.info("Create WebDriver: Opera Driver created successfully.");
             return new OperaDriver(options);
@@ -31,3 +34,4 @@ public class OperaDriverManager implements DriverManager {
         }
     }
 }
+*/
