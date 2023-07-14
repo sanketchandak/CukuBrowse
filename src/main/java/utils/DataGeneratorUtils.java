@@ -3,10 +3,10 @@ package utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGeneratorUtils {
 
@@ -14,7 +14,7 @@ public class DataGeneratorUtils {
     private static final String ALPHA_NUMERIC_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final String ALPHA_STRING = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String NUMERIC_STRING = "0123456789";
-    private static final Random random = new Random();
+    private static final Random random = new SecureRandom();
 
     public static String generateRandomAlphaNumericString(int length) {
         StringBuilder sb = new StringBuilder();
@@ -60,7 +60,7 @@ public class DataGeneratorUtils {
         if (startMillis > endMillis) {
             throw new IllegalArgumentException("Start date cannot be higher than end date");
         }
-        long randomMillisSinceEpoch = ThreadLocalRandom.current().nextLong(startMillis, endMillis);
+        long randomMillisSinceEpoch = getRandomMillisBetween(startMillis, endMillis);
         return new Date(randomMillisSinceEpoch);
     }
 

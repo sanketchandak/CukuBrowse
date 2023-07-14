@@ -21,12 +21,12 @@ public class PressTab {
         }
     }
 
-    public void pressTab(By elementBy) {
-        pressTab(Find.find(elementBy));
+    public void press(By elementBy) {
+        press(Find.findElement(elementBy));
         logger.info(String.format("Press Tab: press tab on element '%s'", elementBy.toString()));
     }
 
-    public void pressTab(WebElement element) {
+    public void press(WebElement element) {
         element.sendKeys(Keys.TAB);
         logger.info(String.format("Press Tab: press tab on element '%s'", element));
     }

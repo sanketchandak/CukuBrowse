@@ -31,7 +31,7 @@ public class DragAndDrop {
     }
 
     public void dragAndDropTo(By sourceElementBy, By destinationElementBy) {
-        dragAndDropTo(find.find(sourceElementBy), find.find(destinationElementBy));
+        dragAndDropTo(find.findElement(sourceElementBy), find.findElement(destinationElementBy));
         logger.info("Drag And Drop: Drag And Drop From: " + sourceElementBy.toString() + " To: " + destinationElementBy.toString());
     }
 
@@ -42,7 +42,7 @@ public class DragAndDrop {
     }
 
     public void dragAndDropTo(By sourceElementBy, int xOffset, int yOffset) {
-        dragAndDropTo(find.find(sourceElementBy), xOffset, yOffset);
+        dragAndDropTo(find.findElement(sourceElementBy), xOffset, yOffset);
         logger.info("Drag And Drop: Drag And Drop From: " + sourceElementBy.toString() + " To X-Offset: " + xOffset + " And Y-Offset: " + yOffset);
     }
 

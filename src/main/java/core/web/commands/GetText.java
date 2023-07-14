@@ -20,13 +20,13 @@ public class GetText {
         }
     }
 
-    public String getText(By elementBy) {
-        String retrievedText = Find.find(elementBy).getText();
+    public String get(By elementBy) {
+        String retrievedText = Find.findElement(elementBy).getText();
         logger.info(String.format("Get Text: '%s' element have text as '%s'", elementBy.toString(), retrievedText));
         return retrievedText;
     }
 
-    public String getText(WebElement element) {
+    public String get(WebElement element) {
         String retrievedText = element.getText();
         logger.info(String.format("Get Text: '%s' element have text as '%s'", element, retrievedText));
         return retrievedText;

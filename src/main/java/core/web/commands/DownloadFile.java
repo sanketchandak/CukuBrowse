@@ -79,7 +79,7 @@ public class DownloadFile {
         if (browserName.contains("chrome")) {
             String script = "return document.querySelector('downloads-manager).shadowRoot.querySelector('#downloadsList').items.filter(e => e.state === 'COMPLETE').map(e => e.filePath || e.file_path || e.fileUrl || e.file_url)";
             if( !driver.getCurrentUrl().startsWith(CHROME_DOWNLOAD_PATH)) {
-                ExecuteJavascript.executeJavascript("window.open()");
+                ExecuteJavascript.execute("window.open()");
                 Set<String> currentWindowHandles = WindowTabsHandle.getCurrentWindowHandles();
                 for (String windowHandle : currentWindowHandles) {
                     driver.switchTo().window(windowHandle);
@@ -90,7 +90,7 @@ public class DownloadFile {
                 }
             }
 
-            String filesList = ExecuteJavascript.executeJavascript(script).toString();
+            String filesList = ExecuteJavascript.execute(script).toString();
             filesList = filesList.substring(1, filesList.length() - 1).replace('\\', '/');
             String[] filePaths = filesList.split(",");
             for (String filePath : filePaths) {
@@ -102,7 +102,7 @@ public class DownloadFile {
             }
         } else if (browserName.contains("edge")) {
             if( !driver.getCurrentUrl().startsWith(EDGE_DOWNLOAD_PATH)) {
-                ExecuteJavascript.executeJavascript("window.open()");
+                ExecuteJavascript.execute("window.open()");
                 Set<String> currentWindowHandles = WindowTabsHandle.getCurrentWindowHandles();
                 for (String windowHandle : currentWindowHandles) {
                     driver.switchTo().window(windowHandle);
@@ -118,15 +118,15 @@ public class DownloadFile {
             } else {
                 fileXpath = "//img[contains(@aria-label,'"+fileExt+"') or contains(@aria-label,'."+fileExt+"')]/ancestor::*[@role='listitem']";
             }
-            List<WebElement> fileWebElementList = FindAll.findAll(By.xpath(fileXpath));
+            List<WebElement> fileWebElementList = FindAll.find(By.xpath(fileXpath));
             if (!fileWebElementList.isEmpty()) {
                 WebElement firstFileElement = fileWebElementList.get(0);
-                Condition.visible(Find.find(firstFileElement, By.xpath("//*[contains(text(), 'Show in folder')]"))).verifyCondition(false);
+                Condition.visible(Find.findElement(firstFileElement, By.xpath("//*[contains(text(), 'Show in folder')]"))).verifyCondition(false);
                 String srcOfFirstFileElement;
                 if (filePattern != null && !filePattern.isEmpty()) {
-                    srcOfFirstFileElement = GetAttribute.getAttribute(By.xpath("//img[starts-with(@aria-label,'"+filePattern+"')][contains(@aria-label,'"+fileExt+"')])"),"src");
+                    srcOfFirstFileElement = GetAttribute.get(By.xpath("//img[starts-with(@aria-label,'"+filePattern+"')][contains(@aria-label,'"+fileExt+"')])"),"src");
                 } else {
-                    srcOfFirstFileElement = GetAttribute.getAttribute(By.xpath("//img[contains(@aria-label,'"+fileExt+"') or contains(@aria-label,'."+fileExt+"')]"),"src");
+                    srcOfFirstFileElement = GetAttribute.get(By.xpath("//img[contains(@aria-label,'"+fileExt+"') or contains(@aria-label,'."+fileExt+"')]"),"src");
                 }
                 try {
                     srcOfFirstFileElement = URLDecoder.decode(srcOfFirstFileElement, "UTF-8");
@@ -164,7 +164,7 @@ public class DownloadFile {
                 "input.hidden = true; " +
                 "input.onchange = function (e) {e.stopPropagation() }; " +
                 "return window.document.documentElement.appendChild(input); ";
-        WebElement fileContent = (WebElement) ExecuteJavascript.executeJavascript(script);
+        WebElement fileContent = (WebElement) ExecuteJavascript.execute(script);
         fileContent.sendKeys(filePath);
 
         String asyncScript = "var input = arguments[0], callback = arguments[1]; " +
@@ -173,7 +173,7 @@ public class DownloadFile {
                 "reader.onerror = function (ex) { callback(ex.message) }; " +
                 "reader.readAsDataURL(input.files[0]); " +
                 "input.remove(); ";
-        String content = ExecuteJavascript.executeJavascript(asyncScript, fileContent).toString();
+        String content = ExecuteJavascript.execute(asyncScript, fileContent).toString();
         int fromIndex = content.indexOf("base64,") + 7;
         content = content.substring(fromIndex);
 

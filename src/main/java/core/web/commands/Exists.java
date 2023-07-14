@@ -22,10 +22,10 @@ public class Exists {
         }
     }
 
-    public boolean exists(By elementBy) {
+    public boolean exist(By elementBy) {
         try {
             logger.info(String.format("Exists: check if '%s' element present", elementBy));
-            return find.find(elementBy) != null;
+            return find.findElement(elementBy) != null;
         } catch (WebDriverException exception) {
             return false;
         }

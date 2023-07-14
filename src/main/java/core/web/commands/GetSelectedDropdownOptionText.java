@@ -25,8 +25,8 @@ public class GetSelectedDropdownOptionText {
         }
     }
 
-    public String getSelectedDropdownOptionText(By dropdownBy, By... dropdownChildOptionBy) {
-        String selectedDropdownOptionText = getSelectedDropdownOptionText(Find.find(dropdownBy), dropdownChildOptionBy);
+    public String get(By dropdownBy, By... dropdownChildOptionBy) {
+        String selectedDropdownOptionText = get(Find.findElement(dropdownBy), dropdownChildOptionBy);
         logger.info(String.format("Get Selected Dropdown Option Text: '%s' dropdown having child options: '%s' having text as '%s'",
                 dropdownBy.toString(),
                 (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : "",
@@ -35,10 +35,10 @@ public class GetSelectedDropdownOptionText {
         return selectedDropdownOptionText;
     }
 
-    public String getSelectedDropdownOptionText(WebElement dropdownElement, By... dropdownChildOptionBy) {
-        String selectedDropdownOptionText = GetSelectedDropdownOption.getSelectedDropdownOption(dropdownElement, dropdownChildOptionBy).getText();
+    public String get(WebElement dropdownElement, By... dropdownChildOptionBy) {
+        String selectedDropdownOptionText = GetSelectedDropdownOption.get(dropdownElement, dropdownChildOptionBy).getText();
         logger.info(String.format("Get Selected Dropdown Option Text: '%s' dropdown having child options: '%s' having text as '%s'",
-                GetInnerHtml.getInnerHtml(dropdownElement),
+                GetInnerHtml.get(dropdownElement),
                 (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : "",
                 selectedDropdownOptionText
         ));

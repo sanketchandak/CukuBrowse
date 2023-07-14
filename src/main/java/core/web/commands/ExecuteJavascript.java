@@ -27,7 +27,7 @@ public class ExecuteJavascript {
         driver = WebDriverRunner.getInstance().getWebDriver();
     }
 
-    public Object executeJavascript(String script, WebElement... elements) {
+    public Object execute(String script, WebElement... elements) {
         assert elements != null;
         setDriverSession();
         JavascriptExecutor js = (JavascriptExecutor) driver;

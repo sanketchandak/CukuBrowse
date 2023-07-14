@@ -25,14 +25,14 @@ public class GetSelectedDropdownOptionsText {
         }
     }
 
-    public List<String> getSelectedDropdownOptionsText(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
+    public List<String> get(By dropdownBy, By... dropdownChildOptionBy) throws Exception {
         logger.info(String.format("Get Selected Dropdown Options Text: Get selected options text of '%s' dropdown having option: '%s'", dropdownBy.toString(), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
-        return getSelectedDropdownOptionsText(Find.find(dropdownBy), dropdownChildOptionBy);
+        return get(Find.findElement(dropdownBy), dropdownChildOptionBy);
     }
 
-    public List<String> getSelectedDropdownOptionsText(WebElement dropdownElement, By... dropdownChildOptionBy) {
-        logger.info(String.format("Get Selected Dropdown Options Text: Get selected options text of '%s' dropdown having option: '%s'", GetInnerHtml.getInnerHtml(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
-        List<WebElement> selectedOptions = GetSelectedDropdownOptions.getSelectedDropdownOptions(dropdownElement, dropdownChildOptionBy);
+    public List<String> get(WebElement dropdownElement, By... dropdownChildOptionBy) {
+        logger.info(String.format("Get Selected Dropdown Options Text: Get selected options text of '%s' dropdown having option: '%s'", GetInnerHtml.get(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
+        List<WebElement> selectedOptions = GetSelectedDropdownOptions.get(dropdownElement, dropdownChildOptionBy);
         return selectedOptions.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 }

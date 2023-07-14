@@ -29,7 +29,7 @@ public class Hover {
     }
 
     public void hover(By hoverElementBy, HoverType hoverType) {
-        hover(Find.find(hoverElementBy), hoverType);
+        hover(Find.findElement(hoverElementBy), hoverType);
         logger.info(String.format("Mouse Hover: mouse hover on '%s' element with '%s'", hoverElementBy.toString(), hoverType));
     }
 
@@ -37,17 +37,17 @@ public class Hover {
         /*WebDriver driver = WebDriverRunner.getInstance().getWebDriver();
         JavascriptExecutor js = (JavascriptExecutor) driver;*/
         setDriverSession();
-        ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", hoverElement);
+        ExecuteJavascript.execute("arguments[0].scrollIntoView(true);", hoverElement);
         switch (hoverType) {
             case JSHover: {
-                ExecuteJavascript.executeJavascript("var element = arguments[0]; " +
+                ExecuteJavascript.execute("var element = arguments[0]; " +
                         "var mouseEventObj = document.createEvent('MouseEvents'); " +
                         "mouseEventObj.initEvent( 'mouseover', true, true ); " +
                         "element.dispatchEvent(mouseEventObj);", hoverElement);
                 break;
             }
             case JSOut: {
-                ExecuteJavascript.executeJavascript("var element = arguments[0]; " +
+                ExecuteJavascript.execute("var element = arguments[0]; " +
                         "var mouseEventObj = document.createEvent('MouseEvents'); " +
                         "mouseEventObj.initEvent( 'mouseout', true, true ); " +
                         "element.dispatchEvent(mouseEventObj);", hoverElement);

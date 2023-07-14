@@ -21,7 +21,7 @@ public class ElementImporter {
     final Map<String, Boolean> importedFiles = new HashMap<>();
     private final Table<String, String, String> elementsTable = TreeBasedTable.create(String.CASE_INSENSITIVE_ORDER, String.CASE_INSENSITIVE_ORDER);
 
-    public static ElementImporter ElementImporter =
+    public static final ElementImporter ElementImporter =
             ThreadLocal.withInitial(ElementImporter::new).get();
 
     private ElementImporter() {

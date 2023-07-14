@@ -21,20 +21,20 @@ public class IsImage {
         }
     }
 
-    public boolean isImage(By elementBy) {
-        boolean status = isImage(Find.find(elementBy));
+    public boolean image(By elementBy) {
+        boolean status = image(Find.findElement(elementBy));
         logger.info(String.format("Is Image: check if '%s' element is image. Actual status: '%s'", elementBy.toString(), status));
         return status;
     }
 
-    public boolean isImage(WebElement element) {
+    public boolean image(WebElement element) {
         if (!"img".equalsIgnoreCase(element.getTagName())) {
             logger.error("Is Image: Method isImage() is only applicable for img elements");
             throw new CukeBrowseException("Method isImage() is only applicable for img elements");
         }
         /*JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver();*/
-        ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", element);
-        boolean status = (boolean) ExecuteJavascript.executeJavascript("return arguments[0].tagName.toLowerCase() === 'img' && " +
+        ExecuteJavascript.execute("arguments[0].scrollIntoView(true);", element);
+        boolean status = (boolean) ExecuteJavascript.execute("return arguments[0].tagName.toLowerCase() === 'img' && " +
                 "arguments[0].complete && " +
                 "typeof arguments[0].naturalWidth != 'undefined' && " +
                 "arguments[0].naturalWidth > 0", element);

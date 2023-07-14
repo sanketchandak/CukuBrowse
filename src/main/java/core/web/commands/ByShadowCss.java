@@ -25,7 +25,7 @@ public class ByShadowCss {
 
     public WebElement findElement(String targetElement, String shadowHost, String... innerShadowHosts) {
         logger.info(String.format("Find Shadow Element: Get '%s' under Shadow host '%s' with inner shadow hosts as '%s'", targetElement, shadowHost, (innerShadowHosts.length != 0) ? Arrays.toString(innerShadowHosts) : ""));
-        WebElement host = Find.find(By.cssSelector(shadowHost));
+        WebElement host = Find.findElement(By.cssSelector(shadowHost));
         for (String innerHost : innerShadowHosts) {
             host = getElementInsideShadowTree(host, innerHost);
         }
@@ -34,7 +34,7 @@ public class ByShadowCss {
 
     public List<WebElement> findElements(String targetElement, String shadowHost, String... innerShadowHosts) {
         logger.info(String.format("Find Shadow Elements: Get all '%s' under Shadow host '%s' with inner shadow hosts as '%s'", targetElement, shadowHost, (innerShadowHosts.length != 0) ? Arrays.toString(innerShadowHosts) : ""));
-        WebElement host = Find.find(By.cssSelector(shadowHost));
+        WebElement host = Find.findElement(By.cssSelector(shadowHost));
         for (String innerHost : innerShadowHosts) {
             host = getElementInsideShadowTree(host, innerHost);
         }
@@ -43,7 +43,7 @@ public class ByShadowCss {
 
     private WebElement getElementInsideShadowTree(WebElement host, String target) {
         if (isShadowRootAttached(host)) {
-            WebElement targetWebElement = (WebElement) ExecuteJavascript.executeJavascript("return arguments[0].shadowRoot.querySelector(" + target + ")", host);
+            WebElement targetWebElement = (WebElement) ExecuteJavascript.execute("return arguments[0].shadowRoot.querySelector(" + target + ")", host);
             /*WebElement targetWebElement = (WebElement) ((JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver())
                     .executeScript("return arguments[0].shadowRoot.querySelector(arguments[1])", host, target);*/
             if (targetWebElement == null) {
@@ -58,13 +58,13 @@ public class ByShadowCss {
     }
 
     private boolean isShadowRootAttached(WebElement host) {
-        return ExecuteJavascript.executeJavascript("return arguments[0].shadowRoot", host) != null;
+        return ExecuteJavascript.execute("return arguments[0].shadowRoot", host) != null;
         /*return ((JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver()).executeScript("return arguments[0].shadowRoot", host) != null;*/
     }
 
     @SuppressWarnings("unchecked")
     private List<WebElement> getElementsInsideShadowTree(WebElement host, String sh) {
-        return (List<WebElement>) ExecuteJavascript.executeJavascript("return arguments[0].shadowRoot.querySelectorAll(" + sh + ")", host);
+        return (List<WebElement>) ExecuteJavascript.execute("return arguments[0].shadowRoot.querySelectorAll(" + sh + ")", host);
         /*return (List<WebElement>) ((JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver())
                 .executeScript("return arguments[0].shadowRoot.querySelectorAll(arguments[1])", host, sh);*/
     }

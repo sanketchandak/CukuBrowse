@@ -26,7 +26,7 @@ public class CSVComparator {
 
     public List<String> compareCSVForDifference() {
         logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file.");
-        List<String> difference = DifferenceEngine.Difference(expectedCSV, actualCSV);
+        List<String> difference = DifferenceEngine.difference(expectedCSV, actualCSV);
         if(!difference.isEmpty()) {
             logger.info("Breaks after comparing '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file: "+difference);
         }
@@ -36,7 +36,7 @@ public class CSVComparator {
 
     public List<String> compareCSVForDifferenceForColumnAddress(int startColumnIndex, int endColumnIndex) {
         logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file from column index '"+startColumnIndex+"' to '"+endColumnIndex);
-        List<String> difference = DifferenceEngine.DifferenceBasedOnColumnIndex(expectedCSV, actualCSV, startColumnIndex, endColumnIndex);
+        List<String> difference = DifferenceEngine.differenceBasedOnColumnIndex(expectedCSV, actualCSV, startColumnIndex, endColumnIndex);
         if(!difference.isEmpty()) {
             logger.info("Breaks after comparing '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file: "+difference);
         }
@@ -46,7 +46,7 @@ public class CSVComparator {
 
     public List<String> compareCSVForDifferenceForRowRange(int startRowNumber, int endRowNumber) {
         logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file from row number '"+startRowNumber+"' to '"+endRowNumber);
-        List<String> difference = DifferenceEngine.DifferenceBasedOnRowNumber(expectedCSV, actualCSV, startRowNumber, endRowNumber);
+        List<String> difference = DifferenceEngine.differenceBasedOnRowNumber(expectedCSV, actualCSV, startRowNumber, endRowNumber);
         if(!difference.isEmpty()) {
             logger.info("Breaks after comparing '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file from row number '"+startRowNumber+"' to '"+endRowNumber+"' having difference: "+difference);
         }
@@ -92,7 +92,7 @@ public class CSVComparator {
             throw new IllegalStateException("Not designed to create object of DifferenceEngine class as contain static methods.");
         }
 
-        private static List<String> Difference(CSV expectedCSV, CSV actualCSV) {
+        private static List<String> difference(CSV expectedCSV, CSV actualCSV) {
             logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file");
             int rowNumber = Math.max(expectedCSV.getCsvData().size(), actualCSV.getCsvData().size());
             List<String> differenceByRow = getDifference(expectedCSV, actualCSV, null, rowNumber, null, null);
@@ -100,7 +100,7 @@ public class CSVComparator {
             return differenceByRow;
         }
 
-        private static List<String> DifferenceBasedOnColumnIndex(CSV expectedCSV, CSV actualCSV, int startColumnIndex, int endColumnIndex) {
+        private static List<String> differenceBasedOnColumnIndex(CSV expectedCSV, CSV actualCSV, int startColumnIndex, int endColumnIndex) {
             logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file from column index '"+startColumnIndex+"' to '"+endColumnIndex+"'");
             int rowNumber = Math.max(expectedCSV.getCsvData().size(), actualCSV.getCsvData().size());
             if(startColumnIndex <=0) {
@@ -118,7 +118,7 @@ public class CSVComparator {
             return differenceByRow;
         }
 
-        private static List<String> DifferenceBasedOnRowNumber(CSV expectedCSV, CSV actualCSV, int startRowNumber, int endRowNumber) {
+        private static List<String> differenceBasedOnRowNumber(CSV expectedCSV, CSV actualCSV, int startRowNumber, int endRowNumber) {
             logger.info("Compare '"+expectedCSV.getFilePath()+"' csv file with '"+actualCSV.getFilePath()+"' csv file from row number '"+startRowNumber+"' to '"+endRowNumber+"'");
             int rowNumber = Math.max(expectedCSV.getCsvData().size(), actualCSV.getCsvData().size());
             if(startRowNumber <=0) {

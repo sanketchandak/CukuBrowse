@@ -35,14 +35,14 @@ public class SelectOptionContainingText {
                 dropdownBy.toString(),
                 text
         ));
-        selectOptionsContainingTexts(Find.find(dropdownBy), text, elementDropdownOptionsBy);
+        selectOptionsContainingTexts(Find.findElement(dropdownBy), text, elementDropdownOptionsBy);
     }
 
     public void selectOptionsContainingTexts(WebElement dropdownElement, String text, By... elementDropdownOptionsBy) {
         assert elementDropdownOptionsBy != null;
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown containing text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
-                GetInnerHtml.getInnerHtml(dropdownElement),
+                GetInnerHtml.get(dropdownElement),
                 text
         ));
         if ("select".equalsIgnoreCase(dropdownElement.getTagName())) {
@@ -66,10 +66,10 @@ public class SelectOptionContainingText {
                 logger.error("Select Options By Texts: 1 Child element 'By' is required.");
                 throw new CukeBrowseException("1 Child element 'By' is required.");
             }
-            List<WebElement> allOptions = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
+            List<WebElement> allOptions = FindAll.find(dropdownElement, elementDropdownOptionsBy[0]);
             if (allOptions.isEmpty()) {
-                logger.error("Select Options By Texts: Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
-                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
+                logger.error("Select Options By Texts: Cannot find Sub-Elements of '" + GetInnerHtml.get(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.get(dropdownElement));
+                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.get(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.get(dropdownElement));
             }
             List<WebElement> elements = allOptions.stream()
                     .filter(element -> element.getText().contains(text.trim()))

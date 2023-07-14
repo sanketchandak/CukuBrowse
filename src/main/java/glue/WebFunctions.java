@@ -80,7 +80,7 @@ public class WebFunctions {
 
     public boolean alert_window_should_be_displayed(boolean alertShouldBe) {
         logger.info("Alert window should " + (alertShouldBe ? "" : "not") + " be displayed.");
-        Condition condition = Condition.AlertPresence(alertShouldBe);
+        Condition condition = Condition.alertPresence(alertShouldBe);
         return waitUntil(condition, 30, false);
     }
 
@@ -240,7 +240,7 @@ public class WebFunctions {
 
     public void I_deselect_following_options_with_text_from_select_dropdown(By dropdownElementBy, List<String> dropdownTexts) {
         logger.info("Deselect options with text " + dropdownTexts + " from element " + dropdownElementBy);
-        find(dropdownElementBy).deselectDropdownOptionsByTexts((String[]) dropdownTexts.toArray());
+        find(dropdownElementBy).deselectDropdownOptionsByTexts(dropdownTexts.toArray(new String[0]));
     }
 
     public ClickType getClickType(String clickOption) {
@@ -280,7 +280,7 @@ public class WebFunctions {
     public void I_select_following_options_with_text_from_dropdown(By dropdownElementBy, List<String> dropdownTexts) {
         logger.info("Select dropdown options " + dropdownTexts + "' from element: " + dropdownElementBy);
         try {
-            find(dropdownElementBy).selectDropdownOptionsByTexts((String[]) dropdownTexts.toArray());
+            find(dropdownElementBy).selectDropdownOptionsByTexts(dropdownTexts.toArray(new String[0]));
         } catch (Exception e) {
             logger.error("Failed to select dropdown options " + dropdownTexts + " from element: " + dropdownElementBy);
             throw new CukeBrowseException("Failed to select dropdown options " + dropdownTexts + " from element: " + dropdownElementBy + ".", e);
@@ -373,7 +373,7 @@ public class WebFunctions {
 
     public void I_wait_for_milliseconds(long toMillis) {
         logger.info("Wait for " + toMillis + " milliseconds.");
-        sleep(toMillis);
+        sleep(TimeUnit.MILLISECONDS.toSeconds(toMillis));
     }
 
     public void I_capture_and_attach_screenshot_of_page() {
@@ -438,13 +438,13 @@ public class WebFunctions {
         logger.info("Element: " + countElementBy + " should have '" + precision + "' than " + expectedNoOfElements);
         Condition condition;
         if (precision.trim().equalsIgnoreCase("greater than")) {
-            condition = Condition.CountOfElementsMoreThan(countElementBy, expectedNoOfElements);
+            condition = Condition.countOfElementsMoreThan(countElementBy, expectedNoOfElements);
             //assert findAll(clickableElementBy).getElements().size() >= expectedNoOfElements;
         } else if (precision.trim().equalsIgnoreCase("less than")) {
-            condition = Condition.CountOfElementsLessThan(countElementBy, expectedNoOfElements);
+            condition = Condition.countOfElementsLessThan(countElementBy, expectedNoOfElements);
             //assert findAll(clickableElementBy).getElements().size() <= expectedNoOfElements;
         } else if (precision.trim().equalsIgnoreCase("exactly")) {
-            condition = Condition.ExactCountOfElements(countElementBy, expectedNoOfElements);
+            condition = Condition.exactCountOfElements(countElementBy, expectedNoOfElements);
             //assert findAll(clickableElementBy).getElements().size() == expectedNoOfElements;
         } else {
             throw new CukeBrowseException("Invalid precision parameter. Valid values are: ['exactly','less than','greater than']");

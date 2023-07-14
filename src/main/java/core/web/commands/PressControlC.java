@@ -26,13 +26,13 @@ public class PressControlC {
         }
     }
 
-    public synchronized String pressControlC(By elementBy) {
-        String copiedText = pressControlC(Find.find(elementBy));
+    public synchronized String press(By elementBy) {
+        String copiedText = press(Find.findElement(elementBy));
         logger.info(String.format("Press Control C: do 'control + C' on '%s' element. Copied value: '%s'", elementBy.toString(), copiedText));
         return copiedText;
     }
 
-    public synchronized String pressControlC(WebElement element) {
+    public synchronized String press(WebElement element) {
         String copiedText = null;
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {

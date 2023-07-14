@@ -20,13 +20,13 @@ public class GetPreceding {
         }
     }
 
-    public WebElement getPreceding(By elementBy, int siblingIndex) {
+    public WebElement get(By elementBy, int siblingIndex) {
         logger.info(String.format("Get Preceding: get preceding of '%s' element at index: '%s'", elementBy.toString(), siblingIndex));
-        return Find.find(elementBy, By.xpath(String.format("preceding-sibling::*[%d]", siblingIndex)));
+        return Find.findElement(elementBy, By.xpath(String.format("preceding-sibling::*[%d]", siblingIndex)));
     }
 
-    public WebElement getPreceding(WebElement element, int siblingIndex) {
+    public WebElement get(WebElement element, int siblingIndex) {
         logger.info(String.format("Get Preceding: get preceding of '%s' element at index: '%s'", element.toString(), siblingIndex));
-        return Find.find(element, By.xpath(String.format("preceding-sibling::*[%d]", siblingIndex)));
+        return Find.findElement(element, By.xpath(String.format("preceding-sibling::*[%d]", siblingIndex)));
     }
 }

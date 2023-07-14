@@ -25,7 +25,7 @@ public class UploadFile {
         }
     }
 
-    public void uploadFile(WebElement inputWebElement, File fileToUpload) {
+    public void upload(WebElement inputWebElement, File fileToUpload) {
         checkFilesExist(fileToUpload);
         checkValidInputField(inputWebElement);
         String fileNames = canonicalPath(fileToUpload);
@@ -53,7 +53,7 @@ public class UploadFile {
         do {
             try {
                 inputField.sendKeys(fileNames);
-                logger.info(String.format("Upload Files: upload file to '%s' element with '%s' filename", GetInnerHtml.getInnerHtml(inputField), fileNames));
+                logger.info(String.format("Upload Files: upload file to '%s' element with '%s' filename", GetInnerHtml.get(inputField), fileNames));
                 break;
             } catch (ElementNotInteractableException notInteractable) {
                 if (stopwatch.isTimeoutReached()) {
@@ -66,8 +66,8 @@ public class UploadFile {
 
     private void checkValidInputField(WebElement inputElement) {
         if (!"input".equalsIgnoreCase(inputElement.getTagName())) {
-            logger.error("Cannot upload file because '" + GetInnerHtml.getInnerHtml(inputElement) + "' is not an INPUT");
-            throw new IllegalArgumentException("Cannot upload file because '" + GetInnerHtml.getInnerHtml(inputElement) + "' is not an INPUT");
+            logger.error("Cannot upload file because '" + GetInnerHtml.get(inputElement) + "' is not an INPUT");
+            throw new IllegalArgumentException("Cannot upload file because '" + GetInnerHtml.get(inputElement) + "' is not an INPUT");
         }
     }
 }

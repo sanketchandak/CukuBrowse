@@ -19,12 +19,12 @@ public class SendKeys {
         }
     }
 
-    public void sendKeys(By elementIdentifierBy, String textToSend) {
-        Find.find(elementIdentifierBy).sendKeys(textToSend);
+    public void send(By elementIdentifierBy, String textToSend) {
+        Find.findElement(elementIdentifierBy).sendKeys(textToSend);
         logger.info(String.format("Send Keys: send '%s' to element '%s'", textToSend, elementIdentifierBy.toString()));
     }
 
-    public void sendKeys(WebElement element, String textToSend) {
+    public void send(WebElement element, String textToSend) {
         element.sendKeys(textToSend);
         logger.info(String.format("Send Keys: send '%s' to element '%s'", textToSend, element));
     }

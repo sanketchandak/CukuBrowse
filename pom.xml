@@ -15,7 +15,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <logback.version>1.2.3</logback.version>
         <javax.mail.version>1.4.7</javax.mail.version>
-        <webdriver.manager.version>5.3.3</webdriver.manager.version>
+        <webdriver.manager.version>5.4.0</webdriver.manager.version>
         <cucumber.java.version>7.12.1</cucumber.java.version>
         <cucumber.junit.version>7.12.1</cucumber.junit.version>
         <selenium.java.version>4.10.0</selenium.java.version>
@@ -151,6 +151,13 @@
             <groupId>com.sikulix</groupId>
             <artifactId>sikulixapi</artifactId>
             <version>2.0.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
         </dependency>
 
     </dependencies>
@@ -574,6 +581,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
                     <source>12</source>
                     <target>12</target>

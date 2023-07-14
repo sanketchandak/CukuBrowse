@@ -21,12 +21,12 @@ public class PressEnter {
         }
     }
 
-    public void pressEnter(By elementBy) {
-        Find.find(elementBy).sendKeys(Keys.ENTER);
+    public void press(By elementBy) {
+        Find.findElement(elementBy).sendKeys(Keys.ENTER);
         logger.info(String.format("Press Enter: press enter on element '%s'", elementBy.toString()));
     }
 
-    public void pressEnter(WebElement element) {
+    public void press(WebElement element) {
         element.sendKeys(Keys.ENTER);
         logger.info(String.format("Press Enter: press enter on element '%s'", element));
     }

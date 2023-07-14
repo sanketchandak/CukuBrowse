@@ -58,7 +58,9 @@ public class FileUtils {
             String parentDirectory = file.getParent();
             String newFilePath = parentDirectory + File.separator + newFileName;
             File newFile = new File(newFilePath);
-            file.renameTo(newFile);
+            if(!file.renameTo(newFile)){
+                logger.error("Fail to rename file '"+filePath+"' as '"+newFileName+"'");
+            }
         }
     }
 

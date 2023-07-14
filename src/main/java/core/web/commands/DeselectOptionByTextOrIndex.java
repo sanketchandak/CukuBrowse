@@ -28,7 +28,7 @@ public class DeselectOptionByTextOrIndex {
     }
 
     public void deselectOptionsByIndexes(By selectDropdownBy, int[] indexes) {
-        deselectOptionsByIndexes(find.find(selectDropdownBy), indexes);
+        deselectOptionsByIndexes(find.findElement(selectDropdownBy), indexes);
         logger.info(String.format("Deselect Options By Indexes: Deselect Options in dropdown '%s' by indexes: '%s' ", selectDropdownBy.toString(), Arrays.toString(indexes)));
     }
 
@@ -44,16 +44,16 @@ public class DeselectOptionByTextOrIndex {
                 }
             }
             if (!Thread.currentThread().getStackTrace()[2].getMethodName().equalsIgnoreCase("deselectOptionsByIndexes")) {
-                logger.info(String.format("Deselect Options By Indexes: Deselect Options in dropdown '%s' by indexes: '%s' ", GetInnerHtml.getInnerHtml(selectDropdownElement), Arrays.toString(indexes)));
+                logger.info(String.format("Deselect Options By Indexes: Deselect Options in dropdown '%s' by indexes: '%s' ", GetInnerHtml.get(selectDropdownElement), Arrays.toString(indexes)));
             }
         } else {
-            logger.error(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new CukeBrowseException(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            logger.error(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect Options By Indexes: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
         }
     }
 
     public void deselectOptionsByTexts(By selectDropdownBy, String[] texts) {
-        deselectOptionsByTexts(find.find(selectDropdownBy), texts);
+        deselectOptionsByTexts(find.findElement(selectDropdownBy), texts);
         logger.info(String.format("Deselect Options By Texts: Deselect Options in dropdown '%s' by indexes: '%s' ", selectDropdownBy.toString(), Arrays.toString(texts)));
     }
 
@@ -68,10 +68,10 @@ public class DeselectOptionByTextOrIndex {
                     throw new CukeBrowseException("Deselect Options By Texts: /option[text:" + text + "] is not present. ", e);
                 }
             }
-            logger.info(String.format("Deselect Options By Texts: Deselect Options in dropdown '%s' by indexes: '%s' ", GetInnerHtml.getInnerHtml(selectDropdownElement), Arrays.toString(texts)));
+            logger.info(String.format("Deselect Options By Texts: Deselect Options in dropdown '%s' by indexes: '%s' ", GetInnerHtml.get(selectDropdownElement), Arrays.toString(texts)));
         } else {
-            logger.error(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new CukeBrowseException(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            logger.error(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect Options By Texts: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
         }
     }
 }

@@ -35,27 +35,27 @@ public class ExcelComparatorColumnBasedKey {
         Set<String> allSheetNames = new HashSet<>();
         expectedWorkbookData.getSheetData().forEach(sheetData -> allSheetNames.add(sheetData.getSheetName()));
         actualWorkbookData.getSheetData().forEach(sheetData -> allSheetNames.add(sheetData.getSheetName()));
-        Workbook workbook = new XSSFWorkbook();
-        Set<Boolean> diffPresentFlag = new HashSet<>();
-
-        for (String sheetName : allSheetNames) {
-            boolean sheetPresence = isSheetPresentForDifference(sheetName);
-            if(sheetPresence) {
-                diffPresentFlag.add(DifferenceEngine.Difference(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), workbook, workbookSheetsKeyColumns));
-                logger.info("Successfully compared '"+sheetName+"' sheet in expected and actual workbook");
-            } else {
-                logger.info("Can not compare '"+sheetName+"' sheet as it's either missing from expected and actual workbook");
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Set<Boolean> diffPresentFlag = new HashSet<>();
+            for (String sheetName : allSheetNames) {
+                boolean sheetPresence = isSheetPresentForDifference(sheetName);
+                if (sheetPresence) {
+                    diffPresentFlag.add(DifferenceEngine.difference(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), workbook, workbookSheetsKeyColumns));
+                    logger.info("Successfully compared '" + sheetName + "' sheet in expected and actual workbook");
+                } else {
+                    logger.info("Can not compare '" + sheetName + "' sheet as it's either missing from expected and actual workbook");
+                }
             }
-        }
 
-        if(diffPresentFlag.contains(true)) {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
-            workbook.write(out);
-            logger.info("Breaks after comparing 2 workbooks reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
-        } else {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
-            workbook.write(out);
-            logger.info("No breaks identified after comparing 2 workbooks reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
+            if (diffPresentFlag.contains(true)) {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
+                workbook.write(out);
+                logger.info("Breaks after comparing 2 workbooks reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            } else {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
+                workbook.write(out);
+                logger.info("No breaks identified after comparing 2 workbooks reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            }
         }
         logger.info("Successfully compared all sheets of '"+expectedWorkbookData.getFilePath()+"' expected workbook and '"+actualWorkbookData.getFilePath()+"' actual workbook.");
         return new File(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
@@ -71,23 +71,24 @@ public class ExcelComparatorColumnBasedKey {
                 outputFilePath.substring(outputFilePath.lastIndexOf(File.separator) + 1)
         );
 
-        Workbook workbook = new XSSFWorkbook();
-        boolean diffPresentFlag = false;
+        try(Workbook workbook = new XSSFWorkbook()) {
+            boolean diffPresentFlag = false;
 
-        boolean sheetPresence = isSheetPresentForDifference(sheetName);
-        if(sheetPresence) {
-            diffPresentFlag = DifferenceEngine.Difference(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), workbook, workbookSheetsKeyColumns);
-            logger.info("Successfully compared '"+sheetName+"' sheet in expected and actual workbook");
-        }
+            boolean sheetPresence = isSheetPresentForDifference(sheetName);
+            if (sheetPresence) {
+                diffPresentFlag = DifferenceEngine.difference(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), workbook, workbookSheetsKeyColumns);
+                logger.info("Successfully compared '" + sheetName + "' sheet in expected and actual workbook");
+            }
 
-        if(diffPresentFlag) {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
-            workbook.write(out);
-            logger.info("Breaks after comparing sheet '"+sheetName+"' in 2 workbooks reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
-        } else {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
-            workbook.write(out);
-            logger.info("No breaks identified after comparing sheet '"+sheetName+"' in 2 workbooks reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
+            if (diffPresentFlag) {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
+                workbook.write(out);
+                logger.info("Breaks after comparing sheet '" + sheetName + "' in 2 workbooks reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            } else {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
+                workbook.write(out);
+                logger.info("No breaks identified after comparing sheet '" + sheetName + "' in 2 workbooks reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            }
         }
         logger.info("Successfully compared sheet '"+sheetName+"' of '"+expectedWorkbookData.getFilePath()+"' expected workbook and '"+actualWorkbookData.getFilePath()+"' actual workbook.");
         return new File(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
@@ -103,23 +104,24 @@ public class ExcelComparatorColumnBasedKey {
                 outputFilePath.substring(outputFilePath.lastIndexOf(File.separator) + 1)
         );
 
-        Workbook workbook = new XSSFWorkbook();
-        boolean diffPresentFlag = false;
+        try(Workbook workbook = new XSSFWorkbook()) {
+            boolean diffPresentFlag = false;
 
-        boolean sheetPresence = isSheetPresentForDifference(sheetName);
-        if(sheetPresence) {
-            diffPresentFlag = DifferenceEngine.DifferenceBasedOnColumnAddress(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), startColumnAddress, endColumnAddress, workbook, workbookSheetsKeyColumns);
-            logger.info("Successfully compared '"+sheetName+"' sheet in expected and actual workbook from column address '"+startColumnAddress+"' to '"+endColumnAddress+"'.");
-        }
+            boolean sheetPresence = isSheetPresentForDifference(sheetName);
+            if (sheetPresence) {
+                diffPresentFlag = DifferenceEngine.differenceBasedOnColumnAddress(expectedWorkbookData.getSheetData(sheetName), actualWorkbookData.getSheetData(sheetName), startColumnAddress, endColumnAddress, workbook, workbookSheetsKeyColumns);
+                logger.info("Successfully compared '" + sheetName + "' sheet in expected and actual workbook from column address '" + startColumnAddress + "' to '" + endColumnAddress + "'.");
+            }
 
-        if(diffPresentFlag) {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
-            workbook.write(out);
-            logger.info("Breaks after comparing sheet '"+sheetName+"' in 2 workbooks from column address '"+startColumnAddress+"' to '"+endColumnAddress+"' reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
-        } else {
-            FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
-            workbook.write(out);
-            logger.info("No breaks identified after comparing sheet '"+sheetName+"' in 2 workbooks from column address '"+startColumnAddress+"' to '"+endColumnAddress+"' reported in: "+FileUtils.getOSFriendlyFilePath(outputFilePath));
+            if (diffPresentFlag) {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(outputFilePath));
+                workbook.write(out);
+                logger.info("Breaks after comparing sheet '" + sheetName + "' in 2 workbooks from column address '" + startColumnAddress + "' to '" + endColumnAddress + "' reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            } else {
+                FileOutputStream out = new FileOutputStream(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
+                workbook.write(out);
+                logger.info("No breaks identified after comparing sheet '" + sheetName + "' in 2 workbooks from column address '" + startColumnAddress + "' to '" + endColumnAddress + "' reported in: " + FileUtils.getOSFriendlyFilePath(outputFilePath));
+            }
         }
         logger.info("Successfully compared sheet '"+sheetName+"' of '"+expectedWorkbookData.getFilePath()+"' expected workbook and '"+actualWorkbookData.getFilePath()+"' actual workbook from column address '"+startColumnAddress+"' to '"+endColumnAddress+"'.");
         return new File(Objects.requireNonNull(FileUtils.getOSFriendlyFilePath(outputFilePath)));
@@ -184,14 +186,14 @@ public class ExcelComparatorColumnBasedKey {
             throw new IllegalStateException("Not designed to create object of DifferenceEngine class as contain static methods.");
         }
 
-        private static boolean Difference(SheetData expectedSheetData, SheetData actualSheetData, Workbook workbook, WorkbookSheetsKeyColumns workbookSheetsKeyColumns) {
+        private static boolean difference(SheetData expectedSheetData, SheetData actualSheetData, Workbook workbook, WorkbookSheetsKeyColumns workbookSheetsKeyColumns) {
             logger.info("Compare '"+expectedSheetData.getSheetName()+"' sheet with '"+actualSheetData.getSheetName()+"' sheet.");
             boolean diffPresentFlag = getDifference(expectedSheetData, actualSheetData, null, null, workbook, workbookSheetsKeyColumns);
             logger.info("Successfully compared '"+expectedSheetData.getSheetName()+"' sheet with '"+actualSheetData.getSheetName()+"' sheet.");
             return diffPresentFlag;
         }
 
-        private static boolean DifferenceBasedOnColumnAddress(SheetData expectedSheetData, SheetData actualSheetData, String startColumnAddress, String endColumnAddress, Workbook workbook, WorkbookSheetsKeyColumns workbookSheetsKeyColumns) {
+        private static boolean differenceBasedOnColumnAddress(SheetData expectedSheetData, SheetData actualSheetData, String startColumnAddress, String endColumnAddress, Workbook workbook, WorkbookSheetsKeyColumns workbookSheetsKeyColumns) {
             logger.info("Compare '"+expectedSheetData.getSheetName()+"' sheet with '"+actualSheetData.getSheetName()+"' sheet from column address '"+startColumnAddress+"' to '"+endColumnAddress+"'");
             int startColumnNumber = ExcelUtility.getExcelColumnNumber(startColumnAddress);
             int endColumnNumber = ExcelUtility.getExcelColumnNumber(endColumnAddress);

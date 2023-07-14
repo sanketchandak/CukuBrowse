@@ -30,27 +30,27 @@ public class Click {
     }
 
     public void clickOn(By elementIdentifierBy, ClickType clickType) {
-        clickOn(Find.find(elementIdentifierBy), clickType);
+        clickOn(Find.findElement(elementIdentifierBy), clickType);
         logger.info("Click On: " + clickType.name() + " on " + elementIdentifierBy.toString());
     }
 
     public void clickOn(WebElement element, ClickType clickType) {
         setDriverSession();
-        ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", element);
+        ExecuteJavascript.execute("arguments[0].scrollIntoView(true);", element);
         switch (clickType) {
             case JSClick: {
-                ExecuteJavascript.executeJavascript("arguments[0].click()", element);
+                ExecuteJavascript.execute("arguments[0].click()", element);
                 break;
             }
             case JSDoubleClick: {
-                ExecuteJavascript.executeJavascript("var element = arguments[0]; " +
+                ExecuteJavascript.execute("var element = arguments[0]; " +
                         "var mouseEventObj = document.createEvent('MouseEvents'); " +
                         "mouseEventObj.initEvent( 'dblclick', true, true ); " +
                         "element.dispatchEvent(mouseEventObj);", element);
                 break;
             }
             case JSRightClick: {
-                ExecuteJavascript.executeJavascript("var element = arguments[0]; " +
+                ExecuteJavascript.execute("var element = arguments[0]; " +
                         "var mouseEventObj = document.createEvent('MouseEvents'); " +
                         "mouseEventObj.initEvent( 'contextmenu', true, true ); " +
                         "element.dispatchEvent(mouseEventObj);", element);

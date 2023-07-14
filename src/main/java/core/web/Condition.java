@@ -158,42 +158,42 @@ public abstract class Condition {
         return new UrlIs(url, shouldBe);
     }
 
-    public static Condition AlertPresence(boolean shouldBe) {
+    public static Condition alertPresence(boolean shouldBe) {
         logger.info("Alert Presence: Wait for alert presence");
         return new AlertPresence(shouldBe);
     }
 
-    public static Condition CountOfElementsLessThan(By elementBy, int elementCount) {
+    public static Condition countOfElementsLessThan(By elementBy, int elementCount) {
         logger.info(String.format("Count Of Elements Less Than: Wait for '%s' element count to be less than '%s'", elementBy.toString(), elementCount));
         return new CountOfElementsLessThan(elementBy, elementCount);
     }
 
-    public static Condition CountOfElementsMoreThan(By elementBy, int elementCount) {
+    public static Condition countOfElementsMoreThan(By elementBy, int elementCount) {
         logger.info(String.format("Count Of Elements More Than: Wait for '%s' element count to be more than '%s'", elementBy.toString(), elementCount));
         return new CountOfElementsMoreThan(elementBy, elementCount);
     }
 
-    public static Condition ExactCountOfElements(By elementBy, int elementCount) {
+    public static Condition exactCountOfElements(By elementBy, int elementCount) {
         logger.info(String.format("Exact Count Of Elements: Wait for '%s' element count to be '%s'", elementBy.toString(), elementCount));
         return new ExactCountOfElements(elementBy, elementCount);
     }
 
-    public static Condition IsFramePresent(String frameLocator) {
+    public static Condition isFramePresent(String frameLocator) {
         logger.info(String.format("Is Frame Present: Wait for frame to be present with name '%s'", frameLocator));
         return new IsFramePresent(frameLocator);
     }
 
-    public static Condition IsFramePresent(By locator) {
+    public static Condition isFramePresent(By locator) {
         logger.info(String.format("Is Frame Present: Wait for '%s' frame to be present", locator.toString()));
         return new IsFramePresent(locator);
     }
 
-    public static Condition IsFramePresent(int frameNumber) {
+    public static Condition isFramePresent(int frameNumber) {
         logger.info(String.format("Is Frame Present: Wait for frame to be present at frame number as '%s'", frameNumber));
         return new IsFramePresent(frameNumber);
     }
 
-    public static Condition IsFramePresent(WebElement frameLocator) {
+    public static Condition isFramePresent(WebElement frameLocator) {
         logger.info(String.format("Is Frame Present: Wait for '%s' frame to be present", frameLocator.toString()));
         return new IsFramePresent(frameLocator);
     }

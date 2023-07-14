@@ -38,7 +38,9 @@ public class EncryptDecryptUtils {
         } finally {
             File file = new File(newFilePath);
             if (file.exists()) {
-                file.delete();
+                if(!file.delete()){
+                    logger.info("public.key file not present to delete");
+                }
             }
         }
         return encryptString;
@@ -60,7 +62,9 @@ public class EncryptDecryptUtils {
         } finally {
             File file = new File(newFilePath);
             if (file.exists()) {
-                file.delete();
+                if(!file.delete()){
+                    logger.info("private.key file not present to delete");
+                }
             }
         }
         return decryptString;

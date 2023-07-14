@@ -103,6 +103,6 @@ public class WebDriverThreadLocalContainer implements WebDriverContainer {
         if (listeners.isEmpty()) {
             return webDriver;
         }
-        return new EventFiringDecorator(listeners.toArray(new WebDriverListener[0])).decorate(webDriver);
+        return new EventFiringDecorator<>(listeners.toArray(new WebDriverListener[0])).decorate(webDriver);
     }
 }

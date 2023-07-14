@@ -21,12 +21,12 @@ public class PressControlA {
         }
     }
 
-    public void pressControlA(By elementBy) {
-        pressControlA(Find.find(elementBy));
+    public void press(By elementBy) {
+        press(Find.findElement(elementBy));
         logger.info(String.format("Press Control A: do 'control + A' on '%s' element", elementBy.toString()));
     }
 
-    public void pressControlA(WebElement element) {
+    public void press(WebElement element) {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {
             element.sendKeys(Keys.chord(Keys.CONTROL, "a"));

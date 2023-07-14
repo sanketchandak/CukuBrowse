@@ -30,21 +30,21 @@ public class GetInnerText {
         driver = WebDriverRunner.getInstance().getWebDriver();
     }
 
-    public String getInnerText(By elementBy) {
-        String retrievedInnerText = getInnerText(Find.find(elementBy));
+    public String get(By elementBy) {
+        String retrievedInnerText = get(Find.findElement(elementBy));
         logger.info(String.format("Get Inner Text: inner text of element: '%s' having value as '%s'", elementBy.toString(), retrievedInnerText));
         return retrievedInnerText;
     }
 
-    public String getInnerText(WebElement element) {
+    public String get(WebElement element) {
         setDriverSession();
         logger.info(String.format("Get Inner Text: get inner text of element: '%s'", element.toString()));
         if (((RemoteWebDriver) driver).getCapabilities().getBrowserName().equalsIgnoreCase(Browser.IE.browserName())) {
-            String retrievedInnerText = GetAttribute.getAttribute(element,"innerText");
+            String retrievedInnerText = GetAttribute.get(element,"innerText");
             logger.info(String.format("Get Inner Text: inner text of element: '%s' having value as '%s'", element, retrievedInnerText));
             return retrievedInnerText;
         }
-        String retrievedInnerText = GetAttribute.getAttribute(element,"textContent");
+        String retrievedInnerText = GetAttribute.get(element,"textContent");
         logger.info(String.format("Get Inner Text: inner text of element: '%s' having value as '%s'", element, retrievedInnerText));
         return retrievedInnerText;
     }

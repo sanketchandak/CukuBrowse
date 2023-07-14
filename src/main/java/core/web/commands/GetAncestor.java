@@ -20,13 +20,13 @@ public class GetAncestor {
         }
     }
 
-    public WebElement getAncestor(By elementBy, String ancestorPath) {
+    public WebElement get(By elementBy, String ancestorPath) {
         logger.info(String.format("Get Ancestor: get ancestor: '%s' for element: '%s'", ancestorPath, elementBy.toString()));
-        return Find.find(elementBy, By.xpath("ancestor::" + ancestorPath));
+        return Find.findElement(elementBy, By.xpath("ancestor::" + ancestorPath));
     }
 
-    public WebElement getAncestor(WebElement element, String ancestorPath) {
+    public WebElement get(WebElement element, String ancestorPath) {
         logger.info(String.format("Get Ancestor: get ancestor: '%s' for element: '%s'", ancestorPath, element.toString()));
-        return Find.find(element, By.xpath("ancestor::" + ancestorPath));
+        return Find.findElement(element, By.xpath("ancestor::" + ancestorPath));
     }
 }

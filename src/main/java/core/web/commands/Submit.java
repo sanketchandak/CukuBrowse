@@ -23,7 +23,7 @@ public class Submit {
     }
 
     public void submit(By elementIdentifierBy) {
-        List<WebElement> elements = FindAll.findAll(elementIdentifierBy);
+        List<WebElement> elements = FindAll.find(elementIdentifierBy);
         if (!elements.isEmpty()) {
             submit(elements.get(0));
             logger.info("Submit: submit form");
@@ -35,7 +35,7 @@ public class Submit {
 
     public void submit(WebElement element) {
         if (element.getTagName().equalsIgnoreCase("form")
-                || !FindAll.findAll(element, By.xpath("//ancestor::form")).isEmpty()) {
+                || !FindAll.find(element, By.xpath("//ancestor::form")).isEmpty()) {
             element.submit();
             logger.info("Submit: submit form");
         } else {

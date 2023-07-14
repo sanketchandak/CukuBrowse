@@ -24,19 +24,19 @@ public class DeselectAllOptions {
         }
     }
 
-    public void deselectAllOptions(By selectDropdownBy) {
-        deselectAllOptions(find.find(selectDropdownBy));
+    public void deselectAll(By selectDropdownBy) {
+        deselectAll(find.findElement(selectDropdownBy));
         logger.info(String.format("Deselect All Options: Deselect All Options in dropdown: '%s' ", selectDropdownBy.toString()));
     }
 
-    public void deselectAllOptions(WebElement selectDropdownElement) {
+    public void deselectAll(WebElement selectDropdownElement) {
         if ("select".equalsIgnoreCase(selectDropdownElement.getTagName())) {
             Select select = new Select(selectDropdownElement);
             select.deselectAll();
-            logger.info(String.format("Deselect All Options: Deselect All Options in dropdown: '%s' ", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            logger.info(String.format("Deselect All Options: Deselect All Options in dropdown: '%s' ", GetInnerHtml.get(selectDropdownElement)));
         } else {
-            logger.error(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
-            throw new CukeBrowseException(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.getInnerHtml(selectDropdownElement)));
+            logger.error(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
+            throw new CukeBrowseException(String.format("Deselect All Options: '%s' Element don't have 'select' tag. This can only work with 'select' tag.", GetInnerHtml.get(selectDropdownElement)));
         }
     }
 

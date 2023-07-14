@@ -50,7 +50,7 @@ public class ContainsCaseInsensitiveAttribute extends Condition {
         driver = WebDriverRunner.getInstance().getWebDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
         if (safeWaitFlag) {
-            if (exceptionTypes == null || exceptionTypes.size() == 0) {
+            if (exceptionTypes == null || exceptionTypes.isEmpty()) {
                 wait.ignoring(Exception.class);
             } else {
                 wait.ignoreAll(exceptionTypes);

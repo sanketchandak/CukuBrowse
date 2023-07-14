@@ -28,8 +28,8 @@ public class SetBrowserZoomPercentage {
         driver = WebDriverRunner.getInstance().getWebDriver();
     }
 
-    public void setBrowserZoomPercentage(int browserZoomLevel) {
-        ExecuteJavascript.executeJavascript("document.body.style.zoom='" + browserZoomLevel + "%'");
+    public void set(int browserZoomLevel) {
+        ExecuteJavascript.execute("document.body.style.zoom='" + browserZoomLevel + "%'");
         logger.info(String.format("Set Browser Zoom Percentage: set browser percentage to '%s'", browserZoomLevel));
     }
 
@@ -37,7 +37,7 @@ public class SetBrowserZoomPercentage {
         setDriverSession();
         String browserName = ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toLowerCase();
         if (browserName.contains("chrome")) {
-            ExecuteJavascript.executeJavascript("document.body.style.zoom='100%'");
+            ExecuteJavascript.execute("document.body.style.zoom='100%'");
         } else {
             try {
                 Robot robot = new Robot();

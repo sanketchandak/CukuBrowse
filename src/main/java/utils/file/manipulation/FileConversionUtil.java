@@ -46,44 +46,48 @@ public class FileConversionUtil {
     public static void csvToEXCEL(String csvFileNameWithPath, String excelFileNameWithPath, char csvSeparator) throws Exception {
         boolean validFileStatus = FileUtils.checkValidFile(csvFileNameWithPath);
         if (validFileStatus & csvFileNameWithPath.endsWith(".csv")) {
-            FileOutputStream writer;
-            Workbook myWorkBook;
-            if (excelFileNameWithPath.endsWith("xls")) {
-                writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath));
-                myWorkBook = new HSSFWorkbook();
-            } else if (excelFileNameWithPath.endsWith("xlsx")) {
-                writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath));
-                myWorkBook = new XSSFWorkbook();
-            } else {
-                writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath + ".xlsx"));
-                myWorkBook = new XSSFWorkbook();
-            }
-            Sheet mySheet = myWorkBook.createSheet();
-            List<String[]> csvDataList;
-            CSVParser parser;
-            CSVReader csvReader;
-            if(csvSeparator != '\u0000') {
-                parser = new CSVParserBuilder()
-                        .withQuoteChar('\"')
-                        .build();
-            } else {
-                parser = new CSVParserBuilder().withSeparator(csvSeparator)
-                        .withQuoteChar('\"')
-                        .build();
-            }
-            csvReader = new CSVReaderBuilder(new FileReader(FileUtils.getOSFriendlyFilePath(csvFileNameWithPath)))
-                    .withCSVParser(parser)
-                    .build();
-            csvDataList = csvReader.readAll();
-            for (int rowNo = 0; rowNo < csvDataList.size(); rowNo++) {
-                String[] columns = csvDataList.get(rowNo);
-                Row myRow = mySheet.createRow(rowNo);
-                for (int cellNo = 0; cellNo < columns.length; cellNo++) {
-                    myRow.createCell(cellNo).setCellValue(columns[cellNo]);
+            FileOutputStream writer = null;
+            Workbook myWorkBook = null;
+            try {
+                if (excelFileNameWithPath.endsWith("xls")) {
+                    writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath));
+                    myWorkBook = new HSSFWorkbook();
+                } else if (excelFileNameWithPath.endsWith("xlsx")) {
+                    writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath));
+                    myWorkBook = new XSSFWorkbook();
+                } else {
+                    writer = new FileOutputStream(FileUtils.getOSFriendlyFilePath(excelFileNameWithPath + ".xlsx"));
+                    myWorkBook = new XSSFWorkbook();
                 }
+                Sheet mySheet = myWorkBook.createSheet();
+                List<String[]> csvDataList;
+                CSVParser parser;
+                CSVReader csvReader;
+                if (csvSeparator != '\u0000') {
+                    parser = new CSVParserBuilder()
+                            .withQuoteChar('\"')
+                            .build();
+                } else {
+                    parser = new CSVParserBuilder().withSeparator(csvSeparator)
+                            .withQuoteChar('\"')
+                            .build();
+                }
+                csvReader = new CSVReaderBuilder(new FileReader(FileUtils.getOSFriendlyFilePath(csvFileNameWithPath)))
+                        .withCSVParser(parser)
+                        .build();
+                csvDataList = csvReader.readAll();
+                for (int rowNo = 0; rowNo < csvDataList.size(); rowNo++) {
+                    String[] columns = csvDataList.get(rowNo);
+                    Row myRow = mySheet.createRow(rowNo);
+                    for (int cellNo = 0; cellNo < columns.length; cellNo++) {
+                        myRow.createCell(cellNo).setCellValue(columns[cellNo]);
+                    }
+                }
+                myWorkBook.write(writer);
+            } finally {
+                myWorkBook.close();
+                writer.close();
             }
-            myWorkBook.write(writer);
-            writer.close();
         } else {
             throw new CukeBrowseException("'" + csvFileNameWithPath + "' is either doesn't exist or not '.csv' file or is a directory");
         }

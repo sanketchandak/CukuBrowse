@@ -20,14 +20,14 @@ public class GetInnerHtml {
         }
     }
 
-    public String getInnerHtml(By elementBy) {
-        String retrievedInnerHtml = GetAttribute.getAttribute(elementBy,"innerHTML");
+    public String get(By elementBy) {
+        String retrievedInnerHtml = GetAttribute.get(elementBy,"innerHTML");
         logger.info(String.format("Get Inner Html: inner html of element: '%s' having value as '%s'", elementBy.toString(), retrievedInnerHtml));
         return retrievedInnerHtml;
     }
 
-    public String getInnerHtml(WebElement element) {
-        String retrievedInnerHtml =  GetAttribute.getAttribute(element, "innerHTML");
+    public String get(WebElement element) {
+        String retrievedInnerHtml =  GetAttribute.get(element, "innerHTML");
         logger.info(String.format("Get Inner Html: inner html of element: '%s' having value as '%s'", element, retrievedInnerHtml));
         return retrievedInnerHtml;
     }

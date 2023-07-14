@@ -8,6 +8,7 @@ import utils.CukeBrowseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -216,14 +217,14 @@ public class Commander {
     /**
      * Not recommended. Test should not sleep, but should wait for some condition instead.
      *
-     * @param milliseconds Time to sleep in milliseconds
+     * @param seconds Time to sleep in seconds
      */
-    public static void sleep(long milliseconds) {
+    public static void sleep(long seconds) {
         try {
-            Thread.sleep(milliseconds);
+            Thread.sleep(Duration.ofSeconds(seconds).toMillis());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new CukeBrowseException("Sleep for "+milliseconds, e);
+            throw new CukeBrowseException("Sleep for seconds:"+seconds, e);
         }
     }
 
@@ -282,7 +283,7 @@ public class Commander {
     public static Object executeJavaScript(String jsCode, CommanderElement... commanderElements) {
         assert commanderElements != null;
         WebElement[] elements = (WebElement[]) Arrays.stream(commanderElements).map(CommanderElement::getElement).toArray();
-        return ExecuteJavascript.executeJavascript(jsCode, elements);
+        return ExecuteJavascript.execute(jsCode, elements);
     }
 
     /**
@@ -291,7 +292,7 @@ public class Commander {
      * @param browserZoomLevel set zoom percentage of browser
      */
     public static void setBrowserZoomPercentage(int browserZoomLevel) {
-        SetBrowserZoomPercentage.setBrowserZoomPercentage(browserZoomLevel);
+        SetBrowserZoomPercentage.set(browserZoomLevel);
     }
 
     /**
@@ -411,7 +412,7 @@ public class Commander {
      * Scroll to element identified using By class.
      */
     public static void scrollIntoView(By elementBy) {
-        ScrollIntoView.scrollIntoView(elementBy);
+        ScrollIntoView.scroll(elementBy);
     }
 
     /**
@@ -445,7 +446,7 @@ public class Commander {
      * @return CommanderElement
      */
     public static CommanderElement find(By elementBy) {
-        return new CommanderElement(Find.find(elementBy));
+        return new CommanderElement(Find.findElement(elementBy));
     }
 
     /**
@@ -457,7 +458,7 @@ public class Commander {
      * @return CommanderElement
      */
     public static CommanderElement find(By parentBy, By targetElementBy, int... index) {
-        return new CommanderElement(Find.find(parentBy, targetElementBy, index));
+        return new CommanderElement(Find.findElement(parentBy, targetElementBy, index));
     }
 
     /**
@@ -467,7 +468,7 @@ public class Commander {
      * @return CommanderElements
      */
     public static CommanderElements findAll(By elementBy) {
-        return new CommanderElements(FindAll.findAll(elementBy));
+        return new CommanderElements(FindAll.find(elementBy));
     }
 
     /**
@@ -478,7 +479,7 @@ public class Commander {
      * @return CommanderElements
      */
     public static CommanderElements findAll(By parentBy, By targetElementBy) {
-        return new CommanderElements(FindAll.findAll(parentBy, targetElementBy));
+        return new CommanderElements(FindAll.find(parentBy, targetElementBy));
     }
 
     /**

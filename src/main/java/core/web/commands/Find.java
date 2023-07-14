@@ -10,7 +10,6 @@ import utils.CukeBrowseException;
 
 import java.util.Arrays;
 
-import static org.openqa.selenium.support.locators.RelativeLocator.*;
 public class Find {
     private static final Logger logger = LoggerFactory.getLogger(Find.class);
     private WebDriver driver;
@@ -28,19 +27,19 @@ public class Find {
         driver = WebDriverRunner.getInstance().getWebDriver();
     }
 
-    public WebElement find(By elementBy) {
+    public WebElement findElement(By elementBy) {
         setDriverSession();
         logger.info(String.format("Find Element: find element by '%s'", elementBy));
         return driver.findElement(elementBy);
     }
 
-    public WebElement find(By parentBy, By elementBy, int... index) {
+    public WebElement findElement(By parentBy, By elementBy, int... index) {
         setDriverSession();
         logger.info(String.format("Find Element: find child element: '%s' under Parent element: '%s' at '%s' index", elementBy.toString(), parentBy.toString(), (index.length != 0) ? Arrays.toString(index) : '0'));
-        return find(driver.findElement(parentBy), elementBy, index);
+        return findElement(driver.findElement(parentBy), elementBy, index);
     }
 
-    public WebElement find(WebElement parentElement, By elementBy, int... index) {
+    public WebElement findElement(WebElement parentElement, By elementBy, int... index) {
         assert index != null;
         logger.info(String.format("Find Element: find child element: '%s' under Parent element: '%s' at '%s' index", elementBy.toString(), parentElement.toString(), (index.length != 0) ? Arrays.toString(index) : '0'));
         return index.length == 0 ?

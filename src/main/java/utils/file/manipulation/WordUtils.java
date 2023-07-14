@@ -33,8 +33,9 @@ public class WordUtils {
      */
     public static String extractText(File file) throws IOException {
         XWPFDocument document = loadDocument(file);
-        XWPFWordExtractor extractor = new XWPFWordExtractor(document);
-        return extractor.getText();
+        try(XWPFWordExtractor extractor = new XWPFWordExtractor(document)) {
+            return extractor.getText();
+        }
     }
 
     /**
@@ -99,8 +100,9 @@ public class WordUtils {
     }
 
     private static XWPFDocument loadDocument(File file) throws IOException {
-        FileInputStream fis = new FileInputStream(file);
-        return new XWPFDocument(fis);
+        try(FileInputStream fis = new FileInputStream(file)) {
+            return new XWPFDocument(fis);
+        }
     }
 
     private static void saveDocument(XWPFDocument document, File file) throws IOException {

@@ -20,13 +20,13 @@ public class GetParent {
         }
     }
 
-    public WebElement getParent(By elementBy) {
+    public WebElement get(By elementBy) {
         logger.info(String.format("Get Parent: get parent of element: '%s'", elementBy.toString()));
-        return Find.find(elementBy, By.xpath(".."));
+        return Find.findElement(elementBy, By.xpath(".."));
     }
 
-    public WebElement getParent(WebElement element) {
+    public WebElement get(WebElement element) {
         logger.info(String.format("Get Parent: get parent of element: '%s'", element.toString()));
-        return Find.find(element, By.xpath(".."));
+        return Find.findElement(element, By.xpath(".."));
     }
 }

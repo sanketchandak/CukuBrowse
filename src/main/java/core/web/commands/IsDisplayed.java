@@ -20,13 +20,13 @@ public class IsDisplayed {
         }
     }
 
-    public boolean isDisplayed(By elementBy) {
-        boolean status = isDisplayed(Find.find(elementBy));
+    public boolean displayed(By elementBy) {
+        boolean status = displayed(Find.findElement(elementBy));
         logger.info(String.format("Is Displayed: check if '%s' element displayed. Actual status: '%s'", elementBy.toString(), status));
         return status;
     }
 
-    public boolean isDisplayed(WebElement element) {
+    public boolean displayed(WebElement element) {
         boolean status = false;
         try {
             status = element.isDisplayed();

@@ -29,18 +29,18 @@ public class FindAll {
         driver = WebDriverRunner.getInstance().getWebDriver();
     }
 
-    public List<WebElement> findAll(By elementBy) {
+    public List<WebElement> find(By elementBy) {
         setDriverSession();
         logger.info(String.format("Find All Elements: find all elements by '%s'", elementBy));
         return driver.findElements(elementBy);
     }
 
-    public List<WebElement> findAll(By parentBy, By elementBy) {
+    public List<WebElement> find(By parentBy, By elementBy) {
         logger.info(String.format("Find All Elements: find all child elements: '%s' under Parent element: '%s'", elementBy.toString(), parentBy.toString()));
-        return findAll(Find.find(parentBy), elementBy);
+        return find(Find.findElement(parentBy), elementBy);
     }
 
-    public List<WebElement> findAll(WebElement parentElement, By elementBy) {
+    public List<WebElement> find(WebElement parentElement, By elementBy) {
         logger.info(String.format("Find All Elements: find all child elements: '%s' under Parent element: '%s'", elementBy.toString(), parentElement.toString()));
         return parentElement.findElements(elementBy);
     }

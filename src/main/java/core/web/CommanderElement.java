@@ -2,7 +2,6 @@ package core.web;
 
 import core.web.commands.ClickType;
 import core.web.commands.HoverType;
-import glue.WebFunctions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -64,31 +63,31 @@ public class CommanderElement {
     }
 
     public CommanderElement find(By elementBy, int... index) {
-        setElement(Find.find(element, elementBy, index));
+        setElement(Find.findElement(element, elementBy, index));
         return this;
     }
 
     public CommanderElements findAll(By elementBy) {
-        return new CommanderElements(FindAll.findAll(element, elementBy));
+        return new CommanderElements(FindAll.find(element, elementBy));
     }
 
     public CommanderElement getParent() {
-        setElement(GetParent.getParent(element));
+        setElement(GetParent.get(element));
         return this;
     }
 
     public CommanderElement getLastChild() {
-        setElement(GetLastChild.getLastChild(element));
+        setElement(GetLastChild.get(element));
         return this;
     }
 
     public CommanderElement getPreceding(int siblingIndex) {
-        setElement(GetPreceding.getPreceding(element, siblingIndex));
+        setElement(GetPreceding.get(element, siblingIndex));
         return this;
     }
 
     public CommanderElement getAncestor(String ancestorPath) {
-        setElement(GetAncestor.getAncestor(element, ancestorPath));
+        setElement(GetAncestor.get(element, ancestorPath));
         return this;
     }
 
@@ -111,7 +110,7 @@ public class CommanderElement {
     }
 
     public String getText() {
-        return GetText.getText(element);
+        return GetText.get(element);
     }
 
     public void hover(HoverType hoverType) {
@@ -119,39 +118,39 @@ public class CommanderElement {
     }
 
     public boolean isDisplayed() {
-        return IsDisplayed.isDisplayed(element);
+        return IsDisplayed.displayed(element);
     }
 
     public boolean isImage() {
-        return IsImage.isImage(element);
+        return IsImage.image(element);
     }
 
     public void pressControlA() {
-        PressControlA.pressControlA(element);
+        PressControlA.press(element);
     }
 
     public void pressControlC() {
-        PressControlC.pressControlC(element);
+        PressControlC.press(element);
     }
 
     public void pressEnter() {
-        PressEnter.pressEnter(element);
+        PressEnter.press(element);
     }
 
     public void pressEscape() {
-        PressEscape.pressEscape(element);
+        PressEscape.press(element);
     }
 
     public void pressTab() {
-        PressTab.pressTab(element);
+        PressTab.press(element);
     }
 
     public void scrollIntoView() {
-        ScrollIntoView.scrollIntoView(element);
+        ScrollIntoView.scroll(element);
     }
 
     public void sendKeys(String textToSend) {
-        SendKeys.sendKeys(element, textToSend);
+        SendKeys.send(element, textToSend);
     }
 
     public void submit() {
@@ -159,7 +158,7 @@ public class CommanderElement {
     }
 
     public void uploadFile(File fileToUpload) {
-        UploadFile.uploadFile(element, fileToUpload);
+        UploadFile.upload(element, fileToUpload);
     }
 
     public void dragAndDropTo(@org.jetbrains.annotations.NotNull CommanderElement destinationCommanderElement) {
@@ -171,31 +170,31 @@ public class CommanderElement {
     }
 
     public String getAttribute(String attribute) {
-        return GetAttribute.getAttribute(element, attribute);
+        return GetAttribute.get(element, attribute);
     }
 
     public Map<String, String> getAttributes(List<String> attributes) {
-        return GetAttribute.getAttributes(element, attributes);
+        return GetAttribute.get(element, attributes);
     }
 
     public String getCssValue(String cssPropertyName) {
-        return GetCssValue.getCssValue(element, cssPropertyName);
+        return GetCssValue.get(element, cssPropertyName);
     }
 
     public Map<String, String> getCssValues(List<String> cssPropertyNames) {
-        return GetCssValue.getCssValues(element, cssPropertyNames);
+        return GetCssValue.get(element, cssPropertyNames);
     }
 
     public String getInnerHtml() {
-        return GetInnerHtml.getInnerHtml(element);
+        return GetInnerHtml.get(element);
     }
 
     public String getInnerText() {
-        return GetInnerText.getInnerText(element);
+        return GetInnerText.get(element);
     }
 
     public void deselectAllDropdownOptions() {
-        DeselectAllOptions.deselectAllOptions(element);
+        DeselectAllOptions.deselectAll(element);
     }
 
     public void deselectDropdownOptionsByIndexes(int[] indexes) {
@@ -207,24 +206,24 @@ public class CommanderElement {
     }
 
     public List<String> getSelectedDropdownAttribute(String attribute, By... dropdownChildOptionBy) {
-        return GetSelectedDropdownAttribute.getSelectedDropdownAttribute(element, attribute, dropdownChildOptionBy);
+        return GetSelectedDropdownAttribute.get(element, attribute, dropdownChildOptionBy);
     }
 
     public CommanderElement getSelectedDropdownOption(By... dropdownChildOptionBy) {
-        setElement(GetSelectedDropdownOption.getSelectedDropdownOption(element, dropdownChildOptionBy));
+        setElement(GetSelectedDropdownOption.get(element, dropdownChildOptionBy));
         return this;
     }
 
     public CommanderElements getSelectedDropdownOptions(By... dropdownChildOptionBy) {
-        return new CommanderElements(GetSelectedDropdownOptions.getSelectedDropdownOptions(element, dropdownChildOptionBy));
+        return new CommanderElements(GetSelectedDropdownOptions.get(element, dropdownChildOptionBy));
     }
 
     public List<String> getSelectedDropdownOptionsText(By... dropdownChildOptionBy) {
-        return GetSelectedDropdownOptionsText.getSelectedDropdownOptionsText(element, dropdownChildOptionBy);
+        return GetSelectedDropdownOptionsText.get(element, dropdownChildOptionBy);
     }
 
     public String getSelectedDropdownOptionText(By... dropdownChildOptionBy) {
-        return GetSelectedDropdownOptionText.getSelectedDropdownOptionText(element, dropdownChildOptionBy);
+        return GetSelectedDropdownOptionText.get(element, dropdownChildOptionBy);
     }
 
     public void selectDropdownOptionsByIndexes(int[] indexes, By... elementDropdownOptionsBy) {

@@ -21,12 +21,12 @@ public class PressEscape {
         }
     }
 
-    public void pressEscape(By elementBy) {
-        pressEscape(Find.find(elementBy));
+    public void press(By elementBy) {
+        press(Find.findElement(elementBy));
         logger.info(String.format("Press Escape: press escape on element '%s'", elementBy.toString()));
     }
 
-    public void pressEscape(WebElement element) {
+    public void press(WebElement element) {
         element.sendKeys(Keys.ESCAPE);
         logger.info(String.format("Press Escape: press escape on element '%s'", element));
     }

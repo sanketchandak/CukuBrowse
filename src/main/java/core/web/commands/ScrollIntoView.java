@@ -20,14 +20,14 @@ public class ScrollIntoView {
         }
     }
 
-    public void scrollIntoView(By elementBy) {
-        scrollIntoView(Find.find(elementBy));
+    public void scroll(By elementBy) {
+        scroll(Find.findElement(elementBy));
         logger.info(String.format("Scroll Into View: scroll to '%s' element.", elementBy.toString()));
     }
 
-    public void scrollIntoView(WebElement element) {
+    public void scroll(WebElement element) {
         //JavascriptExecutor js = (JavascriptExecutor) WebDriverRunner.getInstance().getWebDriver();
-        ExecuteJavascript.executeJavascript("arguments[0].scrollIntoView(true);", element);
+        ExecuteJavascript.execute("arguments[0].scrollIntoView(true);", element);
         logger.info(String.format("Scroll Into View: scroll to '%s' element.", element.toString()));
     }
 }

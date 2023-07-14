@@ -24,25 +24,25 @@ public class GetAttribute {
         }
     }
 
-    public String getAttribute(By elementBy, String attribute) {
-        String retrievedAttributeValue = Find.find(elementBy).getAttribute(attribute);
+    public String get(By elementBy, String attribute) {
+        String retrievedAttributeValue = Find.findElement(elementBy).getAttribute(attribute);
         logger.info(String.format("Get Attribute: Attribute: '%s' of element: '%s' having value as '%s'", attribute, elementBy.toString(), retrievedAttributeValue));
         return retrievedAttributeValue;
     }
 
-    public String getAttribute(WebElement element, String attribute) {
+    public String get(WebElement element, String attribute) {
         String retrievedAttributeValue = element.getAttribute(attribute);
         logger.info(String.format("Get Attribute: Attribute: '%s' of element: '%s' having value as '%s'", attribute, element, retrievedAttributeValue));
         return retrievedAttributeValue;
     }
 
-    public Map<String, String> getAttributes(By elementBy, List<String> attributes) {
-        Map<String, String> retrievedAttributesValues = getAttributes(Find.find(elementBy), attributes);
+    public Map<String, String> get(By elementBy, List<String> attributes) {
+        Map<String, String> retrievedAttributesValues = get(Find.findElement(elementBy), attributes);
         logger.info(String.format("Get Attributes: Attribute: '%s' of element: '%s' having values as '%s'", attributes, elementBy.toString(), retrievedAttributesValues));
         return retrievedAttributesValues;
     }
 
-    public Map<String, String> getAttributes(WebElement element, List<String> attributes) {
+    public Map<String, String> get(WebElement element, List<String> attributes) {
         Map<String, String> retrievedAttributesValues = attributes.stream().collect(Collectors.toMap(attribute -> attribute, element::getAttribute));
         logger.info(String.format("Get Attributes: Attribute: '%s' of element: '%s' having values as '%s'", attributes, element, retrievedAttributesValues));
         return retrievedAttributesValues;

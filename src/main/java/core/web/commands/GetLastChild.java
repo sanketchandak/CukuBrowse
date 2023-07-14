@@ -20,13 +20,13 @@ public class GetLastChild {
         }
     }
 
-    public WebElement getLastChild(By parentBy) {
+    public WebElement get(By parentBy) {
         logger.info(String.format("Get Last Child: get last child of element: '%s'", parentBy.toString()));
-        return Find.find(parentBy, By.xpath("*[last()]"));
+        return Find.findElement(parentBy, By.xpath("*[last()]"));
     }
 
-    public WebElement getLastChild(WebElement parentElement) {
+    public WebElement get(WebElement parentElement) {
         logger.info(String.format("Get Last Child: get last child of element: '%s'", parentElement.toString()));
-        return Find.find(parentElement, By.xpath("*[last()]"));
+        return Find.findElement(parentElement, By.xpath("*[last()]"));
     }
 }

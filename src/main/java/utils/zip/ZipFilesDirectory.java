@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -73,11 +74,13 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
+
             if (zip4JFile.isSplitArchive()) {
                 for (File splitFile : zip4JFile.getSplitZipFiles()) {
-                    splitFile.delete();
+                    if(!splitFile.delete()){
+                        logger.error("Delete Zip File: Failed to Delete zip file at: " + zipFile.getPath() + ".");
+                    }
                 }
             }
             if (isZipFileExist()) {
@@ -90,7 +93,7 @@ public class ZipFilesDirectory {
             } else {
                 logger.warn("Delete Zip File: Zip File doesn't exist to delete. Provided path: " + zipFile.getPath());
             }
-        } catch (SecurityException | NullPointerException | ZipException e) {
+        } catch (SecurityException | NullPointerException | IOException e) {
             logger.error("Delete Zip File: Delete zip file at: " + zipFile.getPath() + ". " + e.getMessage(), e);
         }
         return flag;
@@ -110,9 +113,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             for (File folderToZip : foldersToZip) {
                 zip4JFile.addFolder(folderToZip);
@@ -125,7 +127,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Zip of Folders: Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Zip of Folders: Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
             e.printStackTrace();
         }
@@ -142,9 +144,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.createSplitZipFileFromFolder(foldersToZip, new ZipParameters(), true, splitLength * fileSizeUnits.getUnitSize());
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -155,7 +156,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Split Zip of Folder: Split Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Split Zip of Folder: Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -171,8 +172,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             if (!zip4JFile.isSplitArchive()) {
                 logger.error("Merge Split Zip: Merge split zip will fail, As zip file is not 'split zip' file.");
             } else {
@@ -187,7 +187,7 @@ public class ZipFilesDirectory {
                     logger.error("Merge Split Zip: Split Zip merging cancelled at: " + outputZipFile.getPath());
                 }
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Merge Split Zip: Split Zip merging failed due to: " + e.getMessage() + " at:" + outputZipFile.getPath() + ".", e);
         }
         return flag;
@@ -215,9 +215,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.createSplitZipFileFromFolder(folderToZip, zipParameters, true, splitLength * fileSizeUnits.getUnitSize());
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -228,7 +227,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Split Zip of Folder with Password Protection: Password Protection Split Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Split Zip of Folder with Password Protection: Password Protection Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -329,9 +328,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.addFiles(filesToZip);
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -342,7 +340,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Zip of Files: Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Zip of Files: Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -362,9 +360,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.createSplitZipFile(filesToZip, new ZipParameters(), true, splitLength * fileSizeUnits.getUnitSize());
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -375,7 +372,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Split Zip of Files: Split Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Split Zip of Files: Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -407,9 +404,8 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            deleteZipFile();
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        deleteZipFile();
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.createSplitZipFile(filesToZip, zipParameters, true, splitLength * fileSizeUnits.getUnitSize());
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -420,7 +416,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Create Split Zip of Files with Password Protection: Password Protection Split Zip creation cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Create Split Zip of Files with Password Protection: Password Protection Split Zip creation failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -440,8 +436,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             for (File fileToZip : filesToZip) {
                 zip4JFile.addFolder(fileToZip);
@@ -454,7 +449,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Add Files to Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Add Files to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -486,8 +481,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             zip4JFile.setPassword(password);
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             for (File fileToZip : filesToZip) {
@@ -503,6 +497,8 @@ public class ZipFilesDirectory {
             }
         } catch (ZipException e) {
             logger.error("Add Files with Password Protection to Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return flag;
     }
@@ -517,8 +513,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.removeFiles(filesFoldersToRemove);
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -529,7 +524,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Remove Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Remove Files & Folders in Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -545,8 +540,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.renameFiles(filesFoldersNamesMap);
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -557,7 +551,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Rename Files & Folders in Zip: Zip file updating process cancelled at: " + zipFile.getPath());
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Rename Files & Folders in Zip: Zip file updating process failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return flag;
@@ -569,8 +563,7 @@ public class ZipFilesDirectory {
             return null;
         }
         List<String> fileNames = null;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             List<FileHeader> fileHeaders = zip4JFile.getFileHeaders();
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             fileNames = fileHeaders.stream().map(AbstractFileHeader::getFileName).collect(Collectors.toList());
@@ -581,7 +574,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Get Files & Folders names in Zip: Fetching zip file 'file & Folders' names process cancelled.");
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Get Files & Folders names in Zip: Fetching zip file 'file & Folders' names failed due to: " + e.getMessage() + " at:" + zipFile.getPath() + ".", e);
         }
         return fileNames;
@@ -593,8 +586,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.extractAll(extractDestinationPath);
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -605,7 +597,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Extract Zip: Zip extraction cancelled at: " + extractDestinationPath);
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Extract Zip: Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
@@ -621,8 +613,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             zip4JFile.setPassword(password);
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.extractAll(extractDestinationPath);
@@ -634,7 +625,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Extract Password Protected Zip: Password Protected Zip extraction cancelled at: " + extractDestinationPath);
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Extract Password Protected Zip: Password Protected Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
@@ -654,8 +645,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.extractFile(fileFolderPath, extractDestinationPath, newFileFolderName);
             if (progressMonitor.getResult().equals(ProgressMonitor.Result.SUCCESS)) {
@@ -666,7 +656,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Extract File Or Folder in Zip: Zip extraction cancelled at: " + extractDestinationPath);
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Extract File Or Folder in Zip: Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;
@@ -682,8 +672,7 @@ public class ZipFilesDirectory {
             return false;
         }
         boolean flag = false;
-        try {
-            ZipFile zip4JFile = new ZipFile(zipFile);
+        try (ZipFile zip4JFile = new ZipFile(zipFile)){
             zip4JFile.setPassword(password);
             ProgressMonitor progressMonitor = zip4JFile.getProgressMonitor();
             zip4JFile.extractFile(fileFolderPath, extractDestinationPath, newFileFolderName);
@@ -695,7 +684,7 @@ public class ZipFilesDirectory {
             } else if (progressMonitor.getResult().equals(ProgressMonitor.Result.CANCELLED)) {
                 logger.error("Extract Password Protected File Or Folder Zip: Password Protected Zip extraction cancelled at: " + extractDestinationPath);
             }
-        } catch (ZipException e) {
+        } catch (IOException e) {
             logger.error("Extract Password Protected File Or Folder Zip: Password Protected Zip extraction failed due to: " + e.getMessage() + " at:" + extractDestinationPath + ".", e);
         }
         return flag;

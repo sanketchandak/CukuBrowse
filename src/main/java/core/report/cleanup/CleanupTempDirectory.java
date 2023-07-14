@@ -11,7 +11,7 @@ public class CleanupTempDirectory {
 
     public static void main(String[] args) {
         try {
-            if (args.length < 1) {
+            if (args==null || args.length < 1) {
                 logger.error("Clean up Report Directory: Invalid number of parameters provided. Expected 1 parameters. " +
                         "1st is path to BAT file which will cleanup temp dir.");
             } else if (args.length == 1) {

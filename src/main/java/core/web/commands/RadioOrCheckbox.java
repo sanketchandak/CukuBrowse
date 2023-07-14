@@ -27,7 +27,7 @@ public class RadioOrCheckbox {
 
     public WebElement getSelectedRadioOrCheckbox(By radioField) {
         logger.info(String.format("Get Selected Radio Or Checkbox: get Selected Radio Or Checkbox '%s'", radioField.toString()));
-        for (WebElement radioOrCheckbox : FindAll.findAll(radioField)) {
+        for (WebElement radioOrCheckbox : FindAll.find(radioField)) {
             if (radioOrCheckbox.getAttribute("checked") != null || radioOrCheckbox.isSelected()) {
                 return radioOrCheckbox;
             }
@@ -38,7 +38,7 @@ public class RadioOrCheckbox {
     public List<WebElement> getSelectedRadiosOrCheckboxes(By radioField) {
         logger.info(String.format("Get Selected Radios Or Checkboxes: get Selected Radios Or Checkboxes '%s'", radioField.toString()));
         List<WebElement> selectedRadiosOrCheckboxes = new ArrayList<>();
-        for (WebElement radioOrCheckbox : FindAll.findAll(radioField)) {
+        for (WebElement radioOrCheckbox : FindAll.find(radioField)) {
             if (radioOrCheckbox.getAttribute("checked") != null || radioOrCheckbox.isSelected()) {
                 selectedRadiosOrCheckboxes.add(radioOrCheckbox);
             }
@@ -48,7 +48,7 @@ public class RadioOrCheckbox {
 
     public void selectRadioOrCheckbox(By elementBy, String... radioOrCheckboxText) {
         assert radioOrCheckboxText != null;
-        List<WebElement> radioOrCheckboxElements = FindAll.findAll(elementBy);
+        List<WebElement> radioOrCheckboxElements = FindAll.find(elementBy);
         if (radioOrCheckboxElements.isEmpty()) {
             logger.error("Cannot locate radio button or checkbox containing text: " + Arrays.toString(radioOrCheckboxText) + " for:" + elementBy.toString());
             throw new CukeBrowseException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(radioOrCheckboxText) + " for:" + elementBy.toString());
@@ -74,7 +74,7 @@ public class RadioOrCheckbox {
 
     public void deselectCheckbox(By elementBy, String... checkboxText) {
         assert checkboxText != null;
-        List<WebElement> checkboxElements = FindAll.findAll(elementBy);
+        List<WebElement> checkboxElements = FindAll.find(elementBy);
         if (checkboxElements.isEmpty()) {
             logger.error("Deselect Checkbox: Cannot locate radio button or checkbox containing text: " + Arrays.toString(checkboxText) + " for:" + elementBy);
             throw new CukeBrowseException("Cannot locate radio button or checkbox containing text: " + Arrays.toString(checkboxText) + " for:" + elementBy);

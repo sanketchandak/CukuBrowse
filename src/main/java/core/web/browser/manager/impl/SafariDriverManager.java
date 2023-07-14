@@ -1,5 +1,6 @@
 package core.web.browser.manager.impl;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
@@ -14,6 +15,7 @@ public class SafariDriverManager implements DriverManager {
     @Override
     public WebDriver createDriver() {
         try {
+            WebDriverManager.safaridriver().setup();
             SafariOptions options = new SafariOptions();
             options.setCapability("safari.cleanSession", true);
             DesiredCapabilities capabilities = new DesiredCapabilities();

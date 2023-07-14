@@ -23,7 +23,7 @@ public class Clear {
     }
 
     public void clearBox(By boxToClearBy) {
-        clearBox(find.find(boxToClearBy));
+        clearBox(find.findElement(boxToClearBy));
         logger.info(String.format("Clear Box: clear data in element '%s'.", boxToClearBy.toString()));
     }
 

@@ -23,25 +23,25 @@ public class GetCssValue {
         }
     }
 
-    public String getCssValue(By elementBy, String cssPropertyName) {
-        String retrievedCssValue = Find.find(elementBy).getCssValue(cssPropertyName);
+    public String get(By elementBy, String cssPropertyName) {
+        String retrievedCssValue = Find.findElement(elementBy).getCssValue(cssPropertyName);
         logger.info(String.format("Get CSS Value: css value: '%s' of element: '%s' having value as '%s'", cssPropertyName, elementBy.toString(), retrievedCssValue));
         return retrievedCssValue;
     }
 
-    public String getCssValue(WebElement element, String cssPropertyName) {
+    public String get(WebElement element, String cssPropertyName) {
         String retrievedCssValue = element.getCssValue(cssPropertyName);
         logger.info(String.format("Get CSS Value: css value: '%s' of element: '%s' having value as '%s'", cssPropertyName, element, retrievedCssValue));
         return retrievedCssValue;
     }
 
-    public Map<String, String> getCssValues(By elementBy, List<String> cssPropertyNames) {
-        Map<String, String> retrievedCssValues = getCssValues(Find.find(elementBy), cssPropertyNames);
+    public Map<String, String> get(By elementBy, List<String> cssPropertyNames) {
+        Map<String, String> retrievedCssValues = get(Find.findElement(elementBy), cssPropertyNames);
         logger.info(String.format("Get CSS Values: css values: '%s' of element: '%s' having values as '%s'", cssPropertyNames, elementBy.toString(), retrievedCssValues));
         return retrievedCssValues;
     }
 
-    public Map<String, String> getCssValues(WebElement element, List<String> cssPropertyNames) {
+    public Map<String, String> get(WebElement element, List<String> cssPropertyNames) {
         Map<String, String> retrievedCssValues = cssPropertyNames.stream().collect(Collectors.toMap(cssPropertyName -> cssPropertyName, element::getCssValue));
         logger.info(String.format("Get CSS Values: css values: '%s' of element: '%s' having values as '%s'", cssPropertyNames, element, retrievedCssValues));
         return retrievedCssValues;

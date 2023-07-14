@@ -25,14 +25,14 @@ public class GetSelectedDropdownOption {
         }
     }
 
-    public WebElement getSelectedDropdownOption(By dropdownBy, By... dropdownChildOptionBy) {
+    public WebElement get(By dropdownBy, By... dropdownChildOptionBy) {
         logger.info(String.format("Get Selected Dropdown Option: Get selected option of '%s' dropdown having option: '%s'", dropdownBy.toString(), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
-        return getSelectedDropdownOption(Find.find(dropdownBy), dropdownChildOptionBy);
+        return get(Find.findElement(dropdownBy), dropdownChildOptionBy);
     }
 
-    public WebElement getSelectedDropdownOption(WebElement dropdownElement, By... dropdownChildOptionBy) {
+    public WebElement get(WebElement dropdownElement, By... dropdownChildOptionBy) {
         assert dropdownChildOptionBy != null;
-        logger.info(String.format("Get Selected Dropdown Option: Get selected option of '%s' dropdown having option: '%s'", GetInnerHtml.getInnerHtml(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
+        logger.info(String.format("Get Selected Dropdown Option: Get selected option of '%s' dropdown having option: '%s'", GetInnerHtml.get(dropdownElement), (dropdownChildOptionBy.length != 0) ? Arrays.stream(dropdownChildOptionBy).map(By::toString).collect(Collectors.toList()) : ""));
         if ("select".equalsIgnoreCase(dropdownElement.getTagName())) {
             return new Select(dropdownElement).getFirstSelectedOption();
         } else {
@@ -40,7 +40,7 @@ public class GetSelectedDropdownOption {
             if (dropdownChildOptionBy.length == 0) {
                 throw new CukeBrowseException("Get Selected Dropdown Option: Element is not having 'Select' tag. 'dropdownChildOptionBy' argument value is required.");
             } else {
-                return Find.find(dropdownElement, dropdownChildOptionBy[0]);
+                return Find.findElement(dropdownElement, dropdownChildOptionBy[0]);
             }
         }
     }

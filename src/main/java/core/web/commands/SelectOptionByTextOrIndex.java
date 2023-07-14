@@ -36,14 +36,14 @@ public class SelectOptionByTextOrIndex {
                 dropdownBy.toString(),
                 Arrays.toString(indexes)
         ));
-        selectOptionsByIndexes(Find.find(dropdownBy), indexes, elementDropdownOptionsBy);
+        selectOptionsByIndexes(Find.findElement(dropdownBy), indexes, elementDropdownOptionsBy);
     }
 
     public void selectOptionsByIndexes(WebElement dropdownElement, int[] indexes, By... elementDropdownOptionsBy) {
         assert elementDropdownOptionsBy != null;
         logger.info(String.format("Select Options By Indexes: select '%s' options from '%s' dropdown with indexes as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
-                GetInnerHtml.getInnerHtml(dropdownElement),
+                GetInnerHtml.get(dropdownElement),
                 Arrays.toString(indexes)
         ));
         if ("select".equalsIgnoreCase(dropdownElement.getTagName())) {
@@ -62,7 +62,7 @@ public class SelectOptionByTextOrIndex {
                 logger.error("Select Options By Indexes: 1 Child element 'By' is required.");
                 throw new CukeBrowseException("1 Child element 'By' is required.");
             }
-            List<WebElement> options = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
+            List<WebElement> options = FindAll.find(dropdownElement, elementDropdownOptionsBy[0]);
             for (int index : indexes) {
                 try {
                     WebElement element = options.get(index);
@@ -83,14 +83,14 @@ public class SelectOptionByTextOrIndex {
                 dropdownBy.toString(),
                 Arrays.toString(texts)
         ));
-        selectOptionsByTexts(Find.find(dropdownBy), texts, elementDropdownOptionsBy);
+        selectOptionsByTexts(Find.findElement(dropdownBy), texts, elementDropdownOptionsBy);
     }
 
     public void selectOptionsByTexts(WebElement dropdownElement, String[] texts, By... elementDropdownOptionsBy) {
         assert elementDropdownOptionsBy != null;
         logger.info(String.format("Select Options By Texts: select '%s' options from '%s' dropdown having text as '%s'",
                 (elementDropdownOptionsBy.length != 0) ? Arrays.stream(elementDropdownOptionsBy).map(By::toString).collect(Collectors.toList()) : "",
-                GetInnerHtml.getInnerHtml(dropdownElement),
+                GetInnerHtml.get(dropdownElement),
                 Arrays.toString(texts)
         ));
         if ("select".equalsIgnoreCase(dropdownElement.getTagName())) {
@@ -107,9 +107,9 @@ public class SelectOptionByTextOrIndex {
             if (elementDropdownOptionsBy.length == 0) {
                 throw new ArrayIndexOutOfBoundsException("1 Child element 'By' is required.");
             }
-            List<WebElement> allOptions = FindAll.findAll(dropdownElement, elementDropdownOptionsBy[0]);
+            List<WebElement> allOptions = FindAll.find(dropdownElement, elementDropdownOptionsBy[0]);
             if (allOptions.isEmpty()) {
-                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.getInnerHtml(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.getInnerHtml(dropdownElement));
+                throw new CukeBrowseException("Cannot find Sub-Elements of '" + GetInnerHtml.get(elementDropdownOptionsBy[0]) + "' under: " + GetInnerHtml.get(dropdownElement));
             }
             Map<String, WebElement> elements = allOptions.stream().collect(Collectors.toMap(WebElement::getText, element -> element));
             for (String text : texts) {
